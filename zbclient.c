@@ -9,7 +9,7 @@
 #include <sys/types.h>
 #include <sys/select.h>
 #include <sys/socket.h>
-#include <curl.h>
+#include <microhttpd.h>
 #include <string.h>
 #include "json.h"
 //#include "parse_flags.h"
@@ -24,7 +24,7 @@ typedef unsigned char   uint8_t;     //无符号8位数
 #define DATA_STATE     0x04
 #define FCS_STATE      0x05
 
-#define PORT            6868
+#define PORT            8888
 #define POSTBUFFERSIZE  512
 #define MAXNAMESIZE     3000
 #define MAXANSWERSIZE   512
@@ -67,29 +67,10 @@ typedef unsigned char   uint8_t;     //无符号8位数
 #define MXJ_XIAOMI18                 0x18
 #define MXJ_XIAOMI1C                 0x1C
 #define MXJ_SEND_DATA                0xff
-int usart_fd;
-uint8_t rebuf[100];    
-uint8_t rx_step = 0;	
-uint8_t state = WW_STATE;
-uint8_t  LEN_Token;
-uint8_t  FSC_Token;
-uint8_t  tempDataLen = 0;
-uint8_t rxbuf[100];
-uint8_t len=0;
-uint8_t humaned = 0;
-CURL* geturl;
 
-void send_usart(uint8_t *data,uint8_t len);
-void MXJ_SendRegisterMessage( uint16_t , uint8_t );
-void MXJ_SendCtrlMessage( uint16_t , uint8_t , uint8_t , uint8_t );
-void MXJ_SendStateMessage( uint16_t );
-void MXJ_GetConfigMessage( uint16_t id );
-void MXJ_GetStateMessage( uint16_t id );
+#define DEV_SIZE                200
 
-char headerStr[100];
 
-//json_object *my_object;
-//json_object *val = NULL;
 
 typedef struct
 {
@@ -100,52 +81,480 @@ typedef struct
   uint8_t enable;
 } MXJ_CONFIG_STRUCT;
 
-
-void send_usart(uint8_t *data, uint8_t len);
-
-long writer(void *data, int size, int nmemb, char *content)
+typedef struct
 {
-	uint16_t id=0;
-	uint8_t state11=0,state22=0,state33=0;
-	json_object *type = NULL;
-	json_object *my_object = json_tokener_parse(data);
-	json_object *devid = NULL;
-	json_object_object_get_ex(my_object, "devid",&devid);
-	json_object *state1 = NULL;
-	json_object_object_get_ex(my_object, "state1",&state1);
-	json_object *state2 = NULL;
-	json_object_object_get_ex(my_object, "state2",&state2);
-	json_object *state3 = NULL;
-	json_object_object_get_ex(my_object, "state3",&state3);
-	json_object_object_get_ex(my_object, "type",&type);
+  uint16_t id;
+  uint8_t type;
+  uint8_t ctrl;
+  uint16_t devid;
+  uint8_t idx;
+  uint8_t light[3];
+  uint8_t state[3];
+  uint8_t registered;
+} MXJ_DEVICE;
+MXJ_DEVICE mxj_device[DEV_SIZE];
+uint8_t devsize=0; 
+int usart_fd;
+uint8_t rebuf[100];    
+uint8_t rx_step = 0;	
+uint8_t state = WW_STATE;
+uint8_t  LEN_Token;
+uint8_t  FSC_Token;
+uint8_t  tempDataLen = 0;
+uint8_t rxbuf[100];
+uint8_t len=0;
+//uint8_t humaned = 0;
+//CURL* geturl;
 
-	id = (uint16_t)json_object_get_int(devid);
-	state11 = (uint16_t)json_object_get_int(state1);
-	state22 = (uint16_t)json_object_get_int(state2);
-	state33 = (uint16_t)json_object_get_int(state3);
+void send_usart(uint8_t *data,uint8_t len);
+void MXJ_SendRegisterMessage( uint16_t , uint8_t );
+void MXJ_SendCtrlMessage( uint16_t , uint8_t , uint8_t , uint8_t );
+void MXJ_SendStateMessage( uint16_t );
+void MXJ_GetConfigMessage( uint16_t id );
+void MXJ_GetStateMessage( uint16_t id );
+void del_dev(void);
+int find_dev(int i);
 
-	if(0 == strcmp (json_object_to_json_string(type), "\"control_down\""))
-		MXJ_SendCtrlMessage(id,state11,state22,state33);
-	if(0 == strcmp (json_object_to_json_string(type), "\"register_ok\""))
-		MXJ_SendRegisterMessage(id,MXJ_REGISTER_OK);
-	if(0 == strcmp (json_object_to_json_string(type), "\"register_failed\""))
-		MXJ_SendRegisterMessage(id,MXJ_REGISTER_FAILED);
-	if(0 == strcmp (json_object_to_json_string(type), "\"ask_state\""))
-		MXJ_GetStateMessage(id);
-	if(0 == strcmp (json_object_to_json_string(type), "\"any_data\""))
-		MXJ_SendCtrlMessage(id,state11,state22,state33);
+char *str = "undefine";
+char *json_str;
+struct connection_info_struct
+{
+  int connectiontype;
+  char *answerstring;
+  struct MHD_PostProcessor *postprocessor;
+};
+
+const char *askpage = "{\"devices\":[{\"id\":10552,\"type\":7,\"control\":{\"devid\":1234,\"lights\":[0,1]},\"status\":[]},{\"id\":2155,\"type\":3,\"control\":{\"devid\":6445,\"lights\":[1,2]},\"status\":[]},{\"id\":12345,\"type\":7,\"control\":{},\"status\":[1,1,0]}]}";
+
+const char *greetingpage =
+  "<html><body><h1>Welcome, %s!</center></h1></body></html>";
+
+const char *errorpage =
+  "<html><body>This doesn't seem to be right.</body></html>";
+
+const char *idolpage =
+  "<html><body>hello idol</body></html>";
+
+void build_json()
+{
+	int i=0;
+  char str2[2000];
+  strcpy(str2,"{\"devices\":[");
+//	json_object *devices = json_object_new_array();
+
+	for(i=0;i<devsize;i++)
+		{
+			json_object *lights= json_object_new_array();
+      if(mxj_device[i].light[0])
+			json_object_array_add(lights, json_object_new_int(0));
+      if(mxj_device[i].light[1])
+			json_object_array_add(lights, json_object_new_int(1));
+      if(mxj_device[i].light[2])
+			json_object_array_add(lights, json_object_new_int(2));
+      //printf("lights = %s\n",json_object_to_json_string(lights));
+      
+			json_object *state= json_object_new_array();
+			json_object_array_add(state, json_object_new_int(mxj_device[i].state[0]));
+			json_object_array_add(state, json_object_new_int(mxj_device[i].state[1]));
+			json_object_array_add(state, json_object_new_int(mxj_device[i].state[2]));
+      //printf("state = %s\n",json_object_to_json_string(state));
+            
+			json_object *control = json_object_new_object();
+			json_object_object_add(control, "devid", json_object_new_int(mxj_device[i].devid));
+			json_object_object_add(control, "lights", lights);
+      //printf("control = %s\n",json_object_to_json_string(control));
+            
+			json_object *dev = json_object_new_object();
+			json_object_object_add(dev, "id", json_object_new_int(mxj_device[i].id));
+			json_object_object_add(dev, "type", json_object_new_int(mxj_device[i].type));
+			json_object_object_add(dev, "control", control);
+			json_object_object_add(dev, "status", state);
+      //printf("dev = %s\n",json_object_to_json_string(dev));
+      
+			//json_object_array_add(devices, dev);
+      //json_object *obj = json_object_array_get_idx(devices, i);
+      
+      
+      //snprintf (str2, MAXANSWERSIZE, json_object_to_json_string(obj));
+      strcat(str2,json_object_to_json_string(dev));
+      if(i<devsize-1)
+        strcat(str2,",");
+      else
+        strcat(str2,"]}");
+      
+      
+      //printf("------------------build-json-----------\n");
+	  
+			if(lights!=NULL)
+				json_object_put(lights);
+			if(state!=NULL)
+				json_object_put(state);
+			if(control!=NULL)
+				json_object_put(control);
+			if(dev!=NULL)
+				json_object_put(dev);
+
+				
+		}
+   
+   
+
+   //printf("str2 = %s\n",str2); 
+   strcpy(json_str,str2);
+   printf("build json_str = %s\n",json_str); 
+   //json_str=str2;
+   
 	
-	printf("id = %d\n", id);
-	printf("state11 = %d\n", state11);
-	printf("state22 = %d\n", state22);
-	printf("state33 = %d\n", state33);
-	printf("data= %s\n", data);
-	printf("json= %s\n", json_object_to_json_string(my_object));
-	
-	return 1; 
 }
 
 
+static int
+send_page (struct MHD_Connection *connection, const char *page)
+{
+  int ret;
+  struct MHD_Response *response;
+
+
+  response =
+    MHD_create_response_from_buffer (strlen (page), (void *) page,
+				     MHD_RESPMEM_PERSISTENT);
+  if (!response)
+    return MHD_NO;
+
+  //MHD_add_response_header (response, "Content-Type", "text/html;charset=UTF-8");
+
+  ret = MHD_queue_response (connection, MHD_HTTP_OK, response);
+  MHD_destroy_response (response);
+
+  return ret;
+}
+
+
+static int
+iterate_post (void *coninfo_cls, enum MHD_ValueKind kind, const char *key,
+              const char *filename, const char *content_type,
+              const char *transfer_encoding, const char *data, uint64_t off,
+              size_t size)
+{
+  struct connection_info_struct *con_info = coninfo_cls;
+  //printf("file name =%s \n",filename);
+  //printf("key =%s \n",key);
+  //printf("size =%d \n",size);
+  //printf("data =%s \n",data);
+  
+  if(size > 0)
+  {
+    int tempidx = 0;
+    int tempidx2 = 0;
+	int tempint = 0;
+	int findedid = -1;
+    json_object *val = NULL;
+    json_object *my_object = NULL;
+    json_object *my_object2 = NULL;
+    json_object *obj = NULL;
+    json_object *tempobj = NULL;
+    json_object *tempobj2 = NULL;
+    //*obj
+    my_object2 = json_tokener_parse(data);
+    if(my_object2==NULL)return MHD_NO;
+    json_object_object_get_ex(my_object2, "devices", &my_object);
+    if(my_object==NULL)return MHD_NO;
+    printf("my_object= %s\n", json_object_to_json_string(my_object));
+    //con_info->answerstring = (char*)json_object_to_json_string(my_object2);
+    printf("----------------post--------------------\n");
+    for(tempidx=0;tempidx<json_object_array_length(my_object);tempidx++)
+    {
+      obj = json_object_array_get_idx(my_object, tempidx);    
+      
+      json_object_object_get_ex(obj, "id", &val);
+	  tempint = json_object_get_int(val);
+      printf("id= %04x\n", tempint);
+	  
+	  findedid = find_dev(tempint);
+	  if(findedid !=-1)
+	  	{
+		      json_object_object_get_ex(obj, "type", &val);
+		      tempint = json_object_get_int(val);
+      		  printf("type= %d\n", tempint);
+			  
+		      
+		      json_object_object_get_ex(obj, "control", &val);
+		      //printf("control= %s\n", json_object_to_json_string(val)); 
+		      if(val != NULL)
+		      {
+		                   
+		        json_object_object_get_ex(val, "devid", &tempobj);
+				tempint = json_object_get_int(tempobj);
+				printf("-devid= %d\n", tempint);
+		        mxj_device[findedid].devid = tempint;
+				
+		        json_object_object_get_ex(val, "lights", &tempobj);
+		        //printf("-lights= %s\n", json_object_to_json_string(tempobj)); 
+		        if(tempobj != NULL)
+		        {
+		        	mxj_device[findedid].light[0] = 0;
+					mxj_device[findedid].light[1] = 0;
+					mxj_device[findedid].light[2] = 0;
+		          for(tempidx2=0;tempidx2<json_object_array_length(tempobj);tempidx2++)
+		          {
+		            tempobj2 = json_object_array_get_idx(tempobj, tempidx2); 
+					tempint = json_object_get_int(tempobj2);
+
+					mxj_device[findedid].light[tempint] = 1;
+					printf("--lights[%d]= %d\n", tempidx2,tempint);
+		          }  
+		        }
+		      }
+		      
+		      json_object_object_get_ex(obj, "status", &val);
+		      //printf("status= %s\n", json_object_to_json_string(val)); 
+		      for(tempidx2=0;tempidx2<json_object_array_length(val);tempidx2++)
+		      {
+		        tempobj2 = json_object_array_get_idx(val, tempidx2); 
+				tempint = json_object_get_int(tempobj2);
+				printf("-status[%d]= %d\n", tempidx2,tempint);	
+				if(mxj_device[findedid].state[tempidx2] != tempint)
+					{
+						mxj_device[findedid].state[tempidx2] = tempint;
+						if(tempidx2 == 0)
+							MXJ_SendCtrlMessage( mxj_device[findedid].id ,tempint , 2 , 2 );
+						else if(tempidx2 == 1)
+							MXJ_SendCtrlMessage( mxj_device[findedid].id ,2 , tempint , 2 );
+						else if(tempidx2 == 2)
+							MXJ_SendCtrlMessage( mxj_device[findedid].id ,2 , 2 , tempint );
+					}
+		      }
+	  	}
+	  else printf("dev not find!\n");
+	  
+      printf("----------------post-----------------\n");
+    }      
+/*    
+    if(my_object != NULL)
+      json_object_put(my_object);
+    if(my_object2 != NULL)
+      json_object_put(my_object2);    
+    if(val != NULL)
+      json_object_put(val); 
+    if(obj != NULL)
+      json_object_put(obj); 
+    if(tempobj != NULL)
+      json_object_put(tempobj); 
+    if(tempobj2 != NULL)
+      json_object_put(tempobj2);     
+   */           
+    if ((size > 0) && (size <= MAXNAMESIZE))
+    {
+       
+       //con_info->answerstring = str2;
+       //json_object *devices2 = json_object_new_object();   
+  // printf("str2 = %s\n",str2);  
+     
+       build_json();
+	   con_info->answerstring = json_str;
+	   if(con_info->answerstring !=NULL)
+    	printf("con_info->answerstring =%s \n",con_info->answerstring);
+	   else 
+	   	printf("con_info->answerstring= ===NULL \n");
+    }
+    else
+      con_info->answerstring = NULL;
+    
+    return MHD_NO;
+      
+  }
+  
+   
+ 
+  if (0 == strcmp (key, "open"))
+    {
+    str = "open ";
+	  //printf("open\n");
+     //send_usart(0x15d8,1,1,1);//send===================================
+     //uint8_t data[7]={0,6,0x17,0x1f,1,1,1};//控制命令↓
+     //uint8_t data[4]={10,3,0x17,0x1f};//开关配置文件获取↓
+     //uint8_t data[12]={8,11,0x17,0x1f,0,0,0x7b,0x4f,1,2,2,1};//开关配置文件设置↓    
+     //send_usart(data,12);
+    //MXJ_SendCtrlMessage(0x171f,1,1,1);
+    MXJ_CONFIG_STRUCT mxjconfig;
+    //0xd313 0x09c5
+    mxjconfig.id = 0xa9ed;
+    mxjconfig.state1 = 1;
+    mxjconfig.state2 = 2;
+    mxjconfig.state3 = 2;
+    mxjconfig.enable = 1;
+    MXJ_SendConfigMessage( 0x171f,0,0,mxjconfig);//Des id,IDX,STATE,mxjconfig;    
+/*
+	if ((size > 0) && (size <= MAXNAMESIZE))
+        {
+          char *answerstring;
+          answerstring = malloc (MAXANSWERSIZE);
+          if (!answerstring)
+            return MHD_NO;
+
+          snprintf (answerstring, MAXANSWERSIZE, askpage, key);
+          con_info->answerstring = answerstring;
+		  //printf("data =%s \n",data);
+        }
+      else
+      */
+        con_info->answerstring = NULL;
+	  
+      return MHD_NO;
+    }
+  else if (0 == strcmp (key, "close"))
+    {
+    str = "close";
+    //printf("close\n");
+    //send_usart(0x15d8,0,0,0);//send===================================
+      //uint8_t data[12]={8,11,0xe3,0x19,0,0,0x7b,0x4f,1,2,2,1}; 
+      //uint8_t data[12]={8,11,0xe3,0x19,0,1,0x7b,0x4f,0,2,2,1};    
+      //uint8_t data[12]={8,11,0xe3,0x19,1,0,0x7b,0x4f,2,1,2,1}; 
+      //uint8_t data[12]={8,11,0xe3,0x19,1,1,0x7b,0x4f,2,0,2,1}; 
+      //uint8_t data[12]={8,11,0xe3,0x19,2,0,0x7b,0x4f,2,2,1,1}; 
+      //uint8_t data[12]={8,11,0xe3,0x19,2,1,0x7b,0x4f,2,2,0,1};  
+      //send_usart(data,12);
+      //MXJ_SendCtrlMessage(0x171f,3,3,3);
+      MXJ_GetConfigMessage( 0x171f );
+      /*
+      if ((size > 0) && (size <= MAXNAMESIZE))
+        {
+          char *answerstring;
+          answerstring = malloc (MAXANSWERSIZE);
+          if (!answerstring)
+            return MHD_NO;
+
+          snprintf (answerstring, MAXANSWERSIZE, askpage, key);
+          con_info->answerstring = answerstring;
+		  //printf("data =%s \n",data);
+        }
+      else
+      */
+        con_info->answerstring = NULL;
+
+      return MHD_NO;
+    }
+
+  return MHD_YES;
+}
+
+static void
+request_completed (void *cls, struct MHD_Connection *connection,
+                   void **con_cls, enum MHD_RequestTerminationCode toe)
+{
+  struct connection_info_struct *con_info = *con_cls;
+
+  if (NULL == con_info)
+    return;
+
+  if (con_info->connectiontype == POST)
+    {
+      MHD_destroy_post_processor (con_info->postprocessor);
+      //if (con_info->answerstring)
+        //free (con_info->answerstring);
+    }
+
+  free (con_info);
+  *con_cls = NULL;
+}
+
+
+static int
+answer_to_connection (void *cls, struct MHD_Connection *connection,
+                      const char *url, const char *method,
+                      const char *version, const char *upload_data,
+                      size_t *upload_data_size, void **con_cls)
+{
+	struct connection_info_struct *con_info = *con_cls;
+
+  //printf("method =%s \n",method);
+  if (NULL == *con_cls)
+    {
+    	//printf("NuLl=ClS \n");
+		
+      struct connection_info_struct *con_info;
+
+      con_info = malloc (sizeof (struct connection_info_struct));
+      if (NULL == con_info)
+      {
+        //printf("return MHD_NO \n");
+        return MHD_NO;
+      }
+      con_info->answerstring = NULL;
+      //printf("method2 =%s \n",method);
+      if (0 == strcmp (method, "POST"))
+        {
+          //printf("(0 == strcmp (method, POST)\n");
+          con_info->postprocessor =
+            MHD_create_post_processor (connection, POSTBUFFERSIZE,
+                                       iterate_post, (void *) con_info);
+
+          if (NULL == con_info->postprocessor)
+            {
+              free (con_info);
+              return MHD_NO;
+            }
+          //printf("con_info->connectiontype = POST \n");
+          con_info->connectiontype = POST;
+        }
+      else
+        con_info->connectiontype = GET;
+
+      *con_cls = (void *) con_info;
+
+      return MHD_YES;
+    }
+
+  if (0 == strcmp (method, "GET"))
+    {
+    	//build_json();
+    	//const char *reply = json_str;
+		
+    	//reply = malloc (strlen (json_str) );
+		//strcpy(reply,json_str);
+		
+		printf("get json_str = %s\n",json_str);
+		//
+		//if (NULL == reply)
+	    	//return MHD_NO;
+	  	//snprintf (reply,strlen (json_str) + 1,reply);
+		if(json_str!=NULL)
+			return send_page (connection,json_str);
+		else
+			return send_page (connection, errorpage);
+    }
+
+  if (0 == strcmp (method, "POST"))
+  	{  		
+	  int ret;
+	  //char *reply;
+	  //char *str = "open";
+	  //printf("PoSt \n");
+	  //struct MHD_Response *response;
+	  
+	  //reply = malloc (strlen (askpage) + strlen (str) + 1); 
+	  //if (NULL == reply)
+	  //  return MHD_NO;
+	  //snprintf (reply,strlen (askpage) + strlen (str) + 1,askpage,str);
+	  ////printf("reply= %s \n",reply);
+	  //struct connection_info_struct *con_info = *con_cls;
+
+	  if (*upload_data_size != 0)
+	  {
+		MHD_post_process (con_info->postprocessor, upload_data,
+						  *upload_data_size);
+		*upload_data_size = 0;
+    //printf("%s\n",con_info->postprocessor);
+		return MHD_YES;
+	  }
+	  else if (NULL != con_info->answerstring)
+		  return send_page (connection, con_info->answerstring);
+
+	  
+  	}
+
+  return send_page (connection, errorpage);
+}
 
 void send_usart(uint8_t *data,uint8_t len) //id,state1,state2,state3 1=开,0=关,2=保持
 {
@@ -172,6 +581,34 @@ void send_usart(uint8_t *data,uint8_t len) //id,state1,state2,state3 1=开,0=关,2
 }
 
 
+
+//========thread start=========//
+//AA C0 IDH IDL STATE1 STATE2 STATE3 REV CRC AB
+
+void del_dev(void)
+{
+	mxj_device[devsize-1].id=0;
+	mxj_device[devsize-1].type=0;
+	mxj_device[devsize-1].idx=0;
+	mxj_device[devsize-1].registered=0;
+	mxj_device[devsize-1].ctrl=0;
+	devsize--;
+}
+
+
+int find_dev(int id)
+{
+	int i = 0;
+	for(i=0;i<devsize;i++)
+		if(mxj_device[i].id == id)
+			{
+				//printf("find:%d",i);
+				return i;
+			}
+
+	//printf("not find");
+	return -1;
+}
 void recieve_usart(uint8_t *rx,uint8_t len)
 {
   int i=0,j=0;
@@ -203,30 +640,84 @@ void recieve_usart(uint8_t *rx,uint8_t len)
   switch(rx[0])
   {
     case MXJ_CTRL_UP:
-		{
-			char str[200]={0};
-			sprintf(str,"type=control_up&dev_id=%d&idx=%d&action=%d&action_string=normal",id,rx[5],rx[6]);
-			curl_easy_setopt(geturl, CURLOPT_POSTFIELDS,str);
-			curl_easy_perform(geturl);		
-    	}
+		i=find_dev(id);
+		
+		if(i==-1)
+      	{
+      		printf("control up - dev not found \n");			
+      	}		
+		else 
+	   	{
+	      printf("control up - find id = %d\n",i);
+		  printf("id:%4x\n",id);
+	      if(mxj_device[i].type==7)
+	  			{
+	  				 j=find_dev(mxj_device[i].devid);
+	  				 printf("mxj_device[i].devid = %04x\n",mxj_device[i].devid);
+	  
+	  
+	  
+	  				 
+	  				 if(mxj_device[i].light[0]==1)
+	  				 	tempctrl[0] = mxj_device[j].state[0]==1?0:1;
+	  				 if(mxj_device[i].light[1]==1)
+	  				 	tempctrl[1] = mxj_device[j].state[1]==1?0:1;
+	  				 if(mxj_device[i].light[2]==1)
+	  					tempctrl[2] = mxj_device[j].state[2]==1?0:1;
+	  				 printf("lights = %d\n",tempctrl[0]);
+	  				 printf("lights = %d\n",tempctrl[1]);
+	  				 printf("lights = %d\n",tempctrl[2]);
+	  				 
+	  				 MXJ_SendCtrlMessage( mxj_device[i].devid,tempctrl[0],tempctrl[1],tempctrl[2]);
+	  			}
+	        else if(mxj_device[i].type==3)
+	        {
+	  				 j=find_dev(mxj_device[i].devid);
+	  				 printf("mxj_device[i].devid = %04x\n",mxj_device[i].devid);
+	  
+	  
+	  
+	  				 
+	  				 if(mxj_device[i].light[0]==1)
+	  				 	tempctrl[0] = rx[6];
+	  				 if(mxj_device[i].light[1]==1)
+	  				 	tempctrl[1] = rx[6];
+	  				 if(mxj_device[i].light[2]==1)
+	  					tempctrl[2] = rx[6];
+	  				 printf("lights = %d\n",tempctrl[0]);
+	  				 printf("lights = %d\n",tempctrl[1]);
+	  				 printf("lights = %d\n",tempctrl[2]);
+	  				 
+	  				 MXJ_SendCtrlMessage( mxj_device[i].devid,tempctrl[0],tempctrl[1],tempctrl[2]);
+	  			}
+	     }
     break;
     
     case MXJ_REGISTER_REQUEST:
-		{
-			char str[200]={0};
-			sprintf(str,"type=register_request&dev_id=%d&dev_type=%d&dev_string=NULL&idxs=%d",id,rx[4],rx[5]);
-			curl_easy_setopt(geturl, CURLOPT_POSTFIELDS,str);
-			curl_easy_perform(geturl);	
-    	}
+		i=find_dev(id);
+      if(i==-1)
+      	{
+      		
+	  		mxj_device[devsize].id=id;
+			mxj_device[devsize].type=rx[4];
+			mxj_device[devsize].idx=rx[5];
+			mxj_device[devsize].registered=1;
+			if(devsize<DEV_SIZE)
+				devsize ++;
+			build_json();
+      	}
+      MXJ_SendRegisterMessage(id,MXJ_REGISTER_OK);
     break;
 
     case MXJ_SEND_STATE:
-		{
-			char str[200]={0};
-			sprintf(str,"type=response_state&dev_id=%d&state1=%d&state2=%d&state3=%d",id,rx[4],rx[5],rx[6]);
-			curl_easy_setopt(geturl, CURLOPT_POSTFIELDS,str);
-			curl_easy_perform(geturl);	
-    	}
+		i=find_dev(id);
+      if(i>=0)
+      	{
+	  		mxj_device[i].state[0]=rx[4];
+	  		mxj_device[i].state[1]=rx[5];
+			mxj_device[i].state[2]=rx[6];	
+			build_json();
+      	}
     break;
 
     case MXJ_SENSOR_DATA:
@@ -235,30 +726,30 @@ void recieve_usart(uint8_t *rx,uint8_t len)
 
     case MXJ_GET_STATE:
 		{
-			printf("get state\n");
-			char str[200]={0};
-			sprintf(str,"type=ask_state&dev_id=%d",id);
-			curl_easy_setopt(geturl, CURLOPT_POSTFIELDS,str);
-			curl_easy_perform(geturl);	
+			/printf("get state\n");
+			//char str[200]={0};
+			///sprintf(str,"type=ask_state&dev_id=%d",id);
+			//curl_easy_setopt(geturl, CURLOPT_POSTFIELDS,str);
+			//curl_easy_perform(geturl);	
 		}
     break;
 
 	case MXJ_SEND_RESPONSE:
 		{
-			printf("send response\n");
-			char str[200]={0};
-			sprintf(str,"type=send_response&dev_id=%d&seq_num=%d&state=%d",id,rx[2],rx[3]);
-			curl_easy_setopt(geturl, CURLOPT_POSTFIELDS,str);
-			curl_easy_perform(geturl);	
+			//printf("send response\n");
+			//char str[200]={0};
+			//sprintf(str,"type=send_response&dev_id=%d&seq_num=%d&state=%d",id,rx[2],rx[3]);
+			//curl_easy_setopt(geturl, CURLOPT_POSTFIELDS,str);
+			//curl_easy_perform(geturl);	
 		}
     break;	
 		
     case MXJ_XIAOMI18:
-	
+		i=find_dev(id);
 
 	 if(len>=27)
  	{
- 		if(cid == 0 && rx[12] <= len - 13)
+ 		if(cid == 0 && rx[12] <= len - 13 && i==-1)
 		{
 			 uint8_t *temp_str = NULL;
 		    /*分配内存空间*/
@@ -268,71 +759,69 @@ void recieve_usart(uint8_t *rx,uint8_t len)
 			printf("temp_str = %s\n",temp_str);
 			if (0 == strcmp (temp_str, "lumi.sensor_switch"))
 			{
-				char str[200]={0};
-				sprintf(str,"type=register_request&dev_id=%d&dev_type=11&dev_string=xiaomikaiguan&idxs=1",id);
-				curl_easy_setopt(geturl, CURLOPT_POSTFIELDS,str);
-				curl_easy_perform(geturl);
-
+				mxj_device[devsize].id=id;
+				mxj_device[devsize].type=0x0b;
+				mxj_device[devsize].idx=1;
+				mxj_device[devsize].registered=1;
+				if(devsize<DEV_SIZE)
+					devsize ++;			
+				build_json();
 			}
 			else if (0 == strcmp (temp_str, "lumi.sensor_magnet"))
 			{
-				char str[200]={0};
-				sprintf(str,"type=register_request&dev_id=%d&dev_type=10&dev_string=xiaomimenci&idxs=1",id);
-				curl_easy_setopt(geturl, CURLOPT_POSTFIELDS,str);
-
-				curl_easy_perform(geturl);			
+				mxj_device[devsize].id=id;
+				mxj_device[devsize].type=0x0a;
+				mxj_device[devsize].idx=1;
+				mxj_device[devsize].registered=1;
+				if(devsize<DEV_SIZE)
+					devsize ++;			
+				build_json();				
 			}
 			else if (0 == strcmp (temp_str, "lumi.sensor_motion"))
 			{
-				char str[200]={0};
-				sprintf(str,"type=register_request&dev_id=%d&dev_type=3&dev_string=xiaomihuman&idxs=1",id);
-				curl_easy_setopt(geturl, CURLOPT_POSTFIELDS,str);
-
-				curl_easy_perform(geturl);			
+				mxj_device[devsize].id=id;
+				mxj_device[devsize].type=0x03;
+				mxj_device[devsize].idx=1;
+				mxj_device[devsize].registered=1;
+				if(devsize<DEV_SIZE)
+					devsize ++;			
+				build_json();				
 			}
 			else if (0 == strcmp (temp_str, "lumi.sensor_ht"))
 			{
-				char str[200]={0};
-				sprintf(str,"type=register_request&dev_id=%d&dev_type=9&dev_string=xiaomiwenshidu&idxs=1",id);
-				curl_easy_setopt(geturl, CURLOPT_POSTFIELDS,str);
-				curl_easy_perform(geturl);			
+				mxj_device[devsize].id=id;
+				mxj_device[devsize].type=0x09;
+				mxj_device[devsize].idx=1;
+				mxj_device[devsize].registered=1;
+				if(devsize<DEV_SIZE)
+					devsize ++;			
+				build_json();				
 			}
 		}
  	}
 
+	 if(i>=0)
+ 	{
  		if(cid == 6)
  		{
  			if(len != 13)break;
-			printf("control up\n");
+			printf("control up - find id = %d\n",i);
 			printf("id:%4x\n",id);
 			if(rx[11] == 0x20)
 			{
-				printf("double tick\n");
-				char str[200]={0};
-				sprintf(str,"type=control_up&dev_id=%d&idx=1&action=%d&action_string=double_tick",id,2);
-				curl_easy_setopt(geturl, CURLOPT_POSTFIELDS,str);
-				curl_easy_perform(geturl);							
+				printf("double kick\n");
 			}
 			else
 			{
 				printf("action = %d\n",rx[12]);
-				char str[200]={0};
-				sprintf(str,"type=control_up&dev_id=%d&idx=1&action=%d&action_string=normal",id,rx[12]);
-				curl_easy_setopt(geturl, CURLOPT_POSTFIELDS,str);
-				curl_easy_perform(geturl);
 			}
  		}
 		else if(cid == 0x406)
  		{
  			if(len != 13)break;
-			printf("control up\n");
+			printf("control up - find id = %d\n",i);
 			printf("id:%4x\n",id);
 			printf("human detected\n");
-			printf("action = %d\n",rx[12]);
-			char str[200]={0};
-			sprintf(str,"type=control_up&dev_id=%d&idx=1&action=%d&action_string=human_detected",id,1);
-			curl_easy_setopt(geturl, CURLOPT_POSTFIELDS,str);
-			curl_easy_perform(geturl);		
  		}
 		else if(cid == 0x402)
  		{
@@ -341,14 +830,10 @@ void recieve_usart(uint8_t *rx,uint8_t len)
 			temp = rx[13];
 			temp <<= 8;
 			temp |= rx[12];
-			printf("temperature up\n");
+			printf("temperature up - find id = %d\n",i);
 			printf("id:%4x\n",id);
 			printf("temperature = %02f\n",(float)temp/100);
-			printf("action = %d\n",rx[12]);
-			char str[200]={0};
-			sprintf(str,"type=temperature_up&dev_id=%d&idx=1&value=%d",id,temp);
-			curl_easy_setopt(geturl, CURLOPT_POSTFIELDS,str);
-			curl_easy_perform(geturl);			
+			
  		}
 		else if(cid == 0x405)
  		{
@@ -357,21 +842,16 @@ void recieve_usart(uint8_t *rx,uint8_t len)
 			temp = rx[13];
 			temp <<= 8;
 			temp |= rx[12];
-			printf("humidity up\n");
+			printf("humidity up - find id = %d\n",i);
 			printf("id:%4x\n",id);
 			printf("humidity = %02f\n",(float)temp/100);
-			char str[200]={0};
-			sprintf(str,"type=humidity_up&dev_id=%d&idx=1&value=%d",id,temp);
-			curl_easy_setopt(geturl, CURLOPT_POSTFIELDS,str);
-			curl_easy_perform(geturl);	
-
-		}
+ 		}
 
 
 
 
 		
- 	
+ 	}
     break;
 
 	case MXJ_XIAOMI1C:
@@ -488,29 +968,17 @@ void thread(void)
 
 int main(void)
 {
-	
-	static uint8_t i=1;
-
-	geturl = curl_easy_init();
-	
-
-	if(geturl){
-
-		curl_easy_setopt(geturl, CURLOPT_URL, "127.0.0.1:6868");
-		/* Now specify the POST data */
-	//curl_easy_setopt(geturl, CURLOPT_TIMEOUT, 2L);
-	curl_easy_setopt(geturl, CURLOPT_HTTPPOST, 1L);
-		curl_easy_setopt(geturl, CURLOPT_WRITEFUNCTION, writer);
-		curl_easy_setopt(geturl, CURLOPT_WRITEDATA, &headerStr);
-
-		//curl_easy_cleanup(geturl);
-
-	}
-	else
-	   return (1);
-
-
 	pthread_t id;
+  struct MHD_Daemon *daemon;
+  uint8_t i=0;
+  for(i=0;i<DEV_SIZE;i++)
+  {
+    mxj_device[i].registered = 0;
+	mxj_device[i].ctrl = 0;
+  }
+
+  json_str = (char*)calloc(2000,sizeof(char));
+  
   
 	if(wiringPiSetup() < 0)
 	{
@@ -531,19 +999,72 @@ int main(void)
 		return (1);
 	}
 	
- 
-	 MXJ_SendRegisterMessage( 0x9b02, MXJ_REGISTER_FAILED );
-	 MXJ_SendRegisterMessage( 0x49f0, MXJ_REGISTER_FAILED );
+   //printf("start server ...\n");
+
+  daemon = MHD_start_daemon (MHD_USE_SELECT_INTERNALLY, PORT, NULL, NULL,
+                             &answer_to_connection, NULL,
+                             MHD_OPTION_NOTIFY_COMPLETED, request_completed,
+                             NULL, MHD_OPTION_END);
+  if (NULL == daemon)
+  {
+    //printf("server creat failed!\n");
+    return 1;
+  }
+  int tt=0;
+  int j=0;
+//  uint8_t data1[12]={8,11,0x5e,0xe0,0,0,0xe3,0x19,1,2,2,1}; 
+//  uint8_t data2[12]={8,11,0x5e,0xe0,0,1,0xe3,0x19,0,2,2,1};    
+//  uint8_t data3[12]={8,11,0x5e,0xe0,1,0,0xe3,0x19,2,1,2,1}; 
+//  uint8_t data4[12]={8,11,0x5e,0xe0,1,1,0xe3,0x19,2,0,2,1}; 
+//  uint8_t data5[12]={8,11,0x5e,0xe0,2,0,0xe3,0x19,2,2,1,1}; 
+//  uint8_t data6[12]={8,11,0x5e,0xe0,2,1,0xe3,0x19,2,2,0,1}; 
+  uint8_t data1[12]={8,11,0xf4,0x09,0,0,0x7b,0x4f,1,2,2,1}; 
+  uint8_t data2[12]={8,11,0xf4,0x09,0,1,0x7b,0x4f,0,2,2,1};    
+  uint8_t data3[12]={8,11,0xf4,0x09,1,0,0x7b,0x4f,2,1,2,1}; 
+  uint8_t data4[12]={8,11,0xf4,0x09,1,1,0x7b,0x4f,2,0,2,1}; 
+  uint8_t data5[12]={8,11,0xf4,0x09,2,0,0x7b,0x4f,2,2,1,1}; 
+  uint8_t data6[12]={8,11,0xf4,0x09,2,1,0x7b,0x4f,2,2,0,1};  
+  uint8_t data7[12]={8,11,0x7b,0x4f,0,0,0xe3,0x19,1,2,2,1}; 
+  uint8_t data8[12]={8,11,0x7b,0x4f,0,1,0xe3,0x19,0,2,2,1};    
+  uint8_t data9[12]={8,11,0x7b,0x4f,1,0,0xe3,0x19,2,1,2,1}; 
+  uint8_t data10[12]={8,11,0x7b,0x4f,1,1,0xe3,0x19,2,0,2,1}; 
+  uint8_t data11[12]={8,11,0x7b,0x4f,2,0,0xe3,0x19,2,2,1,1}; 
+  uint8_t data12[12]={8,11,0x7b,0x4f,2,1,0xe3,0x19,2,2,0,1}; 
 
 
+  MXJ_SendRegisterMessage( 0x9b02, MXJ_REGISTER_FAILED );
+  MXJ_SendRegisterMessage( 0x49f0, MXJ_REGISTER_FAILED );
+
+  
+  build_json();
 	while(1)
 	{
-		static uint8_t i=0;
-		//printf("This is the zbclient process.\n");
-		sleep(1);
-   //usleep(50000);
-
-		
+		//printf("This is the main process.\n");
+		//printf("str=%s\n",build_json());
+   
+		usleep(500000);
+   //sleep(2);
+  // MXJ_GetStateMessage( LIGHT_ID);
+  if(tt == 13)
+    MXJ_GetConfigMessage( 0xf409 );
+    
+   switch(tt)
+   {
+     case 1:send_usart(data1,12);tt++;break;
+     case 2:send_usart(data2,12);tt++;break;
+     case 3:send_usart(data3,12);tt++;break;
+     case 4:send_usart(data4,12);tt++;break;
+     case 5:send_usart(data5,12);tt=13;break;
+     case 6:send_usart(data6,12);tt++;break;
+     case 7:send_usart(data7,12);tt++;break;
+     case 8:send_usart(data8,12);tt++;break;
+     case 9:send_usart(data9,12);tt++;break;
+     case 10:send_usart(data10,12);tt++;break;
+     case 11:send_usart(data11,12);tt++;break;
+     case 12:send_usart(data12,12);tt++;break;
+   }
+    //MXJ_GetStateMessage(0x171f);
+      
 	}
 	
 	//pthread_join(id,NULL);
