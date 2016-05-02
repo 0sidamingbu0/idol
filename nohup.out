@@ -1,0 +1,3855 @@
+re_post[0].type=control_up
+re_post[0].id=64580
+re_post[0].dev_type=0
+re_post[0].idxs=0
+re_post[0].idx=1
+re_post[0].action=1
+re_post[0].value=0
+recieve No: 0
+
+
+=========control_up:0
+str22={"devid":"59056","state1":"1","state2":"1","state3":"1","type":"control_down"}
+re_post[1].type=send_response
+re_post[1].id=31744
+re_post[1].dev_type=0
+re_post[1].idxs=0
+re_post[1].idx=0
+re_post[1].action=100
+re_post[1].value=0
+recieve No: 1
+
+
+str22=
+re_post[2].type=control_up
+re_post[2].id=64580
+re_post[2].dev_type=0
+re_post[2].idxs=0
+re_post[2].idx=1
+re_post[2].action=0
+re_post[2].value=0
+recieve No: 2
+
+
+=========control_up:2
+str22={"devid":"59056","state1":"0","state2":"0","state3":"0","type":"control_down"}
+re_post[3].type=send_response
+re_post[3].id=32000
+re_post[3].dev_type=0
+re_post[3].idxs=0
+re_post[3].idx=0
+re_post[3].action=100
+re_post[3].value=0
+recieve No: 3
+
+
+str22=
+re_post[4].type=control_up
+re_post[4].id=64580
+re_post[4].dev_type=0
+re_post[4].idxs=0
+re_post[4].idx=1
+re_post[4].action=1
+re_post[4].value=0
+recieve No: 4
+
+
+=========control_up:4
+str22={"devid":"59056","state1":"1","state2":"1","state3":"1","type":"control_down"}
+re_post[5].type=send_response
+re_post[5].id=32256
+re_post[5].dev_type=0
+re_post[5].idxs=0
+re_post[5].idx=0
+re_post[5].action=100
+re_post[5].value=0
+recieve No: 5
+
+
+str22=
+re_post[6].type=control_up
+re_post[6].id=64580
+re_post[6].dev_type=0
+re_post[6].idxs=0
+re_post[6].idx=1
+re_post[6].action=0
+re_post[6].value=0
+recieve No: 6
+
+
+=========control_up:6
+str22={"devid":"59056","state1":"0","state2":"0","state3":"0","type":"control_down"}
+re_post[7].type=send_response
+re_post[7].id=32512
+re_post[7].dev_type=0
+re_post[7].idxs=0
+re_post[7].idx=0
+re_post[7].action=100
+re_post[7].value=0
+recieve No: 7
+
+
+str22=
+re_post[8].type=control_up
+re_post[8].id=64580
+re_post[8].dev_type=0
+re_post[8].idxs=0
+re_post[8].idx=1
+re_post[8].action=1
+re_post[8].value=0
+recieve No: 8
+
+
+=========control_up:8
+str22={"devid":"59056","state1":"1","state2":"1","state3":"1","type":"control_down"}
+re_post[9].type=send_response
+re_post[9].id=32768
+re_post[9].dev_type=0
+re_post[9].idxs=0
+re_post[9].idx=0
+re_post[9].action=100
+re_post[9].value=0
+recieve No: 9
+
+
+str22=
+re_post[10].type=control_up
+re_post[10].id=64580
+re_post[10].dev_type=0
+re_post[10].idxs=0
+re_post[10].idx=1
+re_post[10].action=0
+re_post[10].value=0
+recieve No: 10
+
+
+=========control_up:10
+str22={"devid":"59056","state1":"0","state2":"0","state3":"0","type":"control_down"}
+re_post[11].type=send_response
+re_post[11].id=33024
+re_post[11].dev_type=0
+re_post[11].idxs=0
+re_post[11].idx=0
+re_post[11].action=100
+re_post[11].value=0
+recieve No: 11
+
+
+str22=
+re_post[12].type=control_up
+re_post[12].id=48778
+re_post[12].dev_type=0
+re_post[12].idxs=0
+re_post[12].idx=1
+re_post[12].action=1
+re_post[12].value=0
+recieve No: 12
+
+
+=========control_up:12
+str22=
+re_post[13].type=control_up
+re_post[13].id=48778
+re_post[13].dev_type=0
+re_post[13].idxs=0
+re_post[13].idx=1
+re_post[13].action=0
+re_post[13].value=0
+recieve No: 13
+
+
+=========control_up:13
+str22=
+re_post[14].type=control_up
+re_post[14].id=64248
+re_post[14].dev_type=0
+re_post[14].idxs=0
+re_post[14].idx=1
+re_post[14].action=0
+re_post[14].value=0
+recieve No: 14
+
+
+=========control_up:14
+str22=
+re_post[15].type=control_up
+re_post[15].id=64248
+re_post[15].dev_type=0
+re_post[15].idxs=0
+re_post[15].idx=1
+re_post[15].action=1
+re_post[15].value=0
+recieve No: 15
+
+
+=========control_up:15
+str22={"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+re_post[16].type=send_response
+re_post[16].id=33280
+re_post[16].dev_type=0
+re_post[16].idxs=0
+re_post[16].idx=0
+re_post[16].action=100
+re_post[16].value=0
+recieve No: 16
+
+
+str22=
+re_post[17].type=control_up
+re_post[17].id=64248
+re_post[17].dev_type=0
+re_post[17].idxs=0
+re_post[17].idx=1
+re_post[17].action=0
+re_post[17].value=0
+recieve No: 17
+
+
+=========control_up:17
+str22=
+re_post[18].type=control_up
+re_post[18].id=64248
+re_post[18].dev_type=0
+re_post[18].idxs=0
+re_post[18].idx=1
+re_post[18].action=1
+re_post[18].value=0
+recieve No: 18
+
+
+=========control_up:18
+str22={"devid":"30480","sserial test start ...
+
+send:55 aa 04 04 9b 02 00 a5 
+
+send:55 aa 04 04 49 f0 00 41 
+
+recieved:4
+0d 03 7a cd 
+------------------------
+send response
+
+recieved:4
+0d 03 7b cd 
+------------------------
+send response
+
+recieved:13
+18 0c fc 44 00 06 18 0d 0a 00 00 10 01 
+------------------------
+control up
+id:fc44
+action = 1
+
+send:55 aa 00 06 e6 b0 01 01 01 9f 
+id = 59056
+state11 = 1
+state22 = 1
+state33 = 1
+data= {"devid":"59056","state1":"1","state2":"1","state3":"1","type":"control_down"}
+json= { "devid": "59056", "state1": "1", "state2": "1", "state3": "1", "type": "control_down" }
+
+recieved:4
+0d 03 7c 00 
+------------------------
+send response
+
+recieved:13
+18 0c fc 44 00 06 18 0e 0a 00 00 10 00 
+------------------------
+control up
+id:fc44
+action = 0
+
+send:55 aa 00 06 e6 b0 00 00 00 9c 
+id = 59056
+state11 = 0
+state22 = 0
+state33 = 0
+data= {"devid":"59056","state1":"0","state2":"0","state3":"0","type":"control_down"}
+json= { "devid": "59056", "state1": "0", "state2": "0", "state3": "0", "type": "control_down" }
+
+recieved:4
+0d 03 7d 00 
+------------------------
+send response
+
+recieved:13
+18 0c fc 44 00 06 18 0f 0a 00 00 10 01 
+------------------------
+control up
+id:fc44
+action = 1
+
+send:55 aa 00 06 e6 b0 01 01 01 9f 
+id = 59056
+state11 = 1
+state22 = 1
+state33 = 1
+data= {"devid":"59056","state1":"1","state2":"1","state3":"1","type":"control_down"}
+json= { "devid": "59056", "state1": "1", "state2": "1", "state3": "1", "type": "control_down" }
+
+recieved:4
+0d 03 7e 00 
+------------------------
+send response
+
+recieved:13
+18 0c fc 44 00 06 18 10 0a 00 00 10 00 
+------------------------
+control up
+id:fc44
+action = 0
+
+send:55 aa 00 06 e6 b0 00 00 00 9c 
+id = 59056
+state11 = 0
+state22 = 0
+state33 = 0
+data= {"devid":"59056","state1":"0","state2":"0","state3":"0","type":"control_down"}
+json= { "devid": "59056", "state1": "0", "state2": "0", "state3": "0", "type": "control_down" }
+
+recieved:4
+0d 03 7f 00 
+------------------------
+send response
+
+recieved:13
+18 0c fc 44 00 06 18 11 0a 00 00 10 01 
+------------------------
+control up
+id:fc44
+action = 1
+
+send:55 aa 00 06 e6 b0 01 01 01 9f 
+id = 59056
+state11 = 1
+state22 = 1
+state33 = 1
+data= {"devid":"59056","state1":"1","state2":"1","state3":"1","type":"control_down"}
+json= { "devid": "59056", "state1": "1", "state2": "1", "state3": "1", "type": "control_down" }
+
+recieved:4
+0d 03 80 00 
+------------------------
+send response
+
+recieved:13
+18 0c fc 44 00 06 18 12 0a 00 00 10 00 
+------------------------
+control up
+id:fc44
+action = 0
+
+send:55 aa 00 06 e6 b0 00 00 00 9c 
+id = 59056
+state11 = 0
+state22 = 0
+state33 = 0
+data= {"devid":"59056","state1":"0","state2":"0","state3":"0","type":"control_down"}
+json= { "devid": "59056", "state1": "0", "state2": "0", "state3": "0", "type": "control_down" }
+
+recieved:4
+0d 03 81 00 
+------------------------
+send response
+
+recieved:7
+01 06 be 8a 04 01 01 
+------------------------
+
+recieved:7
+01 06 be 8a 04 01 00 
+------------------------
+
+recieved:13
+18 0c fa f8 00 06 18 f2 0a 00 00 10 00 
+------------------------
+control up
+id:faf8
+action = 0
+
+recieved:13
+18 0c fa f8 00 06 18 f3 0a 00 00 10 01 
+------------------------
+control up
+id:faf8
+action = 1
+
+send:55 aa 00 06 77 10 03 03 03 96 
+id = 30480
+state11 = 3
+state22 = 3
+state33 = 3
+data= {"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+json= { "devid": "30480", "state1": "3", "state2": "3", "state3": "3", "type": "control_down" }
+
+recieved:4
+0d 03 82 00 
+------------------------
+send response
+
+recieved:13
+18 0c fa f8 00 06 18 f4 0a 00 00 10 00 
+------------------------
+control up
+id:faf8
+action = 0
+
+recieved:13
+18 0c fa f8 00 06 18 f5 0a 00 00 10 01 
+------------------------
+control up
+id:faf8
+action = 1
+
+send:55 aa 00 06 77 10 03 03 03 96 
+id = 30480
+state11 = 3
+state22 = 3
+state33 = 3
+data= {"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+json= { "devid": "30480", "state1": "3", "state2": "3", "state3": "3", "type": "control_down" }
+
+recieved:4
+0d 03 83 00 
+------------------------
+send response
+
+recieved:13
+18 0c fa f8 00 06 18 f6 0a 00 00 10 00 
+-tate1":"3","state2":"3","state3":"3","type":"control_down"}
+re_post[19].type=send_response
+re_post[19].id=33536
+re_post[19].dev_type=0
+re_post[19].idxs=0
+re_post[19].idx=0
+re_post[19].action=100
+re_post[19].value=0
+recieve No: 19
+
+
+str22=
+re_post[20].type=control_up
+re_post[20].id=64248
+re_post[20].dev_type=0
+re_post[20].idxs=0
+re_post[20].idx=1
+re_post[20].action=0
+re_post[20].value=0
+recieve No: 20
+
+
+=========control_up:20
+str22=
+re_post[21].type=control_up
+re_post[21].id=64248
+re_post[21].dev_type=0
+re_post[21].idxs=0
+re_post[21].idx=1
+re_post[21].action=1
+re_post[21].value=0
+recieve No: 21
+
+
+=========control_up:21
+str22={"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+re_post[22].type=send_response
+re_post[22].id=33792
+re_post[22].dev_type=0
+re_post[22].idxs=0
+re_post[22].idx=0
+re_post[22].action=100
+re_post[22].value=0
+recieve No: 22
+
+
+str22=
+re_post[23].type=control_up
+re_post[23].id=64248
+re_post[23].dev_type=0
+re_post[23].idxs=0
+re_post[23].idx=1
+re_post[23].action=2
+re_post[23].value=0
+recieve No: 23
+
+
+=========control_up:23
+str22={"devid":"65535","state1":"0","state2":"0","state3":"0","type":"control_down"}
+re_post[24].type=send_response
+re_post[24].id=34048
+re_post[24].dev_type=0
+re_post[24].idxs=0
+re_post[24].idx=0
+re_post[24].action=100
+re_post[24].value=0
+recieve No: 24
+
+
+str22=
+re_post[25].type=control_up
+re_post[25].id=64248
+re_post[25].dev_type=0
+re_post[25].idxs=0
+re_post[25].idx=1
+re_post[25].action=0
+re_post[25].value=0
+recieve No: 25
+
+
+=========control_up:25
+str22=
+re_post[26].type=control_up
+re_post[26].id=64248
+re_post[26].dev_type=0
+re_post[26].idxs=0
+re_post[26].idx=1
+re_post[26].action=1
+re_post[26].value=0
+recieve No: 26
+
+
+=========control_up:26
+str22={"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+re_post[27].type=send_response
+re_post[27].id=34304
+re_post[27].dev_type=0
+re_post[27].idxs=0
+re_post[27].idx=0
+re_post[27].action=100
+re_post[27].value=0
+recieve No: 27
+
+
+str22=
+re_post[28].type=control_up
+re_post[28].id=64248
+re_post[28].dev_type=0
+re_post[28].idxs=0
+re_post[28].idx=1
+re_post[28].action=0
+re_post[28].value=0
+recieve No: 28
+
+
+=========control_up:28
+str22=
+re_post[29].type=control_up
+re_post[29].id=64248
+re_post[29].dev_type=0
+re_post[29].idxs=0
+re_post[29].idx=1
+re_post[29].action=1
+re_post[29].value=0
+recieve No: 29
+
+
+=========control_up:29
+str22={"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+re_post[30].type=send_response
+re_post[30].id=34560
+re_post[30].dev_type=0
+re_post[30].idxs=0
+re_post[30].idx=0
+re_post[30].action=100
+re_post[30].value=0
+recieve No: 30
+
+
+str22=
+re_post[31].type=control_up
+re_post[31].id=64248
+re_post[31].dev_type=0
+re_post[31].idxs=0
+re_post[31].idx=1
+re_post[31].action=0
+re_post[31].value=0
+recieve No: 31
+
+
+=========control_up:31
+str22=
+re_post[32].type=control_up
+re_post[32].id=64248
+re_post[32].dev_type=0
+re_post[32].idxs=0
+re_post[32].idx=1
+re_post[32].action=1
+re_post[32].value=0
+recieve No: 32
+
+
+=========control_up:32
+str22={"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+re_post[33].type=send_response
+re_post[33].id=34816
+re_post[33].dev_type=0
+re_post[33].idxs=0
+re_post[33].idx=0
+re_post[33].action=100
+re_post[33].value=0
+recieve No: 33
+
+
+str22=
+re_post[34].type=control_up
+re_post[34].id=64248
+re_post[34].dev_type=0
+re_post[34].idxs=0
+re_post[34].idx=1
+re_post[34].action=0
+re_post[34].value=0
+recieve No: 34
+
+
+=========control_up:34
+str22=
+re_post[35].type=control_up
+re_post[35].id=64248
+re_post[35].dev_type=0
+re_post[35].idxs=0
+re_post[35].idx=1
+re_post[35].action=1
+re_post[35].value=0
+recieve No: 35
+
+
+=========control_up:35
+str22={"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+re_post[36].type=send_response
+re_post[36].id=35072
+re_post[36].dev_type=0
+re_post[36].idxs=0
+re_post[36].idx=0
+re_post[36].action=100
+re_post[36].value=0
+recieve No: 36
+
+
+str22=
+re_post[37].type=control_up
+re_post[37].id=64248
+re_post[37].dev_type=0
+re_post[37].idxs=0
+re_post[37].idx=1
+re_post[37].action=0
+re_post[37].value=-----------------------
+control up
+id:faf8
+action = 0
+
+recieved:13
+18 0c fa f8 00 06 18 f7 0a 00 00 10 01 
+------------------------
+control up
+id:faf8
+action = 1
+
+send:55 aa 00 06 77 10 03 03 03 96 
+id = 30480
+state11 = 3
+state22 = 3
+state33 = 3
+data= {"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+json= { "devid": "30480", "state1": "3", "state2": "3", "state3": "3", "type": "control_down" }
+
+recieved:4
+0d 03 84 00 
+------------------------
+send response
+
+recieved:13
+18 0c fa f8 00 06 18 f8 0a 00 80 20 02 
+------------------------
+control up
+id:faf8
+double tick
+
+send:55 aa 00 06 ff ff 00 00 00 04 
+id = 65535
+state11 = 0
+state22 = 0
+state33 = 0
+data= {"devid":"65535","state1":"0","state2":"0","state3":"0","type":"control_down"}
+json= { "devid": "65535", "state1": "0", "state2": "0", "state3": "0", "type": "control_down" }
+
+recieved:4
+0d 03 85 00 
+------------------------
+send response
+
+recieved:13
+18 0c fa f8 00 06 18 f9 0a 00 00 10 00 
+------------------------
+control up
+id:faf8
+action = 0
+
+recieved:13
+18 0c fa f8 00 06 18 fa 0a 00 00 10 01 
+------------------------
+control up
+id:faf8
+action = 1
+
+send:55 aa 00 06 77 10 03 03 03 96 
+id = 30480
+state11 = 3
+state22 = 3
+state33 = 3
+data= {"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+json= { "devid": "30480", "state1": "3", "state2": "3", "state3": "3", "type": "control_down" }
+
+recieved:4
+0d 03 86 00 
+------------------------
+send response
+
+recieved:13
+18 0c fa f8 00 06 18 fb 0a 00 00 10 00 
+------------------------
+control up
+id:faf8
+action = 0
+
+recieved:13
+18 0c fa f8 00 06 18 fc 0a 00 00 10 01 
+------------------------
+control up
+id:faf8
+action = 1
+
+send:55 aa 00 06 77 10 03 03 03 96 
+id = 30480
+state11 = 3
+state22 = 3
+state33 = 3
+data= {"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+json= { "devid": "30480", "state1": "3", "state2": "3", "state3": "3", "type": "control_down" }
+
+recieved:4
+0d 03 87 00 
+------------------------
+send response
+
+recieved:13
+18 0c fa f8 00 06 18 fd 0a 00 00 10 00 
+------------------------
+control up
+id:faf8
+action = 0
+
+recieved:13
+18 0c fa f8 00 06 18 fe 0a 00 00 10 01 
+------------------------
+control up
+id:faf8
+action = 1
+
+send:55 aa 00 06 77 10 03 03 03 96 
+id = 30480
+state11 = 3
+state22 = 3
+state33 = 3
+data= {"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+json= { "devid": "30480", "state1": "3", "state2": "3", "state3": "3", "type": "control_down" }
+
+recieved:4
+0d 03 88 00 
+------------------------
+send response
+
+recieved:13
+18 0c fa f8 00 06 18 ff 0a 00 00 10 00 
+------------------------
+control up
+id:faf8
+action = 0
+
+recieved:13
+18 0c fa f8 00 06 18 00 0a 00 00 10 01 
+------------------------
+control up
+id:faf8
+action = 1
+
+send:55 aa 00 06 77 10 03 03 03 96 
+id = 30480
+state11 = 3
+state22 = 3
+state33 = 3
+data= {"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+json= { "devid": "30480", "state1": "3", "state2": "3", "state3": "3", "type": "control_down" }
+
+recieved:4
+0d 03 89 00 
+------------------------
+send response
+
+recieved:13
+18 0c fa f8 00 06 18 01 0a 00 00 10 00 
+------------------------
+control up
+id:faf8
+action = 0
+
+recieved:13
+18 0c fa f8 00 06 18 02 0a 00 00 10 01 
+------------------------
+control up
+id:faf8
+action = 1
+
+send:55 aa 00 06 77 10 03 03 03 96 
+id = 30480
+state11 = 3
+state22 = 3
+state33 = 3
+data= {"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+json= { "devid": "30480", "state1": "3", "state2": "3", "state3": "3", "type": "control_down" }
+
+recieved:4
+0d 03 8a 00 
+------------------------
+send response
+
+recieved:13
+18 0c fa f8 00 06 18 03 0a 00 00 10 00 
+------------------------
+control up
+id:faf8
+action = 0
+
+recieved:13
+18 0c fa f8 00 06 18 04 0a 00 00 10 01 
+------------------------
+control up
+id:faf8
+action = 1
+
+send:55 aa 00 06 77 10 03 03 03 96 
+id = 30480
+state11 = 3
+state22 = 3
+state33 = 3
+data= {"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+json= { "devid": "30480", "state1": "3", "state2": "3", "0
+recieve No: 37
+
+
+=========control_up:37
+str22=
+re_post[38].type=control_up
+re_post[38].id=64248
+re_post[38].dev_type=0
+re_post[38].idxs=0
+re_post[38].idx=1
+re_post[38].action=1
+re_post[38].value=0
+recieve No: 38
+
+
+=========control_up:38
+str22={"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+re_post[39].type=send_response
+re_post[39].id=35328
+re_post[39].dev_type=0
+re_post[39].idxs=0
+re_post[39].idx=0
+re_post[39].action=100
+re_post[39].value=0
+recieve No: 39
+
+
+str22=
+re_post[40].type=control_up
+re_post[40].id=64248
+re_post[40].dev_type=0
+re_post[40].idxs=0
+re_post[40].idx=1
+re_post[40].action=0
+re_post[40].value=0
+recieve No: 40
+
+
+=========control_up:40
+str22=
+re_post[41].type=control_up
+re_post[41].id=64248
+re_post[41].dev_type=0
+re_post[41].idxs=0
+re_post[41].idx=1
+re_post[41].action=1
+re_post[41].value=0
+recieve No: 41
+
+
+=========control_up:41
+str22={"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+re_post[42].type=send_response
+re_post[42].id=35584
+re_post[42].dev_type=0
+re_post[42].idxs=0
+re_post[42].idx=0
+re_post[42].action=100
+re_post[42].value=0
+recieve No: 42
+
+
+str22=
+re_post[43].type=control_up
+re_post[43].id=64248
+re_post[43].dev_type=0
+re_post[43].idxs=0
+re_post[43].idx=1
+re_post[43].action=0
+re_post[43].value=0
+recieve No: 43
+
+
+=========control_up:43
+str22=
+re_post[44].type=control_up
+re_post[44].id=64248
+re_post[44].dev_type=0
+re_post[44].idxs=0
+re_post[44].idx=1
+re_post[44].action=1
+re_post[44].value=0
+recieve No: 44
+
+
+=========control_up:44
+str22={"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+re_post[45].type=send_response
+re_post[45].id=35840
+re_post[45].dev_type=0
+re_post[45].idxs=0
+re_post[45].idx=0
+re_post[45].action=100
+re_post[45].value=0
+recieve No: 45
+
+
+str22=
+re_post[46].type=control_up
+re_post[46].id=64248
+re_post[46].dev_type=0
+re_post[46].idxs=0
+re_post[46].idx=1
+re_post[46].action=0
+re_post[46].value=0
+recieve No: 46
+
+
+=========control_up:46
+str22=
+re_post[47].type=control_up
+re_post[47].id=64248
+re_post[47].dev_type=0
+re_post[47].idxs=0
+re_post[47].idx=1
+re_post[47].action=1
+re_post[47].value=0
+recieve No: 47
+
+
+=========control_up:47
+str22={"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+re_post[48].type=send_response
+re_post[48].id=36096
+re_post[48].dev_type=0
+re_post[48].idxs=0
+re_post[48].idx=0
+re_post[48].action=100
+re_post[48].value=0
+recieve No: 48
+
+
+str22=
+re_post[49].type=control_up
+re_post[49].id=64248
+re_post[49].dev_type=0
+re_post[49].idxs=0
+re_post[49].idx=1
+re_post[49].action=0
+re_post[49].value=0
+recieve No: 49
+
+
+=========control_up:49
+str22=
+re_post[50].type=control_up
+re_post[50].id=64248
+re_post[50].dev_type=0
+re_post[50].idxs=0
+re_post[50].idx=1
+re_post[50].action=1
+re_post[50].value=0
+recieve No: 50
+
+
+=========control_up:50
+str22={"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+re_post[51].type=send_response
+re_post[51].id=36352
+re_post[51].dev_type=0
+re_post[51].idxs=0
+re_post[51].idx=0
+re_post[51].action=100
+re_post[51].value=0
+recieve No: 51
+
+
+str22=
+re_post[52].type=control_up
+re_post[52].id=64248
+re_post[52].dev_type=0
+re_post[52].idxs=0
+re_post[52].idx=1
+re_post[52].action=0
+re_post[52].value=0
+recieve No: 52
+
+
+=========control_up:52
+str22=
+re_post[53].type=control_up
+re_post[53].id=64248
+re_post[53].dev_type=0
+re_post[53].idxs=0
+re_post[53].idx=1
+re_post[53].action=1
+re_post[53].value=0
+recieve No: 53
+
+
+=========control_up:53
+str22={"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+re_post[54].type=send_response
+re_post[54].id=36608
+re_post[54].dev_type=0
+re_post[54].idxs=0
+re_post[54].idx=0
+re_post[54].action=100
+re_post[54].value=0
+recieve No: 54
+
+
+str22=
+re_post[55].type=control_up
+re_post[55].id=64248
+re_post[55].dev_type=0
+re_post[55].idxs=0
+re_post[55].idx=1
+re_post[55].action=0
+re_post[55].value=0
+recieve No: 55
+
+
+=========control_up:55
+str22=
+re_post[56].type=control_up
+re_post[56].id=64248
+re_post[56].dev_type=0
+re_post[56].idxs=0
+re_post[56].idx=1
+re_post[56].action=1
+re_post[56]state3": "3", "type": "control_down" }
+
+recieved:4
+0d 03 8b 00 
+------------------------
+send response
+
+recieved:13
+18 0c fa f8 00 06 18 05 0a 00 00 10 00 
+------------------------
+control up
+id:faf8
+action = 0
+
+recieved:13
+18 0c fa f8 00 06 18 06 0a 00 00 10 01 
+------------------------
+control up
+id:faf8
+action = 1
+
+send:55 aa 00 06 77 10 03 03 03 96 
+id = 30480
+state11 = 3
+state22 = 3
+state33 = 3
+data= {"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+json= { "devid": "30480", "state1": "3", "state2": "3", "state3": "3", "type": "control_down" }
+
+recieved:4
+0d 03 8c 00 
+------------------------
+send response
+
+recieved:13
+18 0c fa f8 00 06 18 07 0a 00 00 10 00 
+------------------------
+control up
+id:faf8
+action = 0
+
+recieved:13
+18 0c fa f8 00 06 18 08 0a 00 00 10 01 
+------------------------
+control up
+id:faf8
+action = 1
+
+send:55 aa 00 06 77 10 03 03 03 96 
+id = 30480
+state11 = 3
+state22 = 3
+state33 = 3
+data= {"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+json= { "devid": "30480", "state1": "3", "state2": "3", "state3": "3", "type": "control_down" }
+
+recieved:4
+0d 03 8d 00 
+------------------------
+send response
+
+recieved:13
+18 0c fa f8 00 06 18 09 0a 00 00 10 00 
+------------------------
+control up
+id:faf8
+action = 0
+
+recieved:13
+18 0c fa f8 00 06 18 0a 0a 00 00 10 01 
+------------------------
+control up
+id:faf8
+action = 1
+
+send:55 aa 00 06 77 10 03 03 03 96 
+id = 30480
+state11 = 3
+state22 = 3
+state33 = 3
+data= {"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+json= { "devid": "30480", "state1": "3", "state2": "3", "state3": "3", "type": "control_down" }
+
+recieved:4
+0d 03 8e 00 
+------------------------
+send response
+
+recieved:13
+18 0c fa f8 00 06 18 0b 0a 00 00 10 00 
+------------------------
+control up
+id:faf8
+action = 0
+
+recieved:13
+18 0c fa f8 00 06 18 0c 0a 00 00 10 01 
+------------------------
+control up
+id:faf8
+action = 1
+
+send:55 aa 00 06 77 10 03 03 03 96 
+id = 30480
+state11 = 3
+state22 = 3
+state33 = 3
+data= {"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+json= { "devid": "30480", "state1": "3", "state2": "3", "state3": "3", "type": "control_down" }
+
+recieved:4
+0d 03 8f 00 
+------------------------
+send response
+
+recieved:13
+18 0c fa f8 00 06 18 0d 0a 00 00 10 00 
+------------------------
+control up
+id:faf8
+action = 0
+
+recieved:13
+18 0c fa f8 00 06 18 0e 0a 00 00 10 01 
+------------------------
+control up
+id:faf8
+action = 1
+
+send:55 aa 00 06 77 10 03 03 03 96 
+id = 30480
+state11 = 3
+state22 = 3
+state33 = 3
+data= {"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+json= { "devid": "30480", "state1": "3", "state2": "3", "state3": "3", "type": "control_down" }
+
+recieved:4
+0d 03 90 00 
+------------------------
+send response
+
+recieved:13
+18 0c fa f8 00 06 18 0f 0a 00 80 20 02 
+------------------------
+control up
+id:faf8
+double tick
+
+send:55 aa 00 06 ff ff 00 00 00 04 
+id = 65535
+state11 = 0
+state22 = 0
+state33 = 0
+data= {"devid":"65535","state1":"0","state2":"0","state3":"0","type":"control_down"}
+json= { "devid": "65535", "state1": "0", "state2": "0", "state3": "0", "type": "control_down" }
+
+recieved:4
+0d 03 91 00 
+------------------------
+send response
+
+recieved:13
+18 0c fc 44 00 06 18 13 0a 00 00 10 01 
+------------------------
+control up
+id:fc44
+action = 1
+
+send:55 aa 00 06 e6 b0 01 01 01 9f 
+id = 59056
+state11 = 1
+state22 = 1
+state33 = 1
+data= {"devid":"59056","state1":"1","state2":"1","state3":"1","type":"control_down"}
+json= { "devid": "59056", "state1": "1", "state2": "1", "state3": "1", "type": "control_down" }
+
+recieved:4
+0d 03 92 00 
+------------------------
+send response
+
+recieved:13
+18 0c fc 44 00 06 18 14 0a 00 00 10 00 
+------------------------
+control up
+id:fc44
+action = 0
+
+send:55 aa 00 06 e6 b0 00 00 00 9c 
+id = 59056
+state11 = 0
+state22 = 0
+state33 = 0
+data= {"devid":"59056","state1":"0","state2":"0","state3":"0","type":"control_down"}
+json= { "devid": "59056", "state1": "0", "state2": "0", "state3": "0", "type": "control_down" }
+
+recieved:4
+0d 03 93.value=0
+recieve No: 56
+
+
+=========control_up:56
+str22={"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+re_post[57].type=send_response
+re_post[57].id=36864
+re_post[57].dev_type=0
+re_post[57].idxs=0
+re_post[57].idx=0
+re_post[57].action=100
+re_post[57].value=0
+recieve No: 57
+
+
+str22=
+re_post[58].type=control_up
+re_post[58].id=64248
+re_post[58].dev_type=0
+re_post[58].idxs=0
+re_post[58].idx=1
+re_post[58].action=2
+re_post[58].value=0
+recieve No: 58
+
+
+=========control_up:58
+str22={"devid":"65535","state1":"0","state2":"0","state3":"0","type":"control_down"}
+re_post[59].type=send_response
+re_post[59].id=37120
+re_post[59].dev_type=0
+re_post[59].idxs=0
+re_post[59].idx=0
+re_post[59].action=100
+re_post[59].value=0
+recieve No: 59
+
+
+str22=
+re_post[60].type=control_up
+re_post[60].id=64580
+re_post[60].dev_type=0
+re_post[60].idxs=0
+re_post[60].idx=1
+re_post[60].action=1
+re_post[60].value=0
+recieve No: 60
+
+
+=========control_up:60
+str22={"devid":"59056","state1":"1","state2":"1","state3":"1","type":"control_down"}
+re_post[61].type=send_response
+re_post[61].id=37376
+re_post[61].dev_type=0
+re_post[61].idxs=0
+re_post[61].idx=0
+re_post[61].action=100
+re_post[61].value=0
+recieve No: 61
+
+
+str22=
+re_post[62].type=control_up
+re_post[62].id=64580
+re_post[62].dev_type=0
+re_post[62].idxs=0
+re_post[62].idx=1
+re_post[62].action=0
+re_post[62].value=0
+recieve No: 62
+
+
+=========control_up:62
+str22={"devid":"59056","state1":"0","state2":"0","state3":"0","type":"control_down"}
+re_post[63].type=send_response
+re_post[63].id=37632
+re_post[63].dev_type=0
+re_post[63].idxs=0
+re_post[63].idx=0
+re_post[63].action=100
+re_post[63].value=0
+recieve No: 63
+
+
+str22=
+re_post[64].type=control_up
+re_post[64].id=64580
+re_post[64].dev_type=0
+re_post[64].idxs=0
+re_post[64].idx=1
+re_post[64].action=1
+re_post[64].value=0
+recieve No: 64
+
+
+=========control_up:64
+str22={"devid":"59056","state1":"1","state2":"1","state3":"1","type":"control_down"}
+re_post[65].type=send_response
+re_post[65].id=37888
+re_post[65].dev_type=0
+re_post[65].idxs=0
+re_post[65].idx=0
+re_post[65].action=100
+re_post[65].value=0
+recieve No: 65
+
+
+str22=
+re_post[66].type=control_up
+re_post[66].id=64580
+re_post[66].dev_type=0
+re_post[66].idxs=0
+re_post[66].idx=1
+re_post[66].action=0
+re_post[66].value=0
+recieve No: 66
+
+
+=========control_up:66
+str22={"devid":"59056","state1":"0","state2":"0","state3":"0","type":"control_down"}
+re_post[67].type=send_response
+re_post[67].id=38144
+re_post[67].dev_type=0
+re_post[67].idxs=0
+re_post[67].idx=0
+re_post[67].action=100
+re_post[67].value=0
+recieve No: 67
+
+
+str22=
+re_post[68].type=control_up
+re_post[68].id=64580
+re_post[68].dev_type=0
+re_post[68].idxs=0
+re_post[68].idx=1
+re_post[68].action=1
+re_post[68].value=0
+recieve No: 68
+
+
+=========control_up:68
+str22={"devid":"59056","state1":"1","state2":"1","state3":"1","type":"control_down"}
+re_post[69].type=send_response
+re_post[69].id=38400
+re_post[69].dev_type=0
+re_post[69].idxs=0
+re_post[69].idx=0
+re_post[69].action=100
+re_post[69].value=0
+recieve No: 69
+
+
+str22=
+re_post[70].type=control_up
+re_post[70].id=64580
+re_post[70].dev_type=0
+re_post[70].idxs=0
+re_post[70].idx=1
+re_post[70].action=0
+re_post[70].value=0
+recieve No: 70
+
+
+=========control_up:70
+str22={"devid":"59056","state1":"0","state2":"0","state3":"0","type":"control_down"}
+re_post[71].type=send_response
+re_post[71].id=38656
+re_post[71].dev_type=0
+re_post[71].idxs=0
+re_post[71].idx=0
+re_post[71].action=100
+re_post[71].value=0
+recieve No: 71
+
+
+str22=
+re_post[72].type=control_up
+re_post[72].id=64580
+re_post[72].dev_type=0
+re_post[72].idxs=0
+re_post[72].idx=1
+re_post[72].action=1
+re_post[72].value=0
+recieve No: 72
+
+
+=========control_up:72
+str22={"devid":"59056","state1":"1","state2":"1","state3":"1","type":"control_down"}
+re_post[73].type=send_response
+re_post[73].id=38912
+re_post[73].dev_type=0
+re_post[73].idxs=0
+re_post[73].idx=0
+re_post[73].action=100
+re_post[73].value=0
+recieve No: 73
+
+
+str22=
+re_post[74].type=control_up
+re_post[74].id=64580
+re_post[74].dev_type=0
+re_post[74].idxs=0
+re_post[74].idx=1
+re_post[74].action=0
+re_post[74].value=0
+r 00 
+------------------------
+send response
+
+recieved:13
+18 0c fc 44 00 06 18 15 0a 00 00 10 01 
+------------------------
+control up
+id:fc44
+action = 1
+
+send:55 aa 00 06 e6 b0 01 01 01 9f 
+id = 59056
+state11 = 1
+state22 = 1
+state33 = 1
+data= {"devid":"59056","state1":"1","state2":"1","state3":"1","type":"control_down"}
+json= { "devid": "59056", "state1": "1", "state2": "1", "state3": "1", "type": "control_down" }
+
+recieved:4
+0d 03 94 00 
+------------------------
+send response
+
+recieved:13
+18 0c fc 44 00 06 18 16 0a 00 00 10 00 
+------------------------
+control up
+id:fc44
+action = 0
+
+send:55 aa 00 06 e6 b0 00 00 00 9c 
+id = 59056
+state11 = 0
+state22 = 0
+state33 = 0
+data= {"devid":"59056","state1":"0","state2":"0","state3":"0","type":"control_down"}
+json= { "devid": "59056", "state1": "0", "state2": "0", "state3": "0", "type": "control_down" }
+
+recieved:4
+0d 03 95 00 
+------------------------
+send response
+
+recieved:13
+18 0c fc 44 00 06 18 17 0a 00 00 10 01 
+------------------------
+control up
+id:fc44
+action = 1
+
+send:55 aa 00 06 e6 b0 01 01 01 9f 
+id = 59056
+state11 = 1
+state22 = 1
+state33 = 1
+data= {"devid":"59056","state1":"1","state2":"1","state3":"1","type":"control_down"}
+json= { "devid": "59056", "state1": "1", "state2": "1", "state3": "1", "type": "control_down" }
+
+recieved:4
+0d 03 96 00 
+------------------------
+send response
+
+recieved:13
+18 0c fc 44 00 06 18 18 0a 00 00 10 00 
+------------------------
+control up
+id:fc44
+action = 0
+
+send:55 aa 00 06 e6 b0 00 00 00 9c 
+id = 59056
+state11 = 0
+state22 = 0
+state33 = 0
+data= {"devid":"59056","state1":"0","state2":"0","state3":"0","type":"control_down"}
+json= { "devid": "59056", "state1": "0", "state2": "0", "state3": "0", "type": "control_down" }
+
+recieved:4
+0d 03 97 00 
+------------------------
+send response
+
+recieved:13
+18 0c fc 44 00 06 18 19 0a 00 00 10 01 
+------------------------
+control up
+id:fc44
+action = 1
+
+send:55 aa 00 06 e6 b0 01 01 01 9f 
+id = 59056
+state11 = 1
+state22 = 1
+state33 = 1
+data= {"devid":"59056","state1":"1","state2":"1","state3":"1","type":"control_down"}
+json= { "devid": "59056", "state1": "1", "state2": "1", "state3": "1", "type": "control_down" }
+
+recieved:4
+0d 03 98 00 
+------------------------
+send response
+
+recieved:13
+18 0c fc 44 00 06 18 1a 0a 00 00 10 00 
+------------------------
+control up
+id:fc44
+action = 0
+
+send:55 aa 00 06 e6 b0 00 00 00 9c 
+id = 59056
+state11 = 0
+state22 = 0
+state33 = 0
+data= {"devid":"59056","state1":"0","state2":"0","state3":"0","type":"control_down"}
+json= { "devid": "59056", "state1": "0", "state2": "0", "state3": "0", "type": "control_down" }
+
+recieved:4
+0d 03 99 00 
+------------------------
+send response
+
+recieved:13
+18 0c fc 44 00 06 18 1b 0a 00 00 10 01 
+------------------------
+control up
+id:fc44
+action = 1
+
+send:55 aa 00 06 e6 b0 01 01 01 9f 
+id = 59056
+state11 = 1
+state22 = 1
+state33 = 1
+data= {"devid":"59056","state1":"1","state2":"1","state3":"1","type":"control_down"}
+json= { "devid": "59056", "state1": "1", "state2": "1", "state3": "1", "type": "control_down" }
+
+recieved:4
+0d 03 9a 00 
+------------------------
+send response
+
+recieved:13
+18 0c fc 44 00 06 18 1c 0a 00 00 10 00 
+------------------------
+control up
+id:fc44
+action = 0
+
+send:55 aa 00 06 e6 b0 00 00 00 9c 
+id = 59056
+state11 = 0
+state22 = 0
+state33 = 0
+data= {"devid":"59056","state1":"0","state2":"0","state3":"0","type":"control_down"}
+json= { "devid": "59056", "state1": "0", "state2": "0", "state3": "0", "type": "control_down" }
+
+recieved:4
+0d 03 9b 00 
+------------------------
+send response
+
+recieved:13
+18 0c fa f8 00 06 18 10 0a 00 00 10 00 
+------------------------
+control up
+id:faf8
+action = 0
+
+recieved:13
+18 0c fa f8 00 06 18 11 0a 00 00 10 01 
+------------------------
+control up
+id:faf8
+action = 1
+
+send:55 aa 00 06 77 10 03 03 03 96 
+id = 30480
+state11 = 3
+state22 = 3
+state33 = 3
+data= {"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+json= { "devid": "30480", "state1": "3", "state2": "3", "state3": "3", "type": "control_down" }
+
+recieved:4
+0d 03 9c 00 
+------------------------
+send response
+
+recieved:1ecieve No: 74
+
+
+=========control_up:74
+str22={"devid":"59056","state1":"0","state2":"0","state3":"0","type":"control_down"}
+re_post[75].type=send_response
+re_post[75].id=39168
+re_post[75].dev_type=0
+re_post[75].idxs=0
+re_post[75].idx=0
+re_post[75].action=100
+re_post[75].value=0
+recieve No: 75
+
+
+str22=
+re_post[76].type=control_up
+re_post[76].id=64580
+re_post[76].dev_type=0
+re_post[76].idxs=0
+re_post[76].idx=1
+re_post[76].action=1
+re_post[76].value=0
+recieve No: 76
+
+
+=========control_up:76
+str22={"devid":"59056","state1":"1","state2":"1","state3":"1","type":"control_down"}
+re_post[77].type=send_response
+re_post[77].id=39424
+re_post[77].dev_type=0
+re_post[77].idxs=0
+re_post[77].idx=0
+re_post[77].action=100
+re_post[77].value=0
+recieve No: 77
+
+
+str22=
+re_post[78].type=control_up
+re_post[78].id=64580
+re_post[78].dev_type=0
+re_post[78].idxs=0
+re_post[78].idx=1
+re_post[78].action=0
+re_post[78].value=0
+recieve No: 78
+
+
+=========control_up:78
+str22={"devid":"59056","state1":"0","state2":"0","state3":"0","type":"control_down"}
+re_post[79].type=send_response
+re_post[79].id=39680
+re_post[79].dev_type=0
+re_post[79].idxs=0
+re_post[79].idx=0
+re_post[79].action=100
+re_post[79].value=0
+recieve No: 79
+
+
+str22=
+re_post[80].type=control_up
+re_post[80].id=64248
+re_post[80].dev_type=0
+re_post[80].idxs=0
+re_post[80].idx=1
+re_post[80].action=0
+re_post[80].value=0
+recieve No: 80
+
+
+=========control_up:80
+str22=
+re_post[81].type=control_up
+re_post[81].id=64248
+re_post[81].dev_type=0
+re_post[81].idxs=0
+re_post[81].idx=1
+re_post[81].action=1
+re_post[81].value=0
+recieve No: 81
+
+
+=========control_up:81
+str22={"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+re_post[82].type=send_response
+re_post[82].id=39936
+re_post[82].dev_type=0
+re_post[82].idxs=0
+re_post[82].idx=0
+re_post[82].action=100
+re_post[82].value=0
+recieve No: 82
+
+
+str22=
+re_post[83].type=control_up
+re_post[83].id=64248
+re_post[83].dev_type=0
+re_post[83].idxs=0
+re_post[83].idx=1
+re_post[83].action=0
+re_post[83].value=0
+recieve No: 83
+
+
+=========control_up:83
+str22=
+re_post[84].type=control_up
+re_post[84].id=64248
+re_post[84].dev_type=0
+re_post[84].idxs=0
+re_post[84].idx=1
+re_post[84].action=1
+re_post[84].value=0
+recieve No: 84
+
+
+=========control_up:84
+str22={"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+re_post[85].type=send_response
+re_post[85].id=40192
+re_post[85].dev_type=0
+re_post[85].idxs=0
+re_post[85].idx=0
+re_post[85].action=100
+re_post[85].value=0
+recieve No: 85
+
+
+str22=
+re_post[86].type=control_up
+re_post[86].id=64248
+re_post[86].dev_type=0
+re_post[86].idxs=0
+re_post[86].idx=1
+re_post[86].action=0
+re_post[86].value=0
+recieve No: 86
+
+
+=========control_up:86
+str22=
+re_post[87].type=control_up
+re_post[87].id=64248
+re_post[87].dev_type=0
+re_post[87].idxs=0
+re_post[87].idx=1
+re_post[87].action=1
+re_post[87].value=0
+recieve No: 87
+
+
+=========control_up:87
+str22={"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+re_post[88].type=send_response
+re_post[88].id=40448
+re_post[88].dev_type=0
+re_post[88].idxs=0
+re_post[88].idx=0
+re_post[88].action=100
+re_post[88].value=0
+recieve No: 88
+
+
+str22=
+re_post[89].type=control_up
+re_post[89].id=64248
+re_post[89].dev_type=0
+re_post[89].idxs=0
+re_post[89].idx=1
+re_post[89].action=0
+re_post[89].value=0
+recieve No: 89
+
+
+=========control_up:89
+str22=
+re_post[90].type=control_up
+re_post[90].id=64248
+re_post[90].dev_type=0
+re_post[90].idxs=0
+re_post[90].idx=1
+re_post[90].action=1
+re_post[90].value=0
+recieve No: 90
+
+
+=========control_up:90
+str22={"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+re_post[91].type=send_response
+re_post[91].id=40704
+re_post[91].dev_type=0
+re_post[91].idxs=0
+re_post[91].idx=0
+re_post[91].action=100
+re_post[91].value=0
+recieve No: 91
+
+
+str22=
+re_post[92].type=control_up
+re_post[92].id=64248
+re_post[92].dev_type=0
+re_post[92].idxs=0
+re_post[92].idx=1
+re_post[92].action=0
+re_post[92].value=0
+recieve No: 92
+
+
+=========control_up:92
+str22=
+re_post[93].type=control_up
+re_post[93].id=64248
+re_post[93].dev_type=0
+re_post[93].3
+18 0c fa f8 00 06 18 12 0a 00 00 10 00 
+------------------------
+control up
+id:faf8
+action = 0
+
+recieved:13
+18 0c fa f8 00 06 18 13 0a 00 00 10 01 
+------------------------
+control up
+id:faf8
+action = 1
+
+send:55 aa 00 06 77 10 03 03 03 96 
+id = 30480
+state11 = 3
+state22 = 3
+state33 = 3
+data= {"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+json= { "devid": "30480", "state1": "3", "state2": "3", "state3": "3", "type": "control_down" }
+
+recieved:4
+0d 03 9d 00 
+------------------------
+send response
+
+recieved:13
+18 0c fa f8 00 06 18 14 0a 00 00 10 00 
+------------------------
+control up
+id:faf8
+action = 0
+
+recieved:13
+18 0c fa f8 00 06 18 15 0a 00 00 10 01 
+------------------------
+control up
+id:faf8
+action = 1
+
+send:55 aa 00 06 77 10 03 03 03 96 
+id = 30480
+state11 = 3
+state22 = 3
+state33 = 3
+data= {"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+json= { "devid": "30480", "state1": "3", "state2": "3", "state3": "3", "type": "control_down" }
+
+recieved:4
+0d 03 9e 00 
+------------------------
+send response
+
+recieved:13
+18 0c fa f8 00 06 18 16 0a 00 00 10 00 
+------------------------
+control up
+id:faf8
+action = 0
+
+recieved:13
+18 0c fa f8 00 06 18 17 0a 00 00 10 01 
+------------------------
+control up
+id:faf8
+action = 1
+
+send:55 aa 00 06 77 10 03 03 03 96 
+id = 30480
+state11 = 3
+state22 = 3
+state33 = 3
+data= {"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+json= { "devid": "30480", "state1": "3", "state2": "3", "state3": "3", "type": "control_down" }
+
+recieved:4
+0d 03 9f 00 
+------------------------
+send response
+
+recieved:13
+18 0c fa f8 00 06 18 18 0a 00 00 10 00 
+------------------------
+control up
+id:faf8
+action = 0
+
+recieved:13
+18 0c fa f8 00 06 18 19 0a 00 00 10 01 
+------------------------
+control up
+id:faf8
+action = 1
+
+send:55 aa 00 06 77 10 03 03 03 96 
+id = 30480
+state11 = 3
+state22 = 3
+state33 = 3
+data= {"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+json= { "devid": "30480", "state1": "3", "state2": "3", "state3": "3", "type": "control_down" }
+
+recieved:4
+0d 03 a0 00 
+------------------------
+send response
+
+recieved:13
+18 0c fa f8 00 06 18 1a 0a 00 00 10 00 
+------------------------
+control up
+id:faf8
+action = 0
+
+recieved:13
+18 0c fa f8 00 06 18 1b 0a 00 00 10 01 
+------------------------
+control up
+id:faf8
+action = 1
+
+send:55 aa 00 06 77 10 03 03 03 96 
+id = 30480
+state11 = 3
+state22 = 3
+state33 = 3
+data= {"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+json= { "devid": "30480", "state1": "3", "state2": "3", "state3": "3", "type": "control_down" }
+
+recieved:4
+0d 03 a1 00 
+------------------------
+send response
+
+recieved:13
+18 0c fa f8 00 06 18 1c 0a 00 00 10 00 
+------------------------
+control up
+id:faf8
+action = 0
+
+recieved:13
+18 0c fa f8 00 06 18 1d 0a 00 00 10 01 
+------------------------
+control up
+id:faf8
+action = 1
+
+send:55 aa 00 06 77 10 03 03 03 96 
+id = 30480
+state11 = 3
+state22 = 3
+state33 = 3
+data= {"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+json= { "devid": "30480", "state1": "3", "state2": "3", "state3": "3", "type": "control_down" }
+
+recieved:4
+0d 03 a2 00 
+------------------------
+send response
+
+recieved:13
+18 0c fa f8 00 06 18 1e 0a 00 00 10 00 
+------------------------
+control up
+id:faf8
+action = 0
+
+recieved:13
+18 0c fa f8 00 06 18 1f 0a 00 00 10 01 
+------------------------
+control up
+id:faf8
+action = 1
+
+send:55 aa 00 06 77 10 03 03 03 96 
+id = 30480
+state11 = 3
+state22 = 3
+state33 = 3
+data= {"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+json= { "devid": "30480", "state1": "3", "state2": "3", "state3": "3", "type": "control_down" }
+
+recieved:4
+0d 03 a3 00 
+------------------------
+send response
+
+recieved:13
+18 0c fa f8 00 06 18 20 0a 00 00 10 00 
+------------------------
+control up
+id:faf8
+action = 0
+
+recieved:13
+18 0c fa f8 00 06 18 21 0a 00 00 10 01 
+------------------------
+control up
+id:faf8
+action = 1
+
+send:55 aa 00 06 77 10 03 03 03 96 
+id = 30480
+state11 = 3
+state22 = 3
+statidxs=0
+re_post[93].idx=1
+re_post[93].action=1
+re_post[93].value=0
+recieve No: 93
+
+
+=========control_up:93
+str22={"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+re_post[94].type=send_response
+re_post[94].id=40960
+re_post[94].dev_type=0
+re_post[94].idxs=0
+re_post[94].idx=0
+re_post[94].action=100
+re_post[94].value=0
+recieve No: 94
+
+
+str22=
+re_post[95].type=control_up
+re_post[95].id=64248
+re_post[95].dev_type=0
+re_post[95].idxs=0
+re_post[95].idx=1
+re_post[95].action=0
+re_post[95].value=0
+recieve No: 95
+
+
+=========control_up:95
+str22=
+re_post[96].type=control_up
+re_post[96].id=64248
+re_post[96].dev_type=0
+re_post[96].idxs=0
+re_post[96].idx=1
+re_post[96].action=1
+re_post[96].value=0
+recieve No: 96
+
+
+=========control_up:96
+str22={"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+re_post[97].type=send_response
+re_post[97].id=41216
+re_post[97].dev_type=0
+re_post[97].idxs=0
+re_post[97].idx=0
+re_post[97].action=100
+re_post[97].value=0
+recieve No: 97
+
+
+str22=
+re_post[98].type=control_up
+re_post[98].id=64248
+re_post[98].dev_type=0
+re_post[98].idxs=0
+re_post[98].idx=1
+re_post[98].action=0
+re_post[98].value=0
+recieve No: 98
+
+
+=========control_up:98
+str22=
+re_post[99].type=control_up
+re_post[99].id=64248
+re_post[99].dev_type=0
+re_post[99].idxs=0
+re_post[99].idx=1
+re_post[99].action=1
+re_post[99].value=0
+recieve No: 99
+
+
+=========control_up:99
+str22={"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+re_post[100].type=send_response
+re_post[100].id=41472
+re_post[100].dev_type=0
+re_post[100].idxs=0
+re_post[100].idx=0
+re_post[100].action=100
+re_post[100].value=0
+recieve No: 100
+
+
+str22=
+re_post[101].type=control_up
+re_post[101].id=64248
+re_post[101].dev_type=0
+re_post[101].idxs=0
+re_post[101].idx=1
+re_post[101].action=0
+re_post[101].value=0
+recieve No: 101
+
+
+=========control_up:101
+str22=
+re_post[102].type=control_up
+re_post[102].id=64248
+re_post[102].dev_type=0
+re_post[102].idxs=0
+re_post[102].idx=1
+re_post[102].action=1
+re_post[102].value=0
+recieve No: 102
+
+
+=========control_up:102
+str22={"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+re_post[103].type=send_response
+re_post[103].id=41728
+re_post[103].dev_type=0
+re_post[103].idxs=0
+re_post[103].idx=0
+re_post[103].action=100
+re_post[103].value=0
+recieve No: 103
+
+
+str22=
+re_post[104].type=control_up
+re_post[104].id=64248
+re_post[104].dev_type=0
+re_post[104].idxs=0
+re_post[104].idx=1
+re_post[104].action=0
+re_post[104].value=0
+recieve No: 104
+
+
+=========control_up:104
+str22=
+re_post[105].type=control_up
+re_post[105].id=64248
+re_post[105].dev_type=0
+re_post[105].idxs=0
+re_post[105].idx=1
+re_post[105].action=1
+re_post[105].value=0
+recieve No: 105
+
+
+=========control_up:105
+str22={"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+re_post[106].type=send_response
+re_post[106].id=41984
+re_post[106].dev_type=0
+re_post[106].idxs=0
+re_post[106].idx=0
+re_post[106].action=100
+re_post[106].value=0
+recieve No: 106
+
+
+str22=
+re_post[107].type=control_up
+re_post[107].id=64248
+re_post[107].dev_type=0
+re_post[107].idxs=0
+re_post[107].idx=1
+re_post[107].action=0
+re_post[107].value=0
+recieve No: 107
+
+
+=========control_up:107
+str22=
+re_post[108].type=control_up
+re_post[108].id=64248
+re_post[108].dev_type=0
+re_post[108].idxs=0
+re_post[108].idx=1
+re_post[108].action=1
+re_post[108].value=0
+recieve No: 108
+
+
+=========control_up:108
+str22={"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+re_post[109].type=send_response
+re_post[109].id=42240
+re_post[109].dev_type=0
+re_post[109].idxs=0
+re_post[109].idx=0
+re_post[109].action=100
+re_post[109].value=0
+recieve No: 109
+
+
+str22=
+re_post[110].type=control_up
+re_post[110].id=22144
+re_post[110].dev_type=0
+re_post[110].idxs=0
+re_post[110].idx=1
+re_post[110].action=1
+re_post[110].value=0
+recieve No: 110
+
+
+=========control_up:110
+str22=
+re_post[111].type=control_up
+re_post[111].id=22144
+re_post[111].dev_type=0
+re_post[111].idxs=0
+re_post[111].idx=2
+re_post[111].action=1
+re_post[111].value=0
+recieve No: 111
+
+
+====e33 = 3
+data= {"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+json= { "devid": "30480", "state1": "3", "state2": "3", "state3": "3", "type": "control_down" }
+
+recieved:4
+0d 03 a4 00 
+------------------------
+send response
+
+recieved:13
+18 0c fa f8 00 06 18 22 0a 00 00 10 00 
+------------------------
+control up
+id:faf8
+action = 0
+
+recieved:13
+18 0c fa f8 00 06 18 23 0a 00 00 10 01 
+------------------------
+control up
+id:faf8
+action = 1
+
+send:55 aa 00 06 77 10 03 03 03 96 
+id = 30480
+state11 = 3
+state22 = 3
+state33 = 3
+data= {"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+json= { "devid": "30480", "state1": "3", "state2": "3", "state3": "3", "type": "control_down" }
+
+recieved:4
+0d 03 a5 00 
+------------------------
+send response
+
+recieved:35
+1c 22 1a d6 00 00 1c 34 12 54 0a 02 ff 4c 06 00 10 01 21 64 0c 21 a8 13 24 01 00 00 00 00 21 45 00 20 61 
+------------------------
+
+recieved:35
+1c 22 fa f8 00 00 1c 34 12 24 0a 02 ff 4c 06 00 10 01 21 64 0c 21 a8 13 24 be 00 00 01 01 21 43 00 20 5c 
+------------------------
+
+recieved:7
+01 06 56 80 04 01 01 
+------------------------
+
+recieved:7
+01 06 56 80 04 02 01 
+------------------------
+
+recieved:35
+1c 22 fc 44 00 00 1c 34 12 1d 0a 02 ff 4c 06 00 10 00 21 3f 0c 21 a8 13 24 1b 00 00 00 00 21 5d 00 20 5b 
+------------------------
+
+recieved:7
+01 06 56 80 04 01 00 
+------------------------
+
+recieved:7
+01 06 56 80 04 01 01 
+------------------------
+
+recieved:13
+18 0c fc 44 00 06 18 1e 0a 00 00 10 01 
+------------------------
+control up
+id:fc44
+action = 1
+
+send:55 aa 00 06 e6 b0 01 01 01 9f 
+id = 59056
+state11 = 1
+state22 = 1
+state33 = 1
+data= {"devid":"59056","state1":"1","state2":"1","state3":"1","type":"control_down"}
+json= { "devid": "59056", "state1": "1", "state2": "1", "state3": "1", "type": "control_down" }
+
+recieved:4
+0d 03 a6 00 
+------------------------
+send response
+
+recieved:13
+18 0c fc 44 00 06 18 1f 0a 00 00 10 00 
+------------------------
+control up
+id:fc44
+action = 0
+
+send:55 aa 00 06 e6 b0 00 00 00 9c 
+id = 59056
+state11 = 0
+state22 = 0
+state33 = 0
+data= {"devid":"59056","state1":"0","state2":"0","state3":"0","type":"control_down"}
+json= { "devid": "59056", "state1": "0", "state2": "0", "state3": "0", "type": "control_down" }
+
+recieved:4
+0d 03 a7 00 
+------------------------
+send response
+
+recieved:13
+18 0c fa f8 00 06 18 25 0a 00 80 20 02 
+------------------------
+control up
+id:faf8
+double tick
+
+send:55 aa 00 06 ff ff 00 00 00 04 
+id = 65535
+state11 = 0
+state22 = 0
+state33 = 0
+data= {"devid":"65535","state1":"0","state2":"0","state3":"0","type":"control_down"}
+json= { "devid": "65535", "state1": "0", "state2": "0", "state3": "0", "type": "control_down" }
+
+recieved:4
+0d 03 a8 00 
+------------------------
+send response
+
+recieved:13
+18 0c fa f8 00 06 18 26 0a 00 00 10 00 
+------------------------
+control up
+id:faf8
+action = 0
+
+recieved:13
+18 0c fa f8 00 06 18 27 0a 00 00 10 01 
+------------------------
+control up
+id:faf8
+action = 1
+
+send:55 aa 00 06 77 10 03 03 03 96 
+id = 30480
+state11 = 3
+state22 = 3
+state33 = 3
+data= {"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+json= { "devid": "30480", "state1": "3", "state2": "3", "state3": "3", "type": "control_down" }
+
+recieved:4
+0d 03 a9 00 
+------------------------
+send response
+
+recieved:13
+18 0c fa f8 00 06 18 28 0a 00 00 10 00 
+------------------------
+control up
+id:faf8
+action = 0
+
+recieved:13
+18 0c fa f8 00 06 18 29 0a 00 00 10 01 
+------------------------
+control up
+id:faf8
+action = 1
+
+send:55 aa 00 06 77 10 03 03 03 96 
+id = 30480
+state11 = 3
+state22 = 3
+state33 = 3
+data= {"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+json= { "devid": "30480", "state1": "3", "state2": "3", "state3": "3", "type": "control_down" }
+
+recieved:4
+0d 03 aa 00 
+------------------------
+send response
+
+recieved:35
+1c 22 1a d6 00 00 1c 34 12 55 0a 02 ff 4c 06 00 10 01 21 64 0c 21 a8 13 24 01 00 00 00 00 21 45 00 20 62 
+------------------------
+
+recieved:7
+01 06 be 8a 04 01 01 
+------------------------
+
+recieved:7
+01 06 be 8a 0=====control_up:111
+str22=
+re_post[112].type=control_up
+re_post[112].id=22144
+re_post[112].dev_type=0
+re_post[112].idxs=0
+re_post[112].idx=1
+re_post[112].action=0
+re_post[112].value=0
+recieve No: 112
+
+
+=========control_up:112
+str22=
+re_post[113].type=control_up
+re_post[113].id=22144
+re_post[113].dev_type=0
+re_post[113].idxs=0
+re_post[113].idx=1
+re_post[113].action=1
+re_post[113].value=0
+recieve No: 113
+
+
+=========control_up:113
+str22=
+re_post[114].type=control_up
+re_post[114].id=64580
+re_post[114].dev_type=0
+re_post[114].idxs=0
+re_post[114].idx=1
+re_post[114].action=1
+re_post[114].value=0
+recieve No: 114
+
+
+=========control_up:114
+str22={"devid":"59056","state1":"1","state2":"1","state3":"1","type":"control_down"}
+re_post[115].type=send_response
+re_post[115].id=42496
+re_post[115].dev_type=0
+re_post[115].idxs=0
+re_post[115].idx=0
+re_post[115].action=100
+re_post[115].value=0
+recieve No: 115
+
+
+str22=
+re_post[116].type=control_up
+re_post[116].id=64580
+re_post[116].dev_type=0
+re_post[116].idxs=0
+re_post[116].idx=1
+re_post[116].action=0
+re_post[116].value=0
+recieve No: 116
+
+
+=========control_up:116
+str22={"devid":"59056","state1":"0","state2":"0","state3":"0","type":"control_down"}
+re_post[117].type=send_response
+re_post[117].id=42752
+re_post[117].dev_type=0
+re_post[117].idxs=0
+re_post[117].idx=0
+re_post[117].action=100
+re_post[117].value=0
+recieve No: 117
+
+
+str22=
+re_post[118].type=control_up
+re_post[118].id=64248
+re_post[118].dev_type=0
+re_post[118].idxs=0
+re_post[118].idx=1
+re_post[118].action=2
+re_post[118].value=0
+recieve No: 118
+
+
+=========control_up:118
+str22={"devid":"65535","state1":"0","state2":"0","state3":"0","type":"control_down"}
+re_post[119].type=send_response
+re_post[119].id=43008
+re_post[119].dev_type=0
+re_post[119].idxs=0
+re_post[119].idx=0
+re_post[119].action=100
+re_post[119].value=0
+recieve No: 119
+
+
+str22=
+re_post[120].type=control_up
+re_post[120].id=64248
+re_post[120].dev_type=0
+re_post[120].idxs=0
+re_post[120].idx=1
+re_post[120].action=0
+re_post[120].value=0
+recieve No: 120
+
+
+=========control_up:120
+str22=
+re_post[121].type=control_up
+re_post[121].id=64248
+re_post[121].dev_type=0
+re_post[121].idxs=0
+re_post[121].idx=1
+re_post[121].action=1
+re_post[121].value=0
+recieve No: 121
+
+
+=========control_up:121
+str22={"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+re_post[122].type=send_response
+re_post[122].id=43264
+re_post[122].dev_type=0
+re_post[122].idxs=0
+re_post[122].idx=0
+re_post[122].action=100
+re_post[122].value=0
+recieve No: 122
+
+
+str22=
+re_post[123].type=control_up
+re_post[123].id=64248
+re_post[123].dev_type=0
+re_post[123].idxs=0
+re_post[123].idx=1
+re_post[123].action=0
+re_post[123].value=0
+recieve No: 123
+
+
+=========control_up:123
+str22=
+re_post[124].type=control_up
+re_post[124].id=64248
+re_post[124].dev_type=0
+re_post[124].idxs=0
+re_post[124].idx=1
+re_post[124].action=1
+re_post[124].value=0
+recieve No: 124
+
+
+=========control_up:124
+str22={"devid":"30480","state1":"3","state2":"3","state3":"3","type":"control_down"}
+re_post[125].type=send_response
+re_post[125].id=43520
+re_post[125].dev_type=0
+re_post[125].idxs=0
+re_post[125].idx=0
+re_post[125].action=100
+re_post[125].value=0
+recieve No: 125
+
+
+str22=
+re_post[126].type=control_up
+re_post[126].id=48778
+re_post[126].dev_type=0
+re_post[126].idxs=0
+re_post[126].idx=1
+re_post[126].action=1
+re_post[126].value=0
+recieve No: 126
+
+
+=========control_up:126
+str22=
+re_post[127].type=control_up
+re_post[127].id=48778
+re_post[127].dev_type=0
+re_post[127].idxs=0
+re_post[127].idx=1
+re_post[127].action=0
+re_post[127].value=0
+recieve No: 127
+
+
+=========control_up:127
+str22=
+re_post[128].type=control_up
+re_post[128].id=64580
+re_post[128].dev_type=0
+re_post[128].idxs=0
+re_post[128].idx=1
+re_post[128].action=1
+re_post[128].value=0
+recieve No: 128
+
+
+=========control_up:128
+str22={"devid":"59056","state1":"1","state2":"1","state3":"1","type":"control_down"}
+re_post[129].type=send_response
+re_post[129].id=43776
+re_post[129].dev_type=0
+re_post[129].idxs=0
+re_post[129].idx=0
+re_post[129].action=100
+re_post[129].value=0
+recieve No: 129
+
+
+str22=
+re_post4 01 00 
+------------------------
+
+recieved:13
+18 0c fc 44 00 06 18 20 0a 00 00 10 01 
+------------------------
+control up
+id:fc44
+action = 1
+
+send:55 aa 00 06 e6 b0 01 01 01 9f 
+id = 59056
+state11 = 1
+state22 = 1
+state33 = 1
+data= {"devid":"59056","state1":"1","state2":"1","state3":"1","type":"control_down"}
+json= { "devid": "59056", "state1": "1", "state2": "1", "state3": "1", "type": "control_down" }
+
+recieved:4
+0d 03 ab 00 
+------------------------
+send response
+
+recieved:13
+18 0c fc 44 00 06 18 21 0a 00 00 10 00 
+------------------------
+control up
+id:fc44
+action = 0
+
+send:55 aa 00 06 e6 b0 00 00 00 9c 
+id = 59056
+state11 = 0
+state22 = 0
+state33 = 0
+data= {"devid":"59056","state1":"0","state2":"0","state3":"0","type":"control_down"}
+json= { "devid": "59056", "state1": "0", "state2": "0", "state3": "0", "type": "control_down" }
+
+recieved:4
+0d 03 ac 00 
+------------------------
+send response
+
+recieved:35
+1c 22 fc 44 00 00 1c 34 12 22 0a 02 ff 4c 06 00 10 00 21 3f 0c 21 a8 13 24 05 00 00 00 00 21 5d 00 20 5a 
+------------------------
+
+recieved:13
+18 0c fc 44 00 06 18 23 0a 00 00 10 01 
+------------------------
+control up
+id:fc44
+action = 1
+
+send:55 aa 00 06 e6 b0 01 01 01 9f 
+id = 59056
+state11 = 1
+state22 = 1
+state33 = 1
+data= {"devid":"59056","state1":"1","state2":"1","state3":"1","type":"control_down"}
+json= { "devid": "59056", "state1": "1", "state2": "1", "state3": "1", "type": "control_down" }
+
+recieved:4
+0d 03 ad 00 
+------------------------
+send response
+
+recieved:13
+18 0c fc 44 00 06 18 24 0a 00 00 10 00 
+------------------------
+control up
+id:fc44
+action = 0
+
+send:55 aa 00 06 e6 b0 00 00 00 9c 
+id = 59056
+state11 = 0
+state22 = 0
+state33 = 0
+data= {"devid":"59056","state1":"0","state2":"0","state3":"0","type":"control_down"}
+json= { "devid": "59056", "state1": "0", "state2": "0", "state3": "0", "type": "control_down" }
+
+recieved:4
+0d 03 ae 00 
+------------------------
+send response
+
+recieved:13
+18 0c fc 44 00 06 18 25 0a 00 00 10 01 
+------------------------
+control up
+id:fc44
+action = 1
+
+send:55 aa 00 06 e6 b0 01 01 01 9f 
+id = 59056
+state11 = 1
+state22 = 1
+state33 = 1
+data= {"devid":"59056","state1":"1","state2":"1","state3":"1","type":"control_down"}
+json= { "devid": "59056", "state1": "1", "state2": "1", "state3": "1", "type": "control_down" }
+
+recieved:4
+0d 03 af 00 
+------------------------
+send response
+
+recieved:13
+18 0c fc 44 00 06 18 26 0a 00 00 10 00 
+------------------------
+control up
+id:fc44
+action = 0
+
+send:55 aa 00 06 e6 b0 00 00 00 9c 
+id = 59056
+state11 = 0
+state22 = 0
+state33 = 0
+data= {"devid":"59056","state1":"0","state2":"0","state3":"0","type":"control_down"}
+json= { "devid": "59056", "state1": "0", "state2": "0", "state3": "0", "type": "control_down" }
+
+recieved:4
+0d 03 b0 00 
+------------------------
+send response
+
+recieved:13
+18 0c fc 44 00 06 18 27 0a 00 00 10 01 
+------------------------
+control up
+id:fc44
+action = 1
+
+send:55 aa 00 06 e6 b0 01 01 01 9f 
+id = 59056
+state11 = 1
+state22 = 1
+state33 = 1
+data= {"devid":"59056","state1":"1","state2":"1","state3":"1","type":"control_down"}
+json= { "devid": "59056", "state1": "1", "state2": "1", "state3": "1", "type": "control_down" }
+
+recieved:4
+0d 03 b1 00 
+------------------------
+send response
+
+recieved:13
+18 0c fc 44 00 06 18 28 0a 00 00 10 00 
+------------------------
+control up
+id:fc44
+action = 0
+
+send:55 aa 00 06 e6 b0 00 00 00 9c 
+id = 59056
+state11 = 0
+state22 = 0
+state33 = 0
+data= {"devid":"59056","state1":"0","state2":"0","state3":"0","type":"control_down"}
+json= { "devid": "59056", "state1": "0", "state2": "0", "state3": "0", "type": "control_down" }
+
+recieved:4
+0d 03 b2 00 
+------------------------
+send response
+
+recieved:13
+18 0c fc 44 00 06 18 29 0a 00 00 10 01 
+------------------------
+control up
+id:fc44
+action = 1
+
+send:55 aa 00 06 e6 b0 01 01 01 9f 
+id = 59056
+state11 = 1
+state22 = 1
+state33 = 1
+data= {"devid":"59056","state1":"1","state2":"1","state3":"1","type":"control_down"}
+json= { "devid": "59056", "state1": "1", "state2": "1", "state3": "1", "type": "control_down" }
+
+recieved:4
+0d 03 b3 00 
+------------------------[130].type=control_up
+re_post[130].id=64580
+re_post[130].dev_type=0
+re_post[130].idxs=0
+re_post[130].idx=1
+re_post[130].action=0
+re_post[130].value=0
+recieve No: 130
+
+
+=========control_up:130
+str22={"devid":"59056","state1":"0","state2":"0","state3":"0","type":"control_down"}
+re_post[131].type=send_response
+re_post[131].id=44032
+re_post[131].dev_type=0
+re_post[131].idxs=0
+re_post[131].idx=0
+re_post[131].action=100
+re_post[131].value=0
+recieve No: 131
+
+
+str22=
+re_post[132].type=control_up
+re_post[132].id=64580
+re_post[132].dev_type=0
+re_post[132].idxs=0
+re_post[132].idx=1
+re_post[132].action=1
+re_post[132].value=0
+recieve No: 132
+
+
+=========control_up:132
+str22={"devid":"59056","state1":"1","state2":"1","state3":"1","type":"control_down"}
+re_post[133].type=send_response
+re_post[133].id=44288
+re_post[133].dev_type=0
+re_post[133].idxs=0
+re_post[133].idx=0
+re_post[133].action=100
+re_post[133].value=0
+recieve No: 133
+
+
+str22=
+re_post[134].type=control_up
+re_post[134].id=64580
+re_post[134].dev_type=0
+re_post[134].idxs=0
+re_post[134].idx=1
+re_post[134].action=0
+re_post[134].value=0
+recieve No: 134
+
+
+=========control_up:134
+str22={"devid":"59056","state1":"0","state2":"0","state3":"0","type":"control_down"}
+re_post[135].type=send_response
+re_post[135].id=44544
+re_post[135].dev_type=0
+re_post[135].idxs=0
+re_post[135].idx=0
+re_post[135].action=100
+re_post[135].value=0
+recieve No: 135
+
+
+str22=
+re_post[136].type=control_up
+re_post[136].id=64580
+re_post[136].dev_type=0
+re_post[136].idxs=0
+re_post[136].idx=1
+re_post[136].action=1
+re_post[136].value=0
+recieve No: 136
+
+
+=========control_up:136
+str22={"devid":"59056","state1":"1","state2":"1","state3":"1","type":"control_down"}
+re_post[137].type=send_response
+re_post[137].id=44800
+re_post[137].dev_type=0
+re_post[137].idxs=0
+re_post[137].idx=0
+re_post[137].action=100
+re_post[137].value=0
+recieve No: 137
+
+
+str22=
+re_post[138].type=control_up
+re_post[138].id=64580
+re_post[138].dev_type=0
+re_post[138].idxs=0
+re_post[138].idx=1
+re_post[138].action=0
+re_post[138].value=0
+recieve No: 138
+
+
+=========control_up:138
+str22={"devid":"59056","state1":"0","state2":"0","state3":"0","type":"control_down"}
+re_post[139].type=send_response
+re_post[139].id=45056
+re_post[139].dev_type=0
+re_post[139].idxs=0
+re_post[139].idx=0
+re_post[139].action=100
+re_post[139].value=0
+recieve No: 139
+
+
+str22=
+re_post[140].type=control_up
+re_post[140].id=64580
+re_post[140].dev_type=0
+re_post[140].idxs=0
+re_post[140].idx=1
+re_post[140].action=1
+re_post[140].value=0
+recieve No: 140
+
+
+=========control_up:140
+str22={"devid":"59056","state1":"1","state2":"1","state3":"1","type":"control_down"}
+re_post[141].type=send_response
+re_post[141].id=45312
+re_post[141].dev_type=0
+re_post[141].idxs=0
+re_post[141].idx=0
+re_post[141].action=100
+re_post[141].value=0
+recieve No: 141
+
+
+str22=
+re_post[142].type=control_up
+re_post[142].id=64580
+re_post[142].dev_type=0
+re_post[142].idxs=0
+re_post[142].idx=1
+re_post[142].action=0
+re_post[142].value=0
+recieve No: 142
+
+
+=========control_up:142
+str22={"devid":"59056","state1":"0","state2":"0","state3":"0","type":"control_down"}
+re_post[143].type=send_response
+re_post[143].id=45568
+re_post[143].dev_type=0
+re_post[143].idxs=0
+re_post[143].idx=0
+re_post[143].action=100
+re_post[143].value=0
+recieve No: 143
+
+
+str22=
+re_post[144].type=control_up
+re_post[144].id=64580
+re_post[144].dev_type=0
+re_post[144].idxs=0
+re_post[144].idx=1
+re_post[144].action=1
+re_post[144].value=0
+recieve No: 144
+
+
+=========control_up:144
+str22={"devid":"59056","state1":"1","state2":"1","state3":"1","type":"control_down"}
+re_post[145].type=send_response
+re_post[145].id=45824
+re_post[145].dev_type=0
+re_post[145].idxs=0
+re_post[145].idx=0
+re_post[145].action=100
+re_post[145].value=0
+recieve No: 145
+
+
+str22=
+re_post[146].type=control_up
+re_post[146].id=64580
+re_post[146].dev_type=0
+re_post[146].idxs=0
+re_post[146].idx=1
+re_post[146].action=0
+re_post[146].value=0
+recieve No: 146
+
+
+=========control_up:146
+str22={"devid":"59056","state1":"0","state2":"0","state3":"0","type":"control_down"}
+re_post[147].type=send_response
+re_post[147].id=46080
+re_post[147].dev_type=0
+re_post[147].idxs=0
+re_post[147].idx=0
+re_post[147].action=100
+re_post[147].value=0
+recieve No: 147
+
+
+str22=
+re_post[148].type=control_up
+re_post[148].id=64580
+re_post[148].dev_type=0
+re_post[148].idxs=0
+re_post[148].idx=1
+re_post[148].action=1
+re_post[148].value=0
+recieve No: 148
+
+
+=========control_up:148
+str22={"devid":"59056","state1":"1","state2":"1","state3":"1","type":"control_down"}
+re_post[149].type=send_response
+re_post[149].id=46336
+re_post[149].dev_type=0
+re_post[149].idxs=0
+re_post[149].idx=0
+re_post[149].action=100
+re_post[149].value=0
+recieve No: 149
+
+
+str22=
+re_post[150].type=control_up
+re_post[150].id=64580
+re_post[150].dev_type=0
+re_post[150].idxs=0
+re_post[150].idx=1
+re_post[150].action=0
+re_post[150].value=0
+recieve No: 150
+
+
+=========control_up:150
+str22={"devid":"59056","state1":"0","state2":"0","state3":"0","type":"control_down"}
+re_post[151].type=send_response
+re_post[151].id=46592
+re_post[151].dev_type=0
+re_post[151].idxs=0
+re_post[151].idx=0
+re_post[151].action=100
+re_post[151].value=0
+recieve No: 151
+
+
+str22=
+re_post[152].type=control_up
+re_post[152].id=64580
+re_post[152].dev_type=0
+re_post[152].idxs=0
+re_post[152].idx=1
+re_post[152].action=1
+re_post[152].value=0
+recieve No: 152
+
+
+=========control_up:152
+str22={"devid":"59056","state1":"1","state2":"1","state3":"1","type":"control_down"}
+re_post[153].type=send_response
+re_post[153].id=46848
+re_post[153].dev_type=0
+re_post[153].idxs=0
+re_post[153].idx=0
+re_post[153].action=100
+re_post[153].value=0
+recieve No: 153
+
+
+str22=
+re_post[154].type=control_up
+re_post[154].id=64580
+re_post[154].dev_type=0
+re_post[154].idxs=0
+re_post[154].idx=1
+re_post[154].action=0
+re_post[154].value=0
+recieve No: 154
+
+
+=========control_up:154
+str22={"devid":"59056","state1":"0","state2":"0","state3":"0","type":"control_down"}
+re_post[155].type=send_response
+re_post[155].id=47104
+re_post[155].dev_type=0
+re_post[155].idxs=0
+re_post[155].idx=0
+re_post[155].action=100
+re_post[155].value=0
+recieve No: 155
+
+
+str22=
+re_post[156].type=control_up
+re_post[156].id=64580
+re_post[156].dev_type=0
+re_post[156].idxs=0
+re_post[156].idx=1
+re_post[156].action=1
+re_post[156].value=0
+recieve No: 156
+
+
+=========control_up:156
+str22={"devid":"59056","state1":"1","state2":"1","state3":"1","type":"control_down"}
+re_post[157].type=send_response
+re_post[157].id=47360
+re_post[157].dev_type=0
+re_post[157].idxs=0
+re_post[157].idx=0
+re_post[157].action=100
+re_post[157].value=0
+recieve No: 157
+
+
+str22=
+re_post[158].type=control_up
+re_post[158].id=64580
+re_post[158].dev_type=0
+re_post[158].idxs=0
+re_post[158].idx=1
+re_post[158].action=0
+re_post[158].value=0
+recieve No: 158
+
+
+=========control_up:158
+str22={"devid":"59056","state1":"0","state2":"0","state3":"0","type":"control_down"}
+re_post[159].type=send_response
+re_post[159].id=47616
+re_post[159].dev_type=0
+re_post[159].idxs=0
+re_post[159].idx=0
+re_post[159].action=100
+re_post[159].value=0
+recieve No: 159
+
+
+str22=
+re_post[160].type=control_up
+re_post[160].id=64580
+re_post[160].dev_type=0
+re_post[160].idxs=0
+re_post[160].idx=1
+re_post[160].action=1
+re_post[160].value=0
+recieve No: 160
+
+
+=========control_up:160
+str22={"devid":"59056","state1":"1","state2":"1","state3":"1","type":"control_down"}
+re_post[161].type=send_response
+re_post[161].id=47872
+re_post[161].dev_type=0
+re_post[161].idxs=0
+re_post[161].idx=0
+re_post[161].action=100
+re_post[161].value=0
+recieve No: 161
+
+
+str22=
+re_post[162].type=control_up
+re_post[162].id=64580
+re_post[162].dev_type=0
+re_post[162].idxs=0
+re_post[162].idx=1
+re_post[162].action=0
+re_post[162].value=0
+recieve No: 162
+
+
+=========control_up:162
+str22={"devid":"59056","state1":"0","state2":"0","state3":"0","type":"control_down"}
+re_post[163].type=send_response
+re_post[163].id=48128
+re_post[163].dev_type=0
+re_post[163].idxs=0
+re_post[163].idx=0
+re_post[163].action=100
+re_post[163].value=0
+recieve No: 163
+
+
+str22=
+re_post[164].type=control_up
+re_post[164].id=64580
+re_post[164].dev_type=0
+re_post[164].idxs=0
+re_post[164].idx=1
+re_post[164].action=1
+re_post[164].value=0
+recieve No: 164
+
+
+=========control_
+send response
+
+recieved:13
+18 0c fc 44 00 06 18 2a 0a 00 00 10 00 
+------------------------
+control up
+id:fc44
+action = 0
+
+send:55 aa 00 06 e6 b0 00 00 00 9c 
+id = 59056
+state11 = 0
+state22 = 0
+state33 = 0
+data= {"devid":"59056","state1":"0","state2":"0","state3":"0","type":"control_down"}
+json= { "devid": "59056", "state1": "0", "state2": "0", "state3": "0", "type": "control_down" }
+
+recieved:4
+0d 03 b4 00 
+------------------------
+send response
+
+recieved:13
+18 0c fc 44 00 06 18 2b 0a 00 00 10 01 
+------------------------
+control up
+id:fc44
+action = 1
+
+send:55 aa 00 06 e6 b0 01 01 01 9f 
+id = 59056
+state11 = 1
+state22 = 1
+state33 = 1
+data= {"devid":"59056","state1":"1","state2":"1","state3":"1","type":"control_down"}
+json= { "devid": "59056", "state1": "1", "state2": "1", "state3": "1", "type": "control_down" }
+
+recieved:4
+0d 03 b5 00 
+------------------------
+send response
+
+recieved:13
+18 0c fc 44 00 06 18 2c 0a 00 00 10 00 
+------------------------
+control up
+id:fc44
+action = 0
+
+send:55 aa 00 06 e6 b0 00 00 00 9c 
+id = 59056
+state11 = 0
+state22 = 0
+state33 = 0
+data= {"devid":"59056","state1":"0","state2":"0","state3":"0","type":"control_down"}
+json= { "devid": "59056", "state1": "0", "state2": "0", "state3": "0", "type": "control_down" }
+
+recieved:4
+0d 03 b6 00 
+------------------------
+send response
+
+recieved:13
+18 0c fc 44 00 06 18 2d 0a 00 00 10 01 
+------------------------
+control up
+id:fc44
+action = 1
+
+send:55 aa 00 06 e6 b0 01 01 01 9f 
+id = 59056
+state11 = 1
+state22 = 1
+state33 = 1
+data= {"devid":"59056","state1":"1","state2":"1","state3":"1","type":"control_down"}
+json= { "devid": "59056", "state1": "1", "state2": "1", "state3": "1", "type": "control_down" }
+
+recieved:4
+0d 03 b7 00 
+------------------------
+send response
+
+recieved:13
+18 0c fc 44 00 06 18 2e 0a 00 00 10 00 
+------------------------
+control up
+id:fc44
+action = 0
+
+send:55 aa 00 06 e6 b0 00 00 00 9c 
+id = 59056
+state11 = 0
+state22 = 0
+state33 = 0
+data= {"devid":"59056","state1":"0","state2":"0","state3":"0","type":"control_down"}
+json= { "devid": "59056", "state1": "0", "state2": "0", "state3": "0", "type": "control_down" }
+
+recieved:4
+0d 03 b8 00 
+------------------------
+send response
+
+recieved:13
+18 0c fc 44 00 06 18 2f 0a 00 00 10 01 
+------------------------
+control up
+id:fc44
+action = 1
+
+send:55 aa 00 06 e6 b0 01 01 01 9f 
+id = 59056
+state11 = 1
+state22 = 1
+state33 = 1
+data= {"devid":"59056","state1":"1","state2":"1","state3":"1","type":"control_down"}
+json= { "devid": "59056", "state1": "1", "state2": "1", "state3": "1", "type": "control_down" }
+
+recieved:4
+0d 03 b9 00 
+------------------------
+send response
+
+recieved:13
+18 0c fc 44 00 06 18 30 0a 00 00 10 00 
+------------------------
+control up
+id:fc44
+action = 0
+
+send:55 aa 00 06 e6 b0 00 00 00 9c 
+id = 59056
+state11 = 0
+state22 = 0
+state33 = 0
+data= {"devid":"59056","state1":"0","state2":"0","state3":"0","type":"control_down"}
+json= { "devid": "59056", "state1": "0", "state2": "0", "state3": "0", "type": "control_down" }
+
+recieved:4
+0d 03 ba 00 
+------------------------
+send response
+
+recieved:13
+18 0c fc 44 00 06 18 31 0a 00 00 10 01 
+------------------------
+control up
+id:fc44
+action = 1
+
+send:55 aa 00 06 e6 b0 01 01 01 9f 
+id = 59056
+state11 = 1
+state22 = 1
+state33 = 1
+data= {"devid":"59056","state1":"1","state2":"1","state3":"1","type":"control_down"}
+json= { "devid": "59056", "state1": "1", "state2": "1", "state3": "1", "type": "control_down" }
+
+recieved:4
+0d 03 bb 00 
+------------------------
+send response
+
+recieved:13
+18 0c fc 44 00 06 18 32 0a 00 00 10 00 
+------------------------
+control up
+id:fc44
+action = 0
+
+send:55 aa 00 06 e6 b0 00 00 00 9c 
+id = 59056
+state11 = 0
+state22 = 0
+state33 = 0
+data= {"devid":"59056","state1":"0","state2":"0","state3":"0","type":"control_down"}
+json= { "devid": "59056", "state1": "0", "state2": "0", "state3": "0", "type": "control_down" }
+
+recieved:4
+0d 03 bc 00 
+------------------------
+send response
+
+recieved:13
+18 0c fc 44 00 06 18 33 0a 00 00 10 01 
+------------------------
+control up
+id:fc44
+action = 1
+
+send:55 aa 00 06 e6 b0 01 01 01 9f 
+id up:164
+str22={"devid":"59056","state1":"1","state2":"1","state3":"1","type":"control_down"}
+re_post[165].type=send_response
+re_post[165].id=48384
+re_post[165].dev_type=0
+re_post[165].idxs=0
+re_post[165].idx=0
+re_post[165].action=100
+re_post[165].value=0
+recieve No: 165
+
+
+str22=
+re_post[166].type=control_up
+re_post[166].id=64580
+re_post[166].dev_type=0
+re_post[166].idxs=0
+re_post[166].idx=1
+re_post[166].action=0
+re_post[166].value=0
+recieve No: 166
+
+
+=========control_up:166
+str22={"devid":"59056","state1":"0","state2":"0","state3":"0","type":"control_down"}
+re_post[167].type=send_response
+re_post[167].id=48640
+re_post[167].dev_type=0
+re_post[167].idxs=0
+re_post[167].idx=0
+re_post[167].action=100
+re_post[167].value=0
+recieve No: 167
+
+
+str22=
+re_post[168].type=control_up
+re_post[168].id=64580
+re_post[168].dev_type=0
+re_post[168].idxs=0
+re_post[168].idx=1
+re_post[168].action=1
+re_post[168].value=0
+recieve No: 168
+
+
+=========control_up:168
+str22={"devid":"59056","state1":"1","state2":"1","state3":"1","type":"control_down"}
+re_post[169].type=send_response
+re_post[169].id=48896
+re_post[169].dev_type=0
+re_post[169].idxs=0
+re_post[169].idx=0
+re_post[169].action=100
+re_post[169].value=0
+recieve No: 169
+
+
+str22=
+re_post[170].type=control_up
+re_post[170].id=64580
+re_post[170].dev_type=0
+re_post[170].idxs=0
+re_post[170].idx=1
+re_post[170].action=0
+re_post[170].value=0
+recieve No: 170
+
+
+=========control_up:170
+str22={"devid":"59056","state1":"0","state2":"0","state3":"0","type":"control_down"}
+re_post[171].type=send_response
+re_post[171].id=49152
+re_post[171].dev_type=0
+re_post[171].idxs=0
+re_post[171].idx=0
+re_post[171].action=100
+re_post[171].value=0
+recieve No: 171
+
+
+str22=
+re_post[172].type=control_up
+re_post[172].id=64580
+re_post[172].dev_type=0
+re_post[172].idxs=0
+re_post[172].idx=1
+re_post[172].action=1
+re_post[172].value=0
+recieve No: 172
+
+
+=========control_up:172
+str22={"devid":"59056","state1":"1","state2":"1","state3":"1","type":"control_down"}
+re_post[173].type=send_response
+re_post[173].id=49408
+re_post[173].dev_type=0
+re_post[173].idxs=0
+re_post[173].idx=0
+re_post[173].action=100
+re_post[173].value=0
+recieve No: 173
+
+
+str22=
+re_post[174].type=control_up
+re_post[174].id=64580
+re_post[174].dev_type=0
+re_post[174].idxs=0
+re_post[174].idx=1
+re_post[174].action=0
+re_post[174].value=0
+recieve No: 174
+
+
+=========control_up:174
+str22={"devid":"59056","state1":"0","state2":"0","state3":"0","type":"control_down"}
+re_post[175].type=send_response
+re_post[175].id=49664
+re_post[175].dev_type=0
+re_post[175].idxs=0
+re_post[175].idx=0
+re_post[175].action=100
+re_post[175].value=0
+recieve No: 175
+
+
+str22=
+re_post[176].type=control_up
+re_post[176].id=64580
+re_post[176].dev_type=0
+re_post[176].idxs=0
+re_post[176].idx=1
+re_post[176].action=1
+re_post[176].value=0
+recieve No: 176
+
+
+=========control_up:176
+str22={"devid":"59056","state1":"1","state2":"1","state3":"1","type":"control_down"}
+re_post[177].type=send_response
+re_post[177].id=49920
+re_post[177].dev_type=0
+re_post[177].idxs=0
+re_post[177].idx=0
+re_post[177].action=100
+re_post[177].value=0
+recieve No: 177
+
+
+str22=
+re_post[178].type=control_up
+re_post[178].id=64580
+re_post[178].dev_type=0
+re_post[178].idxs=0
+re_post[178].idx=1
+re_post[178].action=0
+re_post[178].value=0
+recieve No: 178
+
+
+=========control_up:178
+str22={"devid":"59056","state1":"0","state2":"0","state3":"0","type":"control_down"}
+re_post[179].type=send_response
+re_post[179].id=50176
+re_post[179].dev_type=0
+re_post[179].idxs=0
+re_post[179].idx=0
+re_post[179].action=100
+re_post[179].value=0
+recieve No: 179
+
+
+str22=
+re_post[180].type=control_up
+re_post[180].id=64580
+re_post[180].dev_type=0
+re_post[180].idxs=0
+re_post[180].idx=1
+re_post[180].action=1
+re_post[180].value=0
+recieve No: 180
+
+
+=========control_up:180
+str22={"devid":"59056","state1":"1","state2":"1","state3":"1","type":"control_down"}
+re_post[181].type=send_response
+re_post[181].id=50432
+re_post[181].dev_type=0
+re_post[181].idxs=0
+re_post[181].idx=0
+re_post[181].action=100
+re_post[181].value=0
+recieve No: 181
+
+
+str22=
+re_post[182].type=control_up
+re_post[182].id=6458= 59056
+state11 = 1
+state22 = 1
+state33 = 1
+data= {"devid":"59056","state1":"1","state2":"1","state3":"1","type":"control_down"}
+json= { "devid": "59056", "state1": "1", "state2": "1", "state3": "1", "type": "control_down" }
+
+recieved:4
+0d 03 bd 00 
+------------------------
+send response
+
+recieved:13
+18 0c fc 44 00 06 18 34 0a 00 00 10 00 
+------------------------
+control up
+id:fc44
+action = 0
+
+send:55 aa 00 06 e6 b0 00 00 00 9c 
+id = 59056
+state11 = 0
+state22 = 0
+state33 = 0
+data= {"devid":"59056","state1":"0","state2":"0","state3":"0","type":"control_down"}
+json= { "devid": "59056", "state1": "0", "state2": "0", "state3": "0", "type": "control_down" }
+
+recieved:4
+0d 03 be 00 
+------------------------
+send response
+
+recieved:13
+18 0c fc 44 00 06 18 35 0a 00 00 10 01 
+------------------------
+control up
+id:fc44
+action = 1
+
+send:55 aa 00 06 e6 b0 01 01 01 9f 
+id = 59056
+state11 = 1
+state22 = 1
+state33 = 1
+data= {"devid":"59056","state1":"1","state2":"1","state3":"1","type":"control_down"}
+json= { "devid": "59056", "state1": "1", "state2": "1", "state3": "1", "type": "control_down" }
+
+recieved:4
+0d 03 bf 00 
+------------------------
+send response
+
+recieved:13
+18 0c fc 44 00 06 18 36 0a 00 00 10 00 
+------------------------
+control up
+id:fc44
+action = 0
+
+send:55 aa 00 06 e6 b0 00 00 00 9c 
+id = 59056
+state11 = 0
+state22 = 0
+state33 = 0
+data= {"devid":"59056","state1":"0","state2":"0","state3":"0","type":"control_down"}
+json= { "devid": "59056", "state1": "0", "state2": "0", "state3": "0", "type": "control_down" }
+
+recieved:4
+0d 03 c0 00 
+------------------------
+send response
+
+recieved:13
+18 0c fc 44 00 06 18 37 0a 00 00 10 01 
+------------------------
+control up
+id:fc44
+action = 1
+
+send:55 aa 00 06 e6 b0 01 01 01 9f 
+id = 59056
+state11 = 1
+state22 = 1
+state33 = 1
+data= {"devid":"59056","state1":"1","state2":"1","state3":"1","type":"control_down"}
+json= { "devid": "59056", "state1": "1", "state2": "1", "state3": "1", "type": "control_down" }
+
+recieved:4
+0d 03 c1 00 
+------------------------
+send response
+
+recieved:13
+18 0c fc 44 00 06 18 38 0a 00 00 10 00 
+------------------------
+control up
+id:fc44
+action = 0
+
+send:55 aa 00 06 e6 b0 00 00 00 9c 
+id = 59056
+state11 = 0
+state22 = 0
+state33 = 0
+data= {"devid":"59056","state1":"0","state2":"0","state3":"0","type":"control_down"}
+json= { "devid": "59056", "state1": "0", "state2": "0", "state3": "0", "type": "control_down" }
+
+recieved:4
+0d 03 c2 00 
+------------------------
+send response
+
+recieved:13
+18 0c fc 44 00 06 18 39 0a 00 00 10 01 
+------------------------
+control up
+id:fc44
+action = 1
+
+send:55 aa 00 06 e6 b0 01 01 01 9f 
+id = 59056
+state11 = 1
+state22 = 1
+state33 = 1
+data= {"devid":"59056","state1":"1","state2":"1","state3":"1","type":"control_down"}
+json= { "devid": "59056", "state1": "1", "state2": "1", "state3": "1", "type": "control_down" }
+
+recieved:4
+0d 03 c3 00 
+------------------------
+send response
+
+recieved:13
+18 0c fc 44 00 06 18 3a 0a 00 00 10 00 
+------------------------
+control up
+id:fc44
+action = 0
+
+send:55 aa 00 06 e6 b0 00 00 00 9c 
+id = 59056
+state11 = 0
+state22 = 0
+state33 = 0
+data= {"devid":"59056","state1":"0","state2":"0","state3":"0","type":"control_down"}
+json= { "devid": "59056", "state1": "0", "state2": "0", "state3": "0", "type": "control_down" }
+
+recieved:4
+0d 03 c4 00 
+------------------------
+send response
+
+recieved:13
+18 0c fc 44 00 06 18 3b 0a 00 00 10 01 
+------------------------
+control up
+id:fc44
+action = 1
+
+send:55 aa 00 06 e6 b0 01 01 01 9f 
+id = 59056
+state11 = 1
+state22 = 1
+state33 = 1
+data= {"devid":"59056","state1":"1","state2":"1","state3":"1","type":"control_down"}
+json= { "devid": "59056", "state1": "1", "state2": "1", "state3": "1", "type": "control_down" }
+
+recieved:4
+0d 03 c5 00 
+------------------------
+send response
+
+recieved:13
+18 0c fc 44 00 06 18 3c 0a 00 00 10 00 
+------------------------
+control up
+id:fc44
+action = 0
+
+send:55 aa 00 06 e6 b0 00 00 00 9c 
+id = 59056
+state11 = 0
+state22 = 0
+state33 = 0
+data= {"devid":"59056","state1":"0","state2":"0","state3":"0","type":"control_down"}
+json= { "devid": "59056", "state1"
