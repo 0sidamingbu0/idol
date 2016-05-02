@@ -10,7 +10,7 @@
 #include <microhttpd.h>
 #include <string.h>
 
-#define PORT 443
+#define PORT 8888
 
 #define POSTBUFFERSIZE  512
 #define MAXNAMESIZE     3000
