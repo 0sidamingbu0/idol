@@ -267,7 +267,10 @@ iterate_post (void *coninfo_cls, enum MHD_ValueKind kind, const char *key,
 	state33 = (uint16_t)json_object_get_int(state3);
 
 	if(0 == strcmp (json_object_to_json_string(type), "\"control_down\""))
-		MXJ_SendCtrlMessage(id,state11,state22,state33);
+		{
+			MXJ_SendCtrlMessage(id,state11,state22,state33);
+			MXJ_GetStateMessage(id);
+		}
 	if(0 == strcmp (json_object_to_json_string(type), "\"register_ok\""))
 		MXJ_SendRegisterMessage(id,MXJ_REGISTER_OK);
 	if(0 == strcmp (json_object_to_json_string(type), "\"register_failed\""))
@@ -276,13 +279,15 @@ iterate_post (void *coninfo_cls, enum MHD_ValueKind kind, const char *key,
 		MXJ_GetStateMessage(id);
 	if(0 == strcmp (json_object_to_json_string(type), "\"any_data\""))
 		MXJ_SendCtrlMessage(id,state11,state22,state33);
-	
+
+	printf("\n");
+	printf("recieve post \n");
 	printf("id = %d\n", id);
-	printf("state11 = %d\n", state11);
-	printf("state22 = %d\n", state22);
-	printf("state33 = %d\n", state33);
+	//printf("state11 = %d\n", state11);
+	//printf("state22 = %d\n", state22);
+	//printf("state33 = %d\n", state33);
 	printf("data= %s\n", data);
-	printf("recieve post json= %s\n", json_object_to_json_string(my_object));
+	//printf("recieve post json= %s\n", json_object_to_json_string(my_object));
     
 	
 
@@ -864,7 +869,7 @@ int main(void)
 		//usleep(500000);
 		
 		MXJ_GetStateMessage(0xffff);
-		sleep(10);
+		sleep(60);
 	}
 	
 
