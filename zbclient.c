@@ -248,6 +248,7 @@ iterate_post (void *coninfo_cls, enum MHD_ValueKind kind, const char *key,
   if(size == 0) return MHD_NO;
 
 	uint16_t id=0;
+	int i=-1;
 	uint8_t state11=0,state22=0,state33=0;
 	json_object *type = NULL;
 	json_object *my_object = json_tokener_parse(data);
@@ -269,7 +270,29 @@ iterate_post (void *coninfo_cls, enum MHD_ValueKind kind, const char *key,
 	if(0 == strcmp (json_object_to_json_string(type), "\"control_down\""))
 		{
 			MXJ_SendCtrlMessage(id,state11,state22,state33);
-			MXJ_GetStateMessage(id);
+			//MXJ_GetStateMessage(id);
+			i=find_dev(id);
+	      if(i>=0)
+	      	{
+	      		if(state11 == 3)
+					if(mxj_device[i].state[0] == 1)
+		  				mxj_device[i].state[0]=0;
+					else if(mxj_device[i].state[0] == 0)
+		  				mxj_device[i].state[0]=1;
+				else if(state11 == 1||state11 == 0)
+					mxj_device[i].state[0]=state11;
+
+				if(state22 == 3)
+					if(mxj_device[i].state[1] == 1)
+		  				mxj_device[i].state[1]=0;
+					else if(mxj_device[i].state[1] == 0)
+		  				mxj_device[i].state[1]=1;
+				else if(state22 == 1||state22 == 0)
+					mxj_device[i].state[1]=state22;
+				
+				build_json();
+	      	}
+			
 		}
 	if(0 == strcmp (json_object_to_json_string(type), "\"register_ok\""))
 		MXJ_SendRegisterMessage(id,MXJ_REGISTER_OK);
@@ -279,6 +302,8 @@ iterate_post (void *coninfo_cls, enum MHD_ValueKind kind, const char *key,
 		MXJ_GetStateMessage(id);
 	if(0 == strcmp (json_object_to_json_string(type), "\"any_data\""))
 		MXJ_SendCtrlMessage(id,state11,state22,state33);
+	if(0 == strcmp (json_object_to_json_string(type), "\"heart\""))
+		;//MXJ_GetStateMessage(0xffff);
 
 	printf("\n");
 	printf("recieve post \n");
@@ -869,7 +894,7 @@ int main(void)
 		//usleep(500000);
 		
 		MXJ_GetStateMessage(0xffff);
-		sleep(60);
+		sleep(20);
 	}
 	
 
