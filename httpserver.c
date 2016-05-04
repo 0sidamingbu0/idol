@@ -24,7 +24,7 @@ E6B0=MENTING
 
 
 */
-#define PORT 6868
+#define PORT 443
 
 #define POSTBUFFERSIZE  512
 #define MAXNAMESIZE     3000
@@ -292,7 +292,7 @@ int i=-1;
     	//reply = malloc (strlen (json_str) );
 		//strcpy(reply,json_str);
 		
-
+    	printf("GET\n");
 		//
 		//if (NULL == reply)
 	    	//return MHD_NO;
@@ -303,9 +303,10 @@ int i=-1;
   if (0 == strcmp (method, "POST"))
   	{  		
 	  int ret;
+
 	  //char *reply;
 	  //char *str = "open";
-	  //printf("PoSt \n");
+	  printf("POST \n");
 	  //struct MHD_Response *response;
 	  
 	  //reply = malloc (strlen (askpage) + strlen (str) + 1); 

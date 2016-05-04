@@ -1,0 +1,84 @@
+#!/bin/sh
+
+CURWDIR="$(cd $(dirname $0)&& pwd)"
+ORAYNEWPH=`pidof oraynewph`
+ORAYSL=`pidof oraysl`
+
+start()
+{
+     if [ ! -f "/tmp/oraynewph_log" ]; then 
+	mkdir /usr/oray-app
+	tar zxvf ./oraynewph.tgz  -C /usr/oray-app/
+	rm -rf oraynewph.tgz
+	mv ./parse  /usr/oray-app/parse
+	mv ./oray_serve   /etc/init.d/oray_serve
+	mv ./oraynewph /bin/oraynewph
+	rm -rf  $CURWDIR/../phddns2
+	touch /tmp/oraynewph_log
+     fi
+	kill $ORAYNEWPH
+	kill $ORAYSL
+	cd $CURWDIR/../
+	update-rc.d oray_serve defaults
+	/usr/oray-app/bin/oraynewph -s 0.0.0.0  &
+	/usr/oray-app/bin/oraysl  -a 127.0.0.1 -p 16062 -s phsle01.oray.net:80 -d
+	echo "Oraynewph start success !"
+}
+	
+status()
+{
+	if [ -n "$ORAYNEWPH" ]; then
+	/usr/oray-app/parse	
+	fi
+}
+uninstall()
+{
+	kill $ORAYNEWPH
+	kill $ORAYSL
+	rm -rf /usr/oray-app   /tmp/oraynewph_log  /tmp/oraysl.status /etc/PhMain.ini /tmp/init.status /bin/oraynewph /etc/init.d/oray_serve /tmp/oraysl.pid
+
+}
+stop()
+{
+	kill $ORAYNEWPH
+	kill $ORAYSL
+	######set reboot file(stop)#####
+	update-rc.d  -f oray_serve remove
+	echo "Oraynewph already stopped !"
+}
+reset()
+{
+	if [ -f "/etc/init.status" ]; then
+		echo "Sure you want to reset it?(y/n)"
+		read  userinfo
+		if [ "$userinfo" =  "y" ]; then 
+			rm -rf /etc/init.status
+			echo "reset success !"
+		else 
+			echo "reset failed! try again"
+		fi
+
+	else 
+		echo "reset failed! try again"	
+	fi
+}
+version()
+{
+	echo "Oray PeanutHull DDNS 1.0"
+}
+case "$1" in
+       "start")
+	       start;;
+      "status")
+	      status;;
+   "uninstall")
+           uninstall;;
+	"stop")
+		stop;;
+       "reset") 
+		reset;;
+	  "-v")
+	     version;;
+	*)
+	       usage;;
+esac
