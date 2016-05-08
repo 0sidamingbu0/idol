@@ -10,7 +10,9 @@
 #include <microhttpd.h>
 #include <string.h>
 
-#define PORT 8888
+
+
+#define PORT 6868
 
 #define POSTBUFFERSIZE  512
 #define MAXNAMESIZE     3000
@@ -19,7 +21,7 @@
 #define POST            1
 int idx = 0;
 typedef unsigned char   uint8_t;     //ÎÞ·ûºÅ8Î»Êý
-
+const char *strrr;
 
 
 char *str = "undefine";
@@ -81,7 +83,6 @@ iterate_post (void *coninfo_cls, enum MHD_ValueKind kind, const char *key,
   printf("data =%s \n",data);
   printf("------------------\n");
     
- 
   
 
   return MHD_YES;
@@ -123,9 +124,21 @@ answer_to_connection (void *cls, struct MHD_Connection *connection,
                       size_t *upload_data_size, void **con_cls)
 {
 	struct connection_info_struct *con_info = *con_cls;
+	
 	printf ("New %s request for %s using version %s\n", method, url, version);
+	MHD_get_connection_values (connection, MHD_HEADER_KIND, print_out_key,
+									  NULL);
+	MHD_get_connection_values (connection, MHD_GET_ARGUMENT_KIND, print_out_key,
+										  NULL);
 
-  //printf("method =%s \n",method);
+  //printf("connection->read_buffer = %s \n",connection->read_buffer);
+  	  const char* length = MHD_lookup_connection_value (connection, MHD_HEADER_KIND, MHD_HTTP_HEADER_CONTENT_LENGTH);  		
+	  const char* body = MHD_lookup_connection_value (connection, MHD_POSTDATA_KIND, NULL);  	    
+	  printf("length=%s\n",length);
+	  printf("body=%s\n",body);
+	  
+
+	  
   if (NULL == *con_cls)
     {
     	//printf("NuLl=ClS \n");
@@ -133,15 +146,16 @@ answer_to_connection (void *cls, struct MHD_Connection *connection,
       struct connection_info_struct *con_info;
 
 
-	  MHD_get_connection_values (connection, MHD_POSTDATA_KIND, print_out_key,
-								   NULL);
-		printf ("========================\n", method, url, version);
+//	  MHD_get_connection_values (connection, MHD_POSTDATA_KIND, print_out_key,
+//								   NULL);
+//		printf ("========================\n", method, url, version);
 	  
-		
-		MHD_get_connection_values (connection, MHD_GET_ARGUMENT_KIND, print_out_key,
-									 NULL);
+//		
+//		MHD_get_connection_values (connection, MHD_GET_ARGUMENT_KIND, print_out_key,
+//									 NULL);
 
-		
+
+
 
       con_info = malloc (sizeof (struct connection_info_struct));
       if (NULL == con_info)
@@ -154,6 +168,9 @@ answer_to_connection (void *cls, struct MHD_Connection *connection,
       if (0 == strcmp (method, "POST"))
         {
           //printf("(0 == strcmp (method, POST)\n");
+
+
+	  
           con_info->postprocessor =
             MHD_create_post_processor (connection, POSTBUFFERSIZE,
                                        iterate_post, (void *) con_info);
@@ -187,30 +204,27 @@ answer_to_connection (void *cls, struct MHD_Connection *connection,
 		//if (NULL == reply)
 	    	//return MHD_NO;
 	  	//snprintf (reply,strlen (json_str) + 1,reply);
+	  	if(strrr != NULL)\
+			return send_page (connection, strrr);
+		else
 			return send_page (connection, errorpage);
     }
 
   if (0 == strcmp (method, "POST"))
   	{  		
 	  int ret;
-	  //char *reply;
-	  //char *str = "open";
-	  //printf("PoSt \n");
-	  //struct MHD_Response *response;
 	  
-	  //reply = malloc (strlen (askpage) + strlen (str) + 1); 
-	  //if (NULL == reply)
-	  //  return MHD_NO;
-	  //snprintf (reply,strlen (askpage) + strlen (str) + 1,askpage,str);
-	  ////printf("reply= %s \n",reply);
-	  //struct connection_info_struct *con_info = *con_cls;
+//	  const char* body = MHD_lookup_connection_value (connection, MHD_POSTDATA_KIND, NULL);  
+//	  printf("body = %s\n",body); 
 
 	  if (*upload_data_size != 0)
 	  {
   		MHD_post_process (con_info->postprocessor, upload_data,
   						  *upload_data_size);
   		*upload_data_size = 0;
-      //printf("%s\n",con_info->postprocessor);
+
+
+	  //printf("%s\n",con_info->postprocessor);
   		return MHD_YES;
 	  }
 	  else if (NULL != con_info->answerstring)

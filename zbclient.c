@@ -1,5 +1,17 @@
 /*
 //gcc zbclient.c -o zbclient -lwiringPi -lcurl -lpthread -ljson-c
+#build libmicrohttp.so
+donwload src
+cp to raspi
+sudo apt-get install autoconf
+sudo apt-get install litool
+autoreconf -fi
+./configure --disable-curl
+sudo make
+sudo make install
+sudo cp /usr/local/lib/libmicrohttp.* /lib/arm-linux-gnueabihf/
+regcc .c
+ok
 */
 #include <stdio.h>
 #include <stdlib.h>
@@ -12,32 +24,42 @@
 #include <microhttpd.h>
 #include <string.h>
 #include "json.h"
+#include <time.h>
+#include <stddef.h>
+
+
 //#include "parse_flags.h"
 /* 
-FAF8=XIAOMIKAIGUAN1
-1AD6=XIAOMIKAIGUAN2
-0xFC44=XIAOMIMENCI
+0xFAF8 =XIAOMIKAIGUAN1-zhuwo
+0x1AD6 =XIAOMIKAIGUAN2-ciwo
+0x9F68 =XIAOMIKAIGUAN3
+0xFC44 =XIAOMIMENCI
+0x32FE =XIAOMIRENTI
 
-4E8A=KETING
-B358=CANTING
-BE8A=CHUFANG
-E6B0=MENTING
-5680=GUODAO
-7710=ZHUWO
-9590=CIWO
+
+0x5C4E =KETING
+0xB358 =CANTING
+0xBE8A =CHUFANG
+0xE6B0 =MENTING
+0x5680 =GUODAO
+0x7710 =ZHUWO
+0x9590 =CIWO
 
 
 */
 #define XMKG_ZHU_ID     0XFAF8
 #define XMKG_CI_ID      0X1AD6
 #define XMMENCI_ID      0xFC44
-#define KETING_ID       0X4E8A
+#define KETING_ID       0x5C4E
 #define CANTING_ID      0XB358
 #define CHUFANG_ID      0XBE8A
 #define MENTING_ID      0XE6B0
 #define GUODAO_ID       0X5680
 #define ZHUWO_ID        0X7710
 #define CIWO_ID         0X9590
+#define XIAOMIRENTI_ID	0x32FE
+#define XMKG_WAI_ID		0x9F68
+
 
 typedef unsigned char   uint8_t;     //ÎÞ·ûºÅ8Î»Êý
 
@@ -127,6 +149,11 @@ uint8_t  FSC_Token;
 uint8_t  tempDataLen = 0;
 uint8_t rxbuf[100];
 uint8_t len=0;
+int humand = 0;
+time_t now;
+struct tm *tblock; 
+
+
 //uint8_t humaned = 0;
 //CURL* geturl;
 
@@ -179,8 +206,23 @@ void build_json()
             
 			json_object *dev = json_object_new_object();
 			json_object_object_add(dev, "id", json_object_new_int(mxj_device[i].id));
-			json_object_object_add(dev, "type", json_object_new_int(mxj_device[i].type));
+			json_object_object_add(dev, "type", json_object_new_int(mxj_device[i].type));				
 			json_object_object_add(dev, "status", state);
+			if(mxj_device[i].id == KETING_ID)
+				json_object_object_add(dev, "name", json_object_new_string("KETING_ID"));
+			if(mxj_device[i].id == CANTING_ID)
+				json_object_object_add(dev, "name", json_object_new_string("CANTING_ID"));
+			if(mxj_device[i].id == CHUFANG_ID)
+				json_object_object_add(dev, "name", json_object_new_string("CHUFANG_ID"));
+			if(mxj_device[i].id == MENTING_ID)
+				json_object_object_add(dev, "name", json_object_new_string("MENTING_ID"));
+			if(mxj_device[i].id == GUODAO_ID)
+				json_object_object_add(dev, "name", json_object_new_string("GUODAO_ID"));
+			if(mxj_device[i].id == ZHUWO_ID)
+				json_object_object_add(dev, "name", json_object_new_string("ZHUWO_ID"));
+			if(mxj_device[i].id == CIWO_ID)
+				json_object_object_add(dev, "name", json_object_new_string("CIWO_ID"));
+			
       //printf("dev = %s\n",json_object_to_json_string(dev));
       
 			//json_object_array_add(devices, dev);
@@ -251,6 +293,7 @@ iterate_post (void *coninfo_cls, enum MHD_ValueKind kind, const char *key,
 	int i=-1;
 	uint8_t state11=0,state22=0,state33=0;
 	json_object *type = NULL;
+	json_object *name = NULL;
 	json_object *my_object = json_tokener_parse(data);
 	json_object *devid = NULL;
 	json_object_object_get_ex(my_object, "devid",&devid);
@@ -261,25 +304,44 @@ iterate_post (void *coninfo_cls, enum MHD_ValueKind kind, const char *key,
 	json_object *state3 = NULL;
 	json_object_object_get_ex(my_object, "state3",&state3);
 	json_object_object_get_ex(my_object, "type",&type);
+	json_object_object_get_ex(my_object, "name",&name);
 
 	id = (uint16_t)json_object_get_int(devid);
 	state11 = (uint16_t)json_object_get_int(state1);
 	state22 = (uint16_t)json_object_get_int(state2);
 	state33 = (uint16_t)json_object_get_int(state3);
 
+
+
 	if(0 == strcmp (json_object_to_json_string(type), "\"control_down\""))
 		{
+			if(0 == strcmp (json_object_to_json_string(name), "\"KETING_ID\""))
+				id = KETING_ID;
+			if(0 == strcmp (json_object_to_json_string(name), "\"CANTING_ID\""))
+				id = CANTING_ID;
+			if(0 == strcmp (json_object_to_json_string(name), "\"CHUFANG_ID\""))
+				id = CHUFANG_ID;
+			if(0 == strcmp (json_object_to_json_string(name), "\"MENTING_ID\""))
+				id = MENTING_ID;
+			if(0 == strcmp (json_object_to_json_string(name), "\"GUODAO_ID\""))
+				id = GUODAO_ID;
+			if(0 == strcmp (json_object_to_json_string(name), "\"ZHUWO_ID\""))
+				id = ZHUWO_ID;
+			if(0 == strcmp (json_object_to_json_string(name), "\"CIWO_ID\""))
+				id = CIWO_ID;
+
+			
 			MXJ_SendCtrlMessage(id,state11,state22,state33);
-			//MXJ_GetStateMessage(id);
+			
 			i=find_dev(id);
 	      if(i>=0)
 	      	{
-	      		if(state11 == 3)
+	      		if(state11 == 3)	      			
 					if(mxj_device[i].state[0] == 1)
 		  				mxj_device[i].state[0]=0;
 					else if(mxj_device[i].state[0] == 0)
 		  				mxj_device[i].state[0]=1;
-				else if(state11 == 1||state11 == 0)
+				if(state11 == 1||state11 == 0)
 					mxj_device[i].state[0]=state11;
 
 				if(state22 == 3)
@@ -287,12 +349,12 @@ iterate_post (void *coninfo_cls, enum MHD_ValueKind kind, const char *key,
 		  				mxj_device[i].state[1]=0;
 					else if(mxj_device[i].state[1] == 0)
 		  				mxj_device[i].state[1]=1;
-				else if(state22 == 1||state22 == 0)
+				if(state22 == 1||state22 == 0)
 					mxj_device[i].state[1]=state22;
 				
 				build_json();
 	      	}
-			
+			MXJ_GetStateMessage(id);
 		}
 	if(0 == strcmp (json_object_to_json_string(type), "\"register_ok\""))
 		MXJ_SendRegisterMessage(id,MXJ_REGISTER_OK);
@@ -312,29 +374,27 @@ iterate_post (void *coninfo_cls, enum MHD_ValueKind kind, const char *key,
 	//printf("state22 = %d\n", state22);
 	//printf("state33 = %d\n", state33);
 	printf("data= %s\n", data);
-	//printf("recieve post json= %s\n", json_object_to_json_string(my_object));
+	printf("recieve post json= %s\n", json_object_to_json_string(my_object));
     
 	
 
   return MHD_YES;
 }
 
+
+
 static void
 request_completed (void *cls, struct MHD_Connection *connection,
                    void **con_cls, enum MHD_RequestTerminationCode toe)
 {
   struct connection_info_struct *con_info = *con_cls;
-
   if (NULL == con_info)
     return;
 
   if (con_info->connectiontype == POST)
     {
       MHD_destroy_post_processor (con_info->postprocessor);
-      //if (con_info->answerstring)
-        //free (con_info->answerstring);
     }
-
   free (con_info);
   *con_cls = NULL;
 }
@@ -348,12 +408,15 @@ answer_to_connection (void *cls, struct MHD_Connection *connection,
 {
 	struct connection_info_struct *con_info = *con_cls;
 int i=-1;
+int len2 =0;
+  FILE *sp;
+  printf ("====New %s request for %s using version %s\n", method, url, version);
+ 
+  time(&now);
+  tblock = localtime(&now);
 
-  //printf("method =%s \n",method);
   if (NULL == *con_cls)
-    {
-    	//printf("NuLl=ClS \n");
-		
+    {		
       struct connection_info_struct *con_info;
 
       con_info = malloc (sizeof (struct connection_info_struct));
@@ -364,42 +427,131 @@ int i=-1;
       }
       con_info->answerstring = NULL;
       //printf("method2 =%s \n",method);
-      if (0 == strcmp (method, "POST"))
-        {
-          //printf("(0 == strcmp (method, POST)\n");
-          con_info->postprocessor =
-            MHD_create_post_processor (connection, POSTBUFFERSIZE,
-                                       iterate_post, (void *) con_info);
-
-          if (NULL == con_info->postprocessor)
-            {
-              free (con_info);
-              return MHD_NO;
-            }
-          //printf("con_info->connectiontype = POST \n");
-          con_info->connectiontype = POST;
-        }
-      else
-        con_info->connectiontype = GET;
 
       *con_cls = (void *) con_info;
 
       return MHD_YES;
     }
 
+
+	const char* length = MHD_lookup_connection_value (connection, MHD_HEADER_KIND, MHD_HTTP_HEADER_CONTENT_LENGTH);		
+	const char* body = MHD_lookup_connection_value (connection, MHD_POSTDATA_KIND, NULL);		
+	//printf("body=%s\n",body);
+	printf("now datetime: %d-%d-%d %d:%d:%d - New %s request for %s using version %s - len2=%d body=\n%s\n End \n", tblock->tm_year, tblock->tm_mon, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec,method, url, version,len2,body);
+	  
+	if(length != NULL)
+	{		  
+	    len2 = atoi(length);	 
+	}
+	else
+	{
+		len2 = 0;
+	}
+
+	if ((sp = fopen("/home/pi/idol/re.txt","a+")) != NULL)
+	{
+		fprintf(sp,"now datetime: %d-%d-%d %d:%d:%d - New %s request for %s using version %s - len2=%d body=\n%s\n End \n", tblock->tm_year, tblock->tm_mon, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec,method, url, version,len2,body);
+		fclose(sp);
+	}
+
+
+
+
+
+  	uint16_t id=0;
+	  uint8_t state11=0,state22=0,state33=0;
+	  json_object *type = NULL;
+	  json_object *name = NULL;
+	  json_object *my_object = json_tokener_parse(body);
+	  json_object *devid = NULL;
+	  json_object_object_get_ex(my_object, "devid",&devid);
+	  json_object *state1 = NULL;
+	  json_object_object_get_ex(my_object, "state1",&state1);
+	  json_object *state2 = NULL;
+	  json_object_object_get_ex(my_object, "state2",&state2);
+	  json_object *state3 = NULL;
+	  json_object_object_get_ex(my_object, "state3",&state3);
+	  json_object_object_get_ex(my_object, "type",&type);
+	  json_object_object_get_ex(my_object, "name",&name);
+  
+	  id = (uint16_t)json_object_get_int(devid);
+	  state11 = (uint16_t)json_object_get_int(state1);
+	  state22 = (uint16_t)json_object_get_int(state2);
+	  state33 = (uint16_t)json_object_get_int(state3);
+  
+  
+  
+	  if(0 == strcmp (json_object_to_json_string(type), "\"control_down\""))
+		  {
+			  if(0 == strcmp (json_object_to_json_string(name), "\"KETING_ID\""))
+				  id = KETING_ID;
+			  if(0 == strcmp (json_object_to_json_string(name), "\"CANTING_ID\""))
+				  id = CANTING_ID;
+			  if(0 == strcmp (json_object_to_json_string(name), "\"CHUFANG_ID\""))
+				  id = CHUFANG_ID;
+			  if(0 == strcmp (json_object_to_json_string(name), "\"MENTING_ID\""))
+				  id = MENTING_ID;
+			  if(0 == strcmp (json_object_to_json_string(name), "\"GUODAO_ID\""))
+				  id = GUODAO_ID;
+			  if(0 == strcmp (json_object_to_json_string(name), "\"ZHUWO_ID\""))
+				  id = ZHUWO_ID;
+			  if(0 == strcmp (json_object_to_json_string(name), "\"CIWO_ID\""))
+				  id = CIWO_ID;
+  
+			  
+			  MXJ_SendCtrlMessage(id,state11,state22,state33);
+			  
+			  i=find_dev(id);
+			if(i>=0)
+			  {
+				  if(state11 == 3)					  
+					  if(mxj_device[i].state[0] == 1)
+						  mxj_device[i].state[0]=0;
+					  else if(mxj_device[i].state[0] == 0)
+						  mxj_device[i].state[0]=1;
+				  if(state11 == 1||state11 == 0)
+					  mxj_device[i].state[0]=state11;
+  
+				  if(state22 == 3)
+					  if(mxj_device[i].state[1] == 1)
+						  mxj_device[i].state[1]=0;
+					  else if(mxj_device[i].state[1] == 0)
+						  mxj_device[i].state[1]=1;
+				  if(state22 == 1||state22 == 0)
+					  mxj_device[i].state[1]=state22;
+				  
+				  build_json();
+			  }
+			  MXJ_GetStateMessage(id);
+		  }
+	  if(0 == strcmp (json_object_to_json_string(type), "\"register_ok\""))
+		  MXJ_SendRegisterMessage(id,MXJ_REGISTER_OK);
+	  if(0 == strcmp (json_object_to_json_string(type), "\"register_failed\""))
+		  MXJ_SendRegisterMessage(id,MXJ_REGISTER_FAILED);
+	  if(0 == strcmp (json_object_to_json_string(type), "\"ask_state\""))
+		  MXJ_GetStateMessage(id);
+	  if(0 == strcmp (json_object_to_json_string(type), "\"any_data\""))
+		  MXJ_SendCtrlMessage(id,state11,state22,state33);
+	  if(0 == strcmp (json_object_to_json_string(type), "\"heart\""))
+		  ;//MXJ_GetStateMessage(0xffff);
+  
+	  printf("\n");
+	  printf("recieve post \n");
+	  printf("id = %d\n", id);
+	  //printf("state11 = %d\n", state11);
+	  //printf("state22 = %d\n", state22);
+	  //printf("state33 = %d\n", state33);
+	  printf("recieve post json= %s\n", json_object_to_json_string(my_object));
+
+
+
+
+
+
+
   if (0 == strcmp (method, "GET"))
-    {
-    	//build_json();
-    	//const char *reply = json_str;
-		
-    	//reply = malloc (strlen (json_str) );
-		//strcpy(reply,json_str);
-		
+    {	
 		printf("get json_str = %s\n",json_str);
-		//
-		//if (NULL == reply)
-	    	//return MHD_NO;
-	  	//snprintf (reply,strlen (json_str) + 1,reply);
 		if(json_str!=NULL)
 			return send_page (connection,json_str);
 		else
@@ -408,34 +560,10 @@ int i=-1;
 
   if (0 == strcmp (method, "POST"))
   	{  		
-	  int ret;
-	  //char *reply;
-	  //char *str = "open";
-	  //printf("PoSt \n");
-	  //struct MHD_Response *response;
-	  
-	  //reply = malloc (strlen (askpage) + strlen (str) + 1); 
-	  //if (NULL == reply)
-	  //  return MHD_NO;
-	  //snprintf (reply,strlen (askpage) + strlen (str) + 1,askpage,str);
-	  ////printf("reply= %s \n",reply);
-	  //struct connection_info_struct *con_info = *con_cls;
-
-	  if (*upload_data_size != 0)
-	  {
-		MHD_post_process (con_info->postprocessor, upload_data,
-						  *upload_data_size);
-		*upload_data_size = 0;
-    //printf("%s\n",con_info->postprocessor);
-		return MHD_YES;
-	  }
-	  else if(json_str!=NULL)
-		  return send_page (connection,json_str);
-	  else
-		  return send_page (connection, errorpage);
-
-
-	  
+		if(json_str!=NULL)
+		 	 return send_page (connection,json_str);
+	  	else
+		  	return send_page (connection, errorpage); 
   	}
 
   return send_page (connection, errorpage);
@@ -670,6 +798,7 @@ void recieve_usart(uint8_t *rx,uint8_t len)
 		{
 			printf("double kick\n");
 			MXJ_SendCtrlMessage(0xffff,0,0,0);
+			MXJ_GetStateMessage(0xffff);
 		}
 		else
 		{
@@ -697,6 +826,23 @@ void recieve_usart(uint8_t *rx,uint8_t len)
 		printf("control up - find id = %d\n",i);
 		printf("id:%4x\n",id);
 		printf("human detected\n");
+		if(id == XIAOMIRENTI_ID)
+		{	
+			int j = -1;
+			j = find_dev(CHUFANG_ID);
+			if(j != -1 && mxj_device[j].state[0] == 0)
+			{				
+				if(humand <= 1)
+				{
+					MXJ_SendCtrlMessage(CHUFANG_ID,1,1,1);
+					MXJ_GetStateMessage(CHUFANG_ID);
+					humand = 30;
+				}	
+								
+			}
+			if(humand > 1 )
+				humand = 30;
+		}
 	}
 	else if(cid == 0x402)
 	{
@@ -882,7 +1028,7 @@ int main(void)
     return 1;
   }
   int tt=0;
-  int j=0;
+  int j=0,k=0;
 
   //MXJ_SendRegisterMessage( 0x4738, MXJ_REGISTER_FAILED );
 //  MXJ_SendRegisterMessage( 0x49f0, MXJ_REGISTER_FAILED );
@@ -892,9 +1038,30 @@ int main(void)
 	while(1)
 	{  
 		//usleep(500000);
+
+	 
+
+
 		
-		MXJ_GetStateMessage(0xffff);
-		sleep(20);
+		j++;
+		
+		if(j > 20)
+		{
+			j = 0;
+			MXJ_GetStateMessage(0xffff);
+		}
+		sleep(1);
+		
+		if(humand == 1)
+		{
+			MXJ_SendCtrlMessage(CHUFANG_ID,0,0,0);	
+			MXJ_GetStateMessage(CHUFANG_ID);		
+		}
+		if(humand > 0)
+		{	
+			printf("humand = %d\n",humand);
+			humand--;
+		}
 	}
 	
 
