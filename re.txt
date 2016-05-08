@@ -118,3 +118,6 @@ score={"type":"heart"}_ID","type":"control_down","state1":3,"state2":3,"state3":
 now datetime: 116-4-8 19:53:46 - New POST request for / using version HTTP/1.1 - len2=22 body=
 score={"type":"heart"}_ID","type":"control_down","state1":3,"state2":3,"state3":3}ion/x-www-form-urlencoded
  End 
+now datetime: 116-4-8 20:0:56 - New GET request for http://zc.qq.com/cgi-bin/common/attr using version HTTP/1.1 - len2=0 body=
+
+ End 
