@@ -289,93 +289,6 @@ iterate_post (void *coninfo_cls, enum MHD_ValueKind kind, const char *key,
   struct connection_info_struct *con_info = coninfo_cls;
   if(size == 0) return MHD_NO;
 
-	uint16_t id=0;
-	int i=-1;
-	uint8_t state11=0,state22=0,state33=0;
-	json_object *type = NULL;
-	json_object *name = NULL;
-	json_object *my_object = json_tokener_parse(data);
-	json_object *devid = NULL;
-	json_object_object_get_ex(my_object, "devid",&devid);
-	json_object *state1 = NULL;
-	json_object_object_get_ex(my_object, "state1",&state1);
-	json_object *state2 = NULL;
-	json_object_object_get_ex(my_object, "state2",&state2);
-	json_object *state3 = NULL;
-	json_object_object_get_ex(my_object, "state3",&state3);
-	json_object_object_get_ex(my_object, "type",&type);
-	json_object_object_get_ex(my_object, "name",&name);
-
-	id = (uint16_t)json_object_get_int(devid);
-	state11 = (uint16_t)json_object_get_int(state1);
-	state22 = (uint16_t)json_object_get_int(state2);
-	state33 = (uint16_t)json_object_get_int(state3);
-
-
-
-	if(0 == strcmp (json_object_to_json_string(type), "\"control_down\""))
-		{
-			if(0 == strcmp (json_object_to_json_string(name), "\"KETING_ID\""))
-				id = KETING_ID;
-			if(0 == strcmp (json_object_to_json_string(name), "\"CANTING_ID\""))
-				id = CANTING_ID;
-			if(0 == strcmp (json_object_to_json_string(name), "\"CHUFANG_ID\""))
-				id = CHUFANG_ID;
-			if(0 == strcmp (json_object_to_json_string(name), "\"MENTING_ID\""))
-				id = MENTING_ID;
-			if(0 == strcmp (json_object_to_json_string(name), "\"GUODAO_ID\""))
-				id = GUODAO_ID;
-			if(0 == strcmp (json_object_to_json_string(name), "\"ZHUWO_ID\""))
-				id = ZHUWO_ID;
-			if(0 == strcmp (json_object_to_json_string(name), "\"CIWO_ID\""))
-				id = CIWO_ID;
-
-			
-			MXJ_SendCtrlMessage(id,state11,state22,state33);
-			
-			i=find_dev(id);
-	      if(i>=0)
-	      	{
-	      		if(state11 == 3)	      			
-					if(mxj_device[i].state[0] == 1)
-		  				mxj_device[i].state[0]=0;
-					else if(mxj_device[i].state[0] == 0)
-		  				mxj_device[i].state[0]=1;
-				if(state11 == 1||state11 == 0)
-					mxj_device[i].state[0]=state11;
-
-				if(state22 == 3)
-					if(mxj_device[i].state[1] == 1)
-		  				mxj_device[i].state[1]=0;
-					else if(mxj_device[i].state[1] == 0)
-		  				mxj_device[i].state[1]=1;
-				if(state22 == 1||state22 == 0)
-					mxj_device[i].state[1]=state22;
-				
-				build_json();
-	      	}
-			MXJ_GetStateMessage(id);
-		}
-	if(0 == strcmp (json_object_to_json_string(type), "\"register_ok\""))
-		MXJ_SendRegisterMessage(id,MXJ_REGISTER_OK);
-	if(0 == strcmp (json_object_to_json_string(type), "\"register_failed\""))
-		MXJ_SendRegisterMessage(id,MXJ_REGISTER_FAILED);
-	if(0 == strcmp (json_object_to_json_string(type), "\"ask_state\""))
-		MXJ_GetStateMessage(id);
-	if(0 == strcmp (json_object_to_json_string(type), "\"any_data\""))
-		MXJ_SendCtrlMessage(id,state11,state22,state33);
-	if(0 == strcmp (json_object_to_json_string(type), "\"heart\""))
-		;//MXJ_GetStateMessage(0xffff);
-
-	printf("\n");
-	printf("recieve post \n");
-	printf("id = %d\n", id);
-	//printf("state11 = %d\n", state11);
-	//printf("state22 = %d\n", state22);
-	//printf("state33 = %d\n", state33);
-	printf("data= %s\n", data);
-	printf("recieve post json= %s\n", json_object_to_json_string(my_object));
-    
 	
 
   return MHD_YES;
@@ -432,121 +345,7 @@ int len2 =0;
 
       return MHD_YES;
     }
-
-
-	const char* length = MHD_lookup_connection_value (connection, MHD_HEADER_KIND, MHD_HTTP_HEADER_CONTENT_LENGTH);		
-	const char* body = MHD_lookup_connection_value (connection, MHD_POSTDATA_KIND, NULL);		
-	//printf("body=%s\n",body);
-	printf("now datetime: %d-%d-%d %d:%d:%d - New %s request for %s using version %s - len2=%d body=\n%s\n End \n", tblock->tm_year, tblock->tm_mon, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec,method, url, version,len2,body);
-	  
-	if(length != NULL)
-	{		  
-	    len2 = atoi(length);	 
-	}
-	else
-	{
-		len2 = 0;
-	}
-
-	if ((sp = fopen("/home/pi/idol/re.txt","a+")) != NULL)
-	{
-		fprintf(sp,"now datetime: %d-%d-%d %d:%d:%d - New %s request for %s using version %s - len2=%d body=\n%s\n End \n", tblock->tm_year, tblock->tm_mon, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec,method, url, version,len2,body);
-		fclose(sp);
-	}
-
-
-
-
-
-  	uint16_t id=0;
-	  uint8_t state11=0,state22=0,state33=0;
-	  json_object *type = NULL;
-	  json_object *name = NULL;
-	  json_object *my_object = json_tokener_parse(body);
-	  json_object *devid = NULL;
-	  json_object_object_get_ex(my_object, "devid",&devid);
-	  json_object *state1 = NULL;
-	  json_object_object_get_ex(my_object, "state1",&state1);
-	  json_object *state2 = NULL;
-	  json_object_object_get_ex(my_object, "state2",&state2);
-	  json_object *state3 = NULL;
-	  json_object_object_get_ex(my_object, "state3",&state3);
-	  json_object_object_get_ex(my_object, "type",&type);
-	  json_object_object_get_ex(my_object, "name",&name);
   
-	  id = (uint16_t)json_object_get_int(devid);
-	  state11 = (uint16_t)json_object_get_int(state1);
-	  state22 = (uint16_t)json_object_get_int(state2);
-	  state33 = (uint16_t)json_object_get_int(state3);
-  
-  
-  
-	  if(0 == strcmp (json_object_to_json_string(type), "\"control_down\""))
-		  {
-			  if(0 == strcmp (json_object_to_json_string(name), "\"KETING_ID\""))
-				  id = KETING_ID;
-			  if(0 == strcmp (json_object_to_json_string(name), "\"CANTING_ID\""))
-				  id = CANTING_ID;
-			  if(0 == strcmp (json_object_to_json_string(name), "\"CHUFANG_ID\""))
-				  id = CHUFANG_ID;
-			  if(0 == strcmp (json_object_to_json_string(name), "\"MENTING_ID\""))
-				  id = MENTING_ID;
-			  if(0 == strcmp (json_object_to_json_string(name), "\"GUODAO_ID\""))
-				  id = GUODAO_ID;
-			  if(0 == strcmp (json_object_to_json_string(name), "\"ZHUWO_ID\""))
-				  id = ZHUWO_ID;
-			  if(0 == strcmp (json_object_to_json_string(name), "\"CIWO_ID\""))
-				  id = CIWO_ID;
-  
-			  
-			  MXJ_SendCtrlMessage(id,state11,state22,state33);
-			  
-			  i=find_dev(id);
-			if(i>=0)
-			  {
-				  if(state11 == 3)					  
-					  if(mxj_device[i].state[0] == 1)
-						  mxj_device[i].state[0]=0;
-					  else if(mxj_device[i].state[0] == 0)
-						  mxj_device[i].state[0]=1;
-				  if(state11 == 1||state11 == 0)
-					  mxj_device[i].state[0]=state11;
-  
-				  if(state22 == 3)
-					  if(mxj_device[i].state[1] == 1)
-						  mxj_device[i].state[1]=0;
-					  else if(mxj_device[i].state[1] == 0)
-						  mxj_device[i].state[1]=1;
-				  if(state22 == 1||state22 == 0)
-					  mxj_device[i].state[1]=state22;
-				  
-				  build_json();
-			  }
-			  MXJ_GetStateMessage(id);
-		  }
-	  if(0 == strcmp (json_object_to_json_string(type), "\"register_ok\""))
-		  MXJ_SendRegisterMessage(id,MXJ_REGISTER_OK);
-	  if(0 == strcmp (json_object_to_json_string(type), "\"register_failed\""))
-		  MXJ_SendRegisterMessage(id,MXJ_REGISTER_FAILED);
-	  if(0 == strcmp (json_object_to_json_string(type), "\"ask_state\""))
-		  MXJ_GetStateMessage(id);
-	  if(0 == strcmp (json_object_to_json_string(type), "\"any_data\""))
-		  MXJ_SendCtrlMessage(id,state11,state22,state33);
-	  if(0 == strcmp (json_object_to_json_string(type), "\"heart\""))
-		  ;//MXJ_GetStateMessage(0xffff);
-  
-	  printf("\n");
-	  printf("recieve post \n");
-	  printf("id = %d\n", id);
-	  //printf("state11 = %d\n", state11);
-	  //printf("state22 = %d\n", state22);
-	  //printf("state33 = %d\n", state33);
-	  printf("recieve post json= %s\n", json_object_to_json_string(my_object));
-
-
-
-
-
 
 
   if (0 == strcmp (method, "GET"))
@@ -557,14 +356,134 @@ int len2 =0;
 		else
 			return send_page (connection, errorpage);
     }
+  
+  //printf("method= %s\n", method);
 
   if (0 == strcmp (method, "POST"))
   	{  		
-		if(json_str!=NULL)
-		 	 return send_page (connection,json_str);
-	  	else
-		  	return send_page (connection, errorpage); 
+	  int ret;
+	  if (*upload_data_size != 0)
+	  {
+
+		
+		
+		const char* length = MHD_lookup_connection_value (connection, MHD_HEADER_KIND, MHD_HTTP_HEADER_CONTENT_LENGTH); 	
+			const char* body = MHD_lookup_connection_value (connection, MHD_POSTDATA_KIND, NULL);		
+			//printf("body=%s\n",body);
+			printf("now datetime: %d-%d-%d %d:%d:%d - New %s request for %s using version %s - len2=%d body=\n%s\n End \n", tblock->tm_year, tblock->tm_mon, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec,method, url, version,len2,body);
+			  
+			if(length != NULL)
+			{		  
+				len2 = atoi(length);	 
+			}
+			else
+			{
+				len2 = 0;
+			}
+		
+			if ((sp = fopen("/home/pi/idol/re.txt","a+")) != NULL)
+			{
+				fprintf(sp,"now datetime: %d-%d-%d %d:%d:%d - New %s request for %s using version %s - len2=%d body=\n%s\n End \n", tblock->tm_year, tblock->tm_mon, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec,method, url, version,len2,body);
+				fclose(sp);
+			}
+		
+		
+		
+		
+		
+			uint16_t id=0;
+			  uint8_t state11=0,state22=0,state33=0;
+			  json_object *type = NULL;
+			  json_object *name = NULL;
+			  json_object *my_object = json_tokener_parse(body);
+			  json_object *devid = NULL;
+			  json_object_object_get_ex(my_object, "devid",&devid);
+			  json_object *state1 = NULL;
+			  json_object_object_get_ex(my_object, "state1",&state1);
+			  json_object *state2 = NULL;
+			  json_object_object_get_ex(my_object, "state2",&state2);
+			  json_object *state3 = NULL;
+			  json_object_object_get_ex(my_object, "state3",&state3);
+			  json_object_object_get_ex(my_object, "type",&type);
+			  json_object_object_get_ex(my_object, "name",&name);
+		  
+			  id = (uint16_t)json_object_get_int(devid);
+			  state11 = (uint16_t)json_object_get_int(state1);
+			  state22 = (uint16_t)json_object_get_int(state2);
+			  state33 = (uint16_t)json_object_get_int(state3);
+		  
+		  
+		  
+			  if(0 == strcmp (json_object_to_json_string(type), "\"control_down\""))
+				  {
+					  if(0 == strcmp (json_object_to_json_string(name), "\"KETING_ID\""))
+						  id = KETING_ID;
+					  if(0 == strcmp (json_object_to_json_string(name), "\"CANTING_ID\""))
+						  id = CANTING_ID;
+					  if(0 == strcmp (json_object_to_json_string(name), "\"CHUFANG_ID\""))
+						  id = CHUFANG_ID;
+					  if(0 == strcmp (json_object_to_json_string(name), "\"MENTING_ID\""))
+						  id = MENTING_ID;
+					  if(0 == strcmp (json_object_to_json_string(name), "\"GUODAO_ID\""))
+						  id = GUODAO_ID;
+					  if(0 == strcmp (json_object_to_json_string(name), "\"ZHUWO_ID\""))
+						  id = ZHUWO_ID;
+					  if(0 == strcmp (json_object_to_json_string(name), "\"CIWO_ID\""))
+						  id = CIWO_ID;
+		  
+					  
+					  MXJ_SendCtrlMessage(id,state11,state22,state33);
+					  
+					  i=find_dev(id);
+					if(i>=0)
+					  {
+						  if(state11 == 3)					  
+							  if(mxj_device[i].state[0] == 1)
+								  mxj_device[i].state[0]=0;
+							  else if(mxj_device[i].state[0] == 0)
+								  mxj_device[i].state[0]=1;
+						  if(state11 == 1||state11 == 0)
+							  mxj_device[i].state[0]=state11;
+		  
+						  if(state22 == 3)
+							  if(mxj_device[i].state[1] == 1)
+								  mxj_device[i].state[1]=0;
+							  else if(mxj_device[i].state[1] == 0)
+								  mxj_device[i].state[1]=1;
+						  if(state22 == 1||state22 == 0)
+							  mxj_device[i].state[1]=state22;
+						  
+						  build_json();
+					  }
+					  MXJ_GetStateMessage(id);
+				  }
+			  if(0 == strcmp (json_object_to_json_string(type), "\"register_ok\""))
+				  MXJ_SendRegisterMessage(id,MXJ_REGISTER_OK);
+			  if(0 == strcmp (json_object_to_json_string(type), "\"register_failed\""))
+				  MXJ_SendRegisterMessage(id,MXJ_REGISTER_FAILED);
+			  if(0 == strcmp (json_object_to_json_string(type), "\"ask_state\""))
+				  MXJ_GetStateMessage(id);
+			  if(0 == strcmp (json_object_to_json_string(type), "\"any_data\""))
+				  MXJ_SendCtrlMessage(id,state11,state22,state33);
+			  if(0 == strcmp (json_object_to_json_string(type), "\"heart\""))
+				  ;//MXJ_GetStateMessage(0xffff);
+		  
+			  printf("\n");
+			  //printf("state11 = %d\n", state11);
+			  //printf("state22 = %d\n", state22);
+			  //printf("state33 = %d\n", state33);
+			  printf("recieve post json= %s\n", json_object_to_json_string(my_object));
+		
+		
+		*upload_data_size = 0;
+		return MHD_YES;
+	  }
+	  else if(json_str!=NULL)
+		  return send_page (connection,json_str);
+	  else
+		  return send_page (connection, errorpage);  
   	}
+
 
   return send_page (connection, errorpage);
 }
