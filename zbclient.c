@@ -27,6 +27,8 @@ ok
 #include <time.h>
 #include <stddef.h>
 
+#include <libxml/parser.h>
+#include <libxml/xmlmemory.h>
 
 //#include "parse_flags.h"
 /* 
@@ -167,6 +169,9 @@ void del_dev(void);
 int find_dev(int i);
 
 char *str = "undefine";
+char strxml[500];
+int post_type;
+
 char *json_str;
 struct connection_info_struct
 {
@@ -322,6 +327,13 @@ answer_to_connection (void *cls, struct MHD_Connection *connection,
 	struct connection_info_struct *con_info = *con_cls;
 int i=-1;
 int len2 =0;
+
+
+char *ToUserName;
+char *CreateTime;
+char *FromUserName;
+
+char *re_body;
   FILE *sp;
   printf ("====New %s request for %s using version %s\n", method, url, version);
  
@@ -370,115 +382,280 @@ int len2 =0;
 		const char* length = MHD_lookup_connection_value (connection, MHD_HEADER_KIND, MHD_HTTP_HEADER_CONTENT_LENGTH); 	
 			const char* body = MHD_lookup_connection_value (connection, MHD_POSTDATA_KIND, NULL);		
 			//printf("body=%s\n",body);
-			printf("now datetime: %d-%d-%d %d:%d:%d - New %s request for %s using version %s - len2=%d body=\n%s\n End \n", tblock->tm_year, tblock->tm_mon, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec,method, url, version,len2,body);
+			
 			  
 			if(length != NULL)
 			{		  
-				len2 = atoi(length);	 
+				len2 = atoi(length);
+				re_body = (uint8_t*)calloc(len2,sizeof(uint8_t));
+				strncpy(re_body,body,len2);
+				printf("now datetime: %d-%d-%d %d:%d:%d - New %s request for %s using version %s - len2=%d re_body=\n%s\n End \n", tblock->tm_year, tblock->tm_mon, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec,method, url, version,len2,re_body);
 			}
 			else
 			{
 				len2 = 0;
+				post_type = 0;
+				printf("now datetime: %d-%d-%d %d:%d:%d - New %s request for %s using version %s - len2=0 re_body=\nNULL\n End \n", tblock->tm_year, tblock->tm_mon, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec,method, url, version);
 			}
 		
 			if ((sp = fopen("/home/pi/idol/re.txt","a+")) != NULL)
 			{
-				fprintf(sp,"now datetime: %d-%d-%d %d:%d:%d - New %s request for %s using version %s - len2=%d body=\n%s\n End \n", tblock->tm_year, tblock->tm_mon, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec,method, url, version,len2,body);
+				fprintf(sp,"now datetime: %d-%d-%d %d:%d:%d - New %s request for %s using version %s - len2=%d re_body=\n%s\n End \n", tblock->tm_year, tblock->tm_mon, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec,method, url, version,len2,re_body);
 				fclose(sp);
 			}
 		
-		
-		
-		
-		
-			uint16_t id=0;
-			  uint8_t state11=0,state22=0,state33=0;
-			  json_object *type = NULL;
-			  json_object *name = NULL;
-			  json_object *my_object = json_tokener_parse(body);
-			  json_object *devid = NULL;
-			  json_object_object_get_ex(my_object, "devid",&devid);
-			  json_object *state1 = NULL;
-			  json_object_object_get_ex(my_object, "state1",&state1);
-			  json_object *state2 = NULL;
-			  json_object_object_get_ex(my_object, "state2",&state2);
-			  json_object *state3 = NULL;
-			  json_object_object_get_ex(my_object, "state3",&state3);
-			  json_object_object_get_ex(my_object, "type",&type);
-			  json_object_object_get_ex(my_object, "name",&name);
-		  
-			  id = (uint16_t)json_object_get_int(devid);
-			  state11 = (uint16_t)json_object_get_int(state1);
-			  state22 = (uint16_t)json_object_get_int(state2);
-			  state33 = (uint16_t)json_object_get_int(state3);
-		  
-		  
-		  
-			  if(0 == strcmp (json_object_to_json_string(type), "\"control_down\""))
-				  {
-					  if(0 == strcmp (json_object_to_json_string(name), "\"KETING_ID\""))
-						  id = KETING_ID;
-					  if(0 == strcmp (json_object_to_json_string(name), "\"CANTING_ID\""))
-						  id = CANTING_ID;
-					  if(0 == strcmp (json_object_to_json_string(name), "\"CHUFANG_ID\""))
-						  id = CHUFANG_ID;
-					  if(0 == strcmp (json_object_to_json_string(name), "\"MENTING_ID\""))
-						  id = MENTING_ID;
-					  if(0 == strcmp (json_object_to_json_string(name), "\"GUODAO_ID\""))
-						  id = GUODAO_ID;
-					  if(0 == strcmp (json_object_to_json_string(name), "\"ZHUWO_ID\""))
-						  id = ZHUWO_ID;
-					  if(0 == strcmp (json_object_to_json_string(name), "\"CIWO_ID\""))
-						  id = CIWO_ID;
-		  
+			if(len2 != 0)
+			{
+				json_object *my_object = json_tokener_parse(re_body);
+				if(json_object_to_json_string(my_object) != NULL && (0 != strcmp (json_object_to_json_string(my_object), "null")))
+				{
+					  uint16_t id=0;
+					  uint8_t state11=0,state22=0,state33=0;
+					  post_type = 1;
+					  json_object *type = NULL;
+					  json_object *name = NULL;
 					  
-					  MXJ_SendCtrlMessage(id,state11,state22,state33);
-					  
-					  i=find_dev(id);
-					if(i>=0)
-					  {
-						  if(state11 == 3)					  
-							  if(mxj_device[i].state[0] == 1)
-								  mxj_device[i].state[0]=0;
-							  else if(mxj_device[i].state[0] == 0)
-								  mxj_device[i].state[0]=1;
-						  if(state11 == 1||state11 == 0)
-							  mxj_device[i].state[0]=state11;
-		  
-						  if(state22 == 3)
-							  if(mxj_device[i].state[1] == 1)
-								  mxj_device[i].state[1]=0;
-							  else if(mxj_device[i].state[1] == 0)
-								  mxj_device[i].state[1]=1;
-						  if(state22 == 1||state22 == 0)
-							  mxj_device[i].state[1]=state22;
-						  
-						  build_json();
-					  }
-					  MXJ_GetStateMessage(id);
-				  }
-			  if(0 == strcmp (json_object_to_json_string(type), "\"register_ok\""))
-				  MXJ_SendRegisterMessage(id,MXJ_REGISTER_OK);
-			  if(0 == strcmp (json_object_to_json_string(type), "\"register_failed\""))
-				  MXJ_SendRegisterMessage(id,MXJ_REGISTER_FAILED);
-			  if(0 == strcmp (json_object_to_json_string(type), "\"ask_state\""))
-				  MXJ_GetStateMessage(id);
-			  if(0 == strcmp (json_object_to_json_string(type), "\"any_data\""))
-				  MXJ_SendCtrlMessage(id,state11,state22,state33);
-			  if(0 == strcmp (json_object_to_json_string(type), "\"heart\""))
-				  ;//MXJ_GetStateMessage(0xffff);
-		  
-			  printf("\n");
-			  //printf("state11 = %d\n", state11);
-			  //printf("state22 = %d\n", state22);
-			  //printf("state33 = %d\n", state33);
-			  printf("recieve post json= %s\n", json_object_to_json_string(my_object));
-		
-		
+					  json_object *devid = NULL;
+					  json_object_object_get_ex(my_object, "devid",&devid);
+					  json_object *state1 = NULL;
+					  json_object_object_get_ex(my_object, "state1",&state1);
+					  json_object *state2 = NULL;
+					  json_object_object_get_ex(my_object, "state2",&state2);
+					  json_object *state3 = NULL;
+					  json_object_object_get_ex(my_object, "state3",&state3);
+					  json_object_object_get_ex(my_object, "type",&type);
+					  json_object_object_get_ex(my_object, "name",&name);
+				  
+					  id = (uint16_t)json_object_get_int(devid);
+					  state11 = (uint16_t)json_object_get_int(state1);
+					  state22 = (uint16_t)json_object_get_int(state2);
+					  state33 = (uint16_t)json_object_get_int(state3);
+				  
+				  
+				  
+					  if(0 == strcmp (json_object_to_json_string(type), "\"control_down\""))
+						  {
+							  if(0 == strcmp (json_object_to_json_string(name), "\"KETING_ID\""))
+								  id = KETING_ID;
+							  if(0 == strcmp (json_object_to_json_string(name), "\"CANTING_ID\""))
+								  id = CANTING_ID;
+							  if(0 == strcmp (json_object_to_json_string(name), "\"CHUFANG_ID\""))
+								  id = CHUFANG_ID;
+							  if(0 == strcmp (json_object_to_json_string(name), "\"MENTING_ID\""))
+								  id = MENTING_ID;
+							  if(0 == strcmp (json_object_to_json_string(name), "\"GUODAO_ID\""))
+								  id = GUODAO_ID;
+							  if(0 == strcmp (json_object_to_json_string(name), "\"ZHUWO_ID\""))
+								  id = ZHUWO_ID;
+							  if(0 == strcmp (json_object_to_json_string(name), "\"CIWO_ID\""))
+								  id = CIWO_ID;
+				  
+							  
+							  MXJ_SendCtrlMessage(id,state11,state22,state33);
+							  
+							  i=find_dev(id);
+							if(i>=0)
+							  {
+								  if(state11 == 3)					  
+									  if(mxj_device[i].state[0] == 1)
+										  mxj_device[i].state[0]=0;
+									  else if(mxj_device[i].state[0] == 0)
+										  mxj_device[i].state[0]=1;
+								  if(state11 == 1||state11 == 0)
+									  mxj_device[i].state[0]=state11;
+				  
+								  if(state22 == 3)
+									  if(mxj_device[i].state[1] == 1)
+										  mxj_device[i].state[1]=0;
+									  else if(mxj_device[i].state[1] == 0)
+										  mxj_device[i].state[1]=1;
+								  if(state22 == 1||state22 == 0)
+									  mxj_device[i].state[1]=state22;
+								  
+								  build_json();
+							  }
+							  MXJ_GetStateMessage(id);
+						  }
+					  if(0 == strcmp (json_object_to_json_string(type), "\"register_ok\""))
+						  MXJ_SendRegisterMessage(id,MXJ_REGISTER_OK);
+					  if(0 == strcmp (json_object_to_json_string(type), "\"register_failed\""))
+						  MXJ_SendRegisterMessage(id,MXJ_REGISTER_FAILED);
+					  if(0 == strcmp (json_object_to_json_string(type), "\"ask_state\""))
+						  MXJ_GetStateMessage(id);
+					  if(0 == strcmp (json_object_to_json_string(type), "\"any_data\""))
+						  MXJ_SendCtrlMessage(id,state11,state22,state33);
+					  if(0 == strcmp (json_object_to_json_string(type), "\"heart\""))
+						  ;//MXJ_GetStateMessage(0xffff);
+				  
+					  printf("\n");
+					  //printf("state11 = %d\n", state11);
+					  //printf("state22 = %d\n", state22);
+					  //printf("state33 = %d\n", state33);
+					  printf("recieve post json= %s\n", json_object_to_json_string(my_object));
+				}
+				
+				else
+				{
+					xmlDocPtr doc;
+					xmlNodePtr cur;
+					xmlChar *uri;
+					char *str_data;
+					post_type = 2;
+					printf("xml2\n");
+					doc = xmlParseMemory(re_body,len2);
+					if (doc == NULL ) 
+					{
+						printf("xmlParseMemory failed\n");
+						xmlFree(doc);
+					}
+					else
+					{
+						cur = xmlDocGetRootElement(doc);
+						if (cur == NULL ) 
+						{
+							printf("xmlDocGetRootElement failed\n");
+						}
+						else
+						{
+
+							cur = cur->xmlChildrenNode;
+							while (cur != NULL)
+							{
+								if (!xmlStrcmp(cur->name, (const xmlChar *)"CreateTime"))
+								{
+									uri = xmlNodeGetContent(cur);
+									CreateTime = uri;
+									printf("CreateTime: %s\n", uri);
+								}
+								else if (!xmlStrcmp(cur->name, (const xmlChar *)"FromUserName"))
+								{
+									uri = xmlNodeGetContent(cur);
+									FromUserName = uri;
+									printf("FromUserName: %s\n", uri);
+									
+								}
+								else if (!xmlStrcmp(cur->name, (const xmlChar *)"ToUserName"))
+								{
+									uri = xmlNodeGetContent(cur);
+									ToUserName = uri;
+									printf("ToUserName: %s\n", uri);
+									
+								}
+								else if (!xmlStrcmp(cur->name, (const xmlChar *)"MsgType"))
+								{
+									uri = xmlNodeGetContent(cur);
+									printf("MsgType: %s\n", uri);
+								}
+								else if (!xmlStrcmp(cur->name, (const xmlChar *)"Content"))
+								{
+									uri = xmlNodeGetContent(cur);
+									printf("Content: %s\n", uri);
+									if(0 == strcmp (uri, "openketing"))
+									{
+										str_data = uri;
+										MXJ_SendCtrlMessage(KETING_ID,1,1,1);
+									}
+									else if(0 == strcmp (uri, "closeketing"))
+									{
+										str_data = uri;
+										MXJ_SendCtrlMessage(KETING_ID,0,0,0);
+									}
+									else if(0 == strcmp (uri, "opencanting"))
+									{
+										str_data = uri;
+										MXJ_SendCtrlMessage(CANTING_ID,1,0,0);
+									}
+									else if(0 == strcmp (uri, "closecanting"))
+									{
+										str_data = uri;
+										MXJ_SendCtrlMessage(CANTING_ID,0,0,0);
+									}
+									else if(0 == strcmp (uri, "openchufang"))
+									{
+										str_data = uri;
+										MXJ_SendCtrlMessage(CHUFANG_ID,1,0,0);
+									}
+									else if(0 == strcmp (uri, "closechufang"))
+									{
+										str_data = uri;
+										MXJ_SendCtrlMessage(CHUFANG_ID,0,0,0);
+									}
+									else if(0 == strcmp (uri, "openmenting"))
+									{
+										str_data = uri;
+										MXJ_SendCtrlMessage(MENTING_ID,1,0,0);
+									}
+									else if(0 == strcmp (uri, "closementing"))
+									{
+										str_data = uri;
+										MXJ_SendCtrlMessage(MENTING_ID,0,0,0);
+									}
+									else if(0 == strcmp (uri, "openzhuwo"))
+									{
+										str_data = uri;
+										MXJ_SendCtrlMessage(ZHUWO_ID,1,0,0);
+									}
+									else if(0 == strcmp (uri, "closezhuwo"))
+									{
+										str_data = uri;
+										MXJ_SendCtrlMessage(ZHUWO_ID,0,0,0);
+									}
+									else if(0 == strcmp (uri, "openciwo"))
+									{
+										str_data = uri;
+										MXJ_SendCtrlMessage(CIWO_ID,1,0,0);
+									}
+									else if(0 == strcmp (uri, "closeciwo"))
+									{
+										str_data = uri;
+										MXJ_SendCtrlMessage(CIWO_ID,0,0,0);
+									}
+									else if(0 == strcmp (uri, "openguodao"))
+									{
+										str_data = uri;
+										MXJ_SendCtrlMessage(GUODAO_ID,2,1,2);
+									}else if(0 == strcmp (uri, "closeguodao"))
+									{
+										str_data = uri;
+										MXJ_SendCtrlMessage(GUODAO_ID,2,0,2);
+									}
+									else if(0 == strcmp (uri, "opencesuo"))
+									{
+										str_data = uri;
+										MXJ_SendCtrlMessage(GUODAO_ID,1,2,2);
+									}
+									else if(0 == strcmp (uri, "closecesuo"))
+									{
+										str_data = uri;
+										MXJ_SendCtrlMessage(GUODAO_ID,0,2,2);
+									}else
+										str_data = "unknow cmd";
+									
+									sprintf(strxml,"<xml><ToUserName><![CDATA[%s]]></ToUserName><FromUserName><![CDATA[%s]]></FromUserName><CreateTime>%d</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[%s]]></Content></xml>",FromUserName,ToUserName,time(NULL),str_data);
+									printf("strxml = %s\n",strxml);
+								}
+								
+								
+
+								
+								
+								cur = cur->next;
+							}
+							xmlFree(cur);
+							xmlFree(uri);
+						}
+					}					
+				}
+				
+				free(re_body);
+			}
+
 		*upload_data_size = 0;
 		return MHD_YES;
 	  }
-	  else if(json_str!=NULL)
+	  else if(post_type == 2)
+	  	  return send_page (connection,strxml);
+	  else if(post_type == 1&&json_str!=NULL)
 		  return send_page (connection,json_str);
 	  else
 		  return send_page (connection, errorpage);  
