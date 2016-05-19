@@ -723,8 +723,10 @@ void recieve_usart(uint8_t *rx,uint8_t len)
   int i=0,j=0;
   int id=0,cid=0;
   int tempctrl[3]={2,2,2};
+  time(&now);
+  tblock = localtime(&now);
   printf("\n");
-  printf("recieved:%d\n",len);
+  printf("recieved:%d - at: %d-%d-%d %d:%d:%d\n",len,tblock->tm_year, tblock->tm_mon, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec);
   
   for(i=0;i<len;i++)
     printf("%02x ",rx[i]);
@@ -932,12 +934,12 @@ void recieve_usart(uint8_t *rx,uint8_t len)
 				{
 					MXJ_SendCtrlMessage(CHUFANG_ID,1,1,1);
 					MXJ_GetStateMessage(CHUFANG_ID);
-					humand = 30;
+					humand = 120;
 				}	
 								
 			}
 			if(humand > 1 )
-				humand = 30;
+				humand = 120;
 		}
 	}
 	else if(cid == 0x402)

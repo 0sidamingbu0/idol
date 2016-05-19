@@ -89,8 +89,8 @@ ahc_echo (void *cls,
       return MHD_YES;
     }
   *ptr = NULL;                  /* reset when done */
-  if (0 == stat ("/home/pi/idol/re.txt", &buf))
-    file = fopen ("/home/pi/idol/re.txt", "rb");
+  if (0 == stat ("/home/pi/idol/zbclient.log", &buf))
+    file = fopen ("/home/pi/idol/zbclient.log", "rb");
   else
     file = NULL;
   if (NULL == file)
