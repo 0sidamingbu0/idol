@@ -770,6 +770,8 @@ void recieve_usart(uint8_t *rx,uint8_t len)
 				if( rx[5] == 3)
 					mxj_device[i].state[2]=rx[6];
 
+				if(id == CHUFANG_ID)
+					humand = 0;
 				build_json();
 			}
 	     }
