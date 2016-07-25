@@ -77,7 +77,7 @@ sudo find / -name libmicrohttpd*
 #define XMLOUSHUI_CIWO_ID		0x0000
 
 
-typedef unsigned char   uint8_t;     //ÎŞ·ûºÅ8Î»Êı
+typedef unsigned char   uint8_t;     //éƒçŠµîƒé™?æµ£å¶†æšŸ
 
 #define WW_STATE      0x55
 #define AA_STATE      0xaa
@@ -490,9 +490,9 @@ char *re_body;
 								  id = CIWO_ID;
 				  
 							  if(id == GUODAO_ID)
-							  	MXJ_SendCtrlMessage(id,2,state11,state22,state33);
+							  	MXJ_SendCtrlMessage(id,3,state11,state22,state33);//2need change
 							  else
-							  	MXJ_SendCtrlMessage(id,1,state11,state22,state33);
+							  	MXJ_SendCtrlMessage(id,3,state11,state22,state33);//1need change
 							  
 							  i=find_dev(id);
 							if(i>=0)
@@ -591,86 +591,86 @@ char *re_body;
 								{
 									uri = xmlNodeGetContent(cur);
 									//printf("Content: %s\n", uri);
-									if(0 == strcmp (uri, "kaiketing"))
+									if(0 == strcmp (uri, "å¼€å®¢å…"))
 									{
 										str_data = uri;
-										MXJ_SendCtrlMessage(KETING_ID,1,1,1,1);
+										MXJ_SendCtrlMessage(KETING_ID,3,1,1,1);//1need change
 									}
-									else if(0 == strcmp (uri, "guanketing"))
+									else if(0 == strcmp (uri, "å…³å®¢å…"))
 									{
 										str_data = uri;
-										MXJ_SendCtrlMessage(KETING_ID,1,0,0,0);
+										MXJ_SendCtrlMessage(KETING_ID,3,0,0,0);
 									}
-									else if(0 == strcmp (uri, "kaicanting"))
+									else if(0 == strcmp (uri, "å¼€é¤å…"))
 									{
 										str_data = uri;
-										MXJ_SendCtrlMessage(CANTING_ID,1,1,0,0);
+										MXJ_SendCtrlMessage(CANTING_ID,3,1,0,0);
 									}
-									else if(0 == strcmp (uri, "guancanting"))
+									else if(0 == strcmp (uri, "å…³é¤å…"))
 									{
 										str_data = uri;
-										MXJ_SendCtrlMessage(CANTING_ID,1,0,0,0);
+										MXJ_SendCtrlMessage(CANTING_ID,3,0,0,0);
 									}
-									else if(0 == strcmp (uri, "kaichufang"))
+									else if(0 == strcmp (uri, "å¼€å¨æˆ¿"))
 									{
 										str_data = uri;
-										MXJ_SendCtrlMessage(CHUFANG_ID,1,1,0,0);
+										MXJ_SendCtrlMessage(CHUFANG_ID,3,1,0,0);
 									}
-									else if(0 == strcmp (uri, "guanchufang"))
+									else if(0 == strcmp (uri, "å…³å¨æˆ¿"))
 									{
 										str_data = uri;
-										MXJ_SendCtrlMessage(CHUFANG_ID,1,0,0,0);
+										MXJ_SendCtrlMessage(CHUFANG_ID,3,0,0,0);
 									}
-									else if(0 == strcmp (uri, "kaimenting"))
+									else if(0 == strcmp (uri, "å¼€é—¨å…"))
 									{
 										str_data = uri;
-										MXJ_SendCtrlMessage(MENTING_ID,1,1,0,0);
+										MXJ_SendCtrlMessage(MENTING_ID,3,1,0,0);
 									}
-									else if(0 == strcmp (uri, "guanmenting"))
+									else if(0 == strcmp (uri, "å…³é—¨å…"))
 									{
 										str_data = uri;
-										MXJ_SendCtrlMessage(MENTING_ID,1,0,0,0);
+										MXJ_SendCtrlMessage(MENTING_ID,3,0,0,0);
 									}
-									else if(0 == strcmp (uri, "kaizhuwo"))
+									else if(0 == strcmp (uri, "å¼€ä¸»å§"))
 									{
 										str_data = uri;
-										MXJ_SendCtrlMessage(ZHUWO_ID,1,1,0,0);
+										MXJ_SendCtrlMessage(ZHUWO_ID,3,1,0,0);
 									}
-									else if(0 == strcmp (uri, "guanzhuwo"))
+									else if(0 == strcmp (uri, "å…³ä¸»å§"))
 									{
 										str_data = uri;
-										MXJ_SendCtrlMessage(ZHUWO_ID,1,0,0,0);
+										MXJ_SendCtrlMessage(ZHUWO_ID,3,0,0,0);
 									}
-									else if(0 == strcmp (uri, "kaiciwo"))
+									else if(0 == strcmp (uri, "å¼€æ¬¡å§"))
 									{
 										str_data = uri;
-										MXJ_SendCtrlMessage(CIWO_ID,1,1,0,0);
+										MXJ_SendCtrlMessage(CIWO_ID,3,1,0,0);
 									}
-									else if(0 == strcmp (uri, "guanciwo"))
+									else if(0 == strcmp (uri, "å…³æ¬¡å§"))
 									{
 										str_data = uri;
-										MXJ_SendCtrlMessage(CIWO_ID,1,0,0,0);
+										MXJ_SendCtrlMessage(CIWO_ID,3,0,0,0);
 									}
-									else if(0 == strcmp (uri, "kaiguodao"))
+									else if(0 == strcmp (uri, "å¼€è¿‡é“"))
 									{
 										str_data = uri;
-										MXJ_SendCtrlMessage(GUODAO_ID,2,2,1,2);
-									}else if(0 == strcmp (uri, "guanguodao"))
+										MXJ_SendCtrlMessage(GUODAO_ID,3,2,1,2);//2need change
+									}else if(0 == strcmp (uri, "å…³è¿‡é“"))
 									{
 										str_data = uri;
-										MXJ_SendCtrlMessage(GUODAO_ID,2,2,0,2);
+										MXJ_SendCtrlMessage(GUODAO_ID,3,2,0,2);//2need change
 									}
-									else if(0 == strcmp (uri, "kaicesuo"))
+									else if(0 == strcmp (uri, "å¼€å•æ‰€"))
 									{
 										str_data = uri;
-										MXJ_SendCtrlMessage(GUODAO_ID,2,1,2,2);
+										MXJ_SendCtrlMessage(GUODAO_ID,3,1,2,2);
 									}
-									else if(0 == strcmp (uri, "guancesuo"))
+									else if(0 == strcmp (uri, "å…³å•æ‰€"))
 									{
 										str_data = uri;
-										MXJ_SendCtrlMessage(GUODAO_ID,2,0,2,2);
+										MXJ_SendCtrlMessage(GUODAO_ID,3,0,2,2);//need change
 									}else
-										str_data = "unknow cmd";
+										str_data = "egï¼šå¼€å®¢å…ã€å…³å®¢å…ã€å¼€æ¬¡å§ã€å¼€è¿‡é“ã€å¼€é—¨å…ã€å¼€å¨æˆ¿ã€å¼€é¤å…ã€å¼€å•æ‰€";
 									
 									sprintf(strxml,"<xml><ToUserName><![CDATA[%s]]></ToUserName><FromUserName><![CDATA[%s]]></FromUserName><CreateTime>%d</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[%s]]></Content></xml>",FromUserName,ToUserName,time(NULL),str_data);
 									printf("strxml = %s\n",strxml);
@@ -706,7 +706,7 @@ char *re_body;
   return send_page (connection, errorpage);
 }
 
-void send_usart(uint8_t *data,uint8_t len) //id,state1,state2,state3 1=¿ª,0=¹Ø,2=±£³Ö
+void send_usart(uint8_t *data,uint8_t len) //id,state1,state2,state3 1=å¯®â‚¬,0=é?2=æ·‡æ¿‡å¯”
 {
   uint8_t txbuf[100];
   uint8_t i=0;
@@ -913,9 +913,9 @@ void recieve_usart(uint8_t *rx,uint8_t len)
  		if(cid == 0 && rx[12] <= len - 13 && i==-1)
 		{
 			 uint8_t *temp_str = NULL;
-		    /*·ÖÅäÄÚ´æ¿Õ¼ä*/
+		    /*é’å—›å¤éå‘­ç“¨ç»Œæ´ªæ£¿*/
 		    temp_str = (uint8_t*)calloc(rx[12],sizeof(uint8_t));
-		    /*½«helloĞ´Èë*/
+		    /*çå”„elloéæ¬å†*/
 		    strncpy(temp_str, &rx[13],rx[12]);
 			printf("temp_str = %s\n",temp_str);
 			if (0 == strcmp (temp_str, "lumi.sensor_switch"))
@@ -969,13 +969,13 @@ void recieve_usart(uint8_t *rx,uint8_t len)
 		if(rx[11] == 0x20)
 		{
 			printf("double kick\n");
-			MXJ_SendCtrlMessage(ZHUWO_ID,1,0,0,0);
-			MXJ_SendCtrlMessage(CIWO_ID,1,0,0,0);
-			MXJ_SendCtrlMessage(CHUFANG_ID,1,0,0,0);
-			MXJ_SendCtrlMessage(CANTING_ID,1,0,0,0);
-			MXJ_SendCtrlMessage(KETING_ID,1,0,0,0);
-			MXJ_SendCtrlMessage(MENTING_ID,1,0,0,0);
-			MXJ_SendCtrlMessage(GUODAO_ID,2,0,0,0);
+			MXJ_SendCtrlMessage(ZHUWO_ID,3,0,0,0);
+			MXJ_SendCtrlMessage(CIWO_ID,3,0,0,0);
+			MXJ_SendCtrlMessage(CHUFANG_ID,3,0,0,0);
+			MXJ_SendCtrlMessage(CANTING_ID,3,0,0,0);
+			MXJ_SendCtrlMessage(KETING_ID,3,0,0,0);
+			MXJ_SendCtrlMessage(MENTING_ID,3,0,0,0);
+			MXJ_SendCtrlMessage(GUODAO_ID,3,0,0,0);//2need change
 
 			//MXJ_GetStateMessage(0xffff);
 		}
@@ -984,17 +984,17 @@ void recieve_usart(uint8_t *rx,uint8_t len)
 			printf("action = %d\n",rx[12]);
 			if(id==XMKG_ZHU_ID&&rx[12] == 1)
 			{					
-				MXJ_SendCtrlMessage(ZHUWO_ID,1,3,3,3);
+				MXJ_SendCtrlMessage(ZHUWO_ID,3,3,3,3);//need change
 				//MXJ_GetStateMessage(ZHUWO_ID);
 			}
 			if(id==XMKG_CI_ID&&rx[12] == 1)
 			{
-				MXJ_SendCtrlMessage(CIWO_ID,1,3,3,3);
+				MXJ_SendCtrlMessage(CIWO_ID,3,3,3,3);//need change
 				//MXJ_GetStateMessage(CIWO_ID);
 			}
 			if(id==XMMENCI_ID)
 			{
-				MXJ_SendCtrlMessage(MENTING_ID,1,rx[12],rx[12],rx[12]);
+				MXJ_SendCtrlMessage(MENTING_ID,3,rx[12],rx[12],rx[12]);//need change
 				//MXJ_GetStateMessage(MENTING_ID);
 			}
 			if(id==XMLOUSHUI_CIWO_ID)
@@ -1002,14 +1002,14 @@ void recieve_usart(uint8_t *rx,uint8_t len)
 				if(rx[12]==0)//loushui
 				{
 					char str[200]={0};
-					sprintf(str,"text=´ÎÎÔÂ©Ë®À²");				
+					sprintf(str,"text=æ¬¡å§æ¼æ°´");				
 					curl_easy_setopt(posturl, CURLOPT_POSTFIELDS,str);
 					curl_easy_perform(posturl);
 				}
 				else if(rx[12]==1)
 				{
 					char str[200]={0};
-					sprintf(str,"text=´ÎÎÔÂ©Ë®½â³ı");
+					sprintf(str,"text=æ¬¡å§æ¼æ°´è§£é™¤");
 					curl_easy_setopt(posturl, CURLOPT_POSTFIELDS,str);
 					curl_easy_perform(posturl);
 				}
@@ -1031,7 +1031,7 @@ void recieve_usart(uint8_t *rx,uint8_t len)
 			{				
 				if(humand <= 1)
 				{
-					MXJ_SendCtrlMessage(CHUFANG_ID,1,1,1,1);
+					MXJ_SendCtrlMessage(CHUFANG_ID,3,1,1,1);//need change
 					//MXJ_GetStateMessage(CHUFANG_ID);
 					humand = 120;
 				}	
@@ -1257,11 +1257,60 @@ int main(void)
 	  fclose(sp);
   }
   char str[200]={0};
-  sprintf(str,"text=ÏµÍ³Æô¶¯ AT:%d-%d-%d %d:%d:%d", tblock->tm_year+1900, tblock->tm_mon+1, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec);
+  sprintf(str,"text=ç³»ç»Ÿå¯åŠ¨  AT:%d-%d-%d %d:%d:%d", tblock->tm_year+1900, tblock->tm_mon+1, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec);
   curl_easy_setopt(posturl, CURLOPT_POSTFIELDS,str);
   curl_easy_perform(posturl);
 
-  
+	mxj_device[devsize].id=KETING_ID;
+	mxj_device[devsize].type=4;
+	mxj_device[devsize].idx=1;
+	mxj_device[devsize].registered=1;
+	if(devsize<DEV_SIZE)
+		devsize ++;
+	
+	mxj_device[devsize].id=CANTING_ID;
+	mxj_device[devsize].type=4;
+	mxj_device[devsize].idx=1;
+	mxj_device[devsize].registered=1;
+	if(devsize<DEV_SIZE)
+		devsize ++;
+	
+	mxj_device[devsize].id=CHUFANG_ID;
+	mxj_device[devsize].type=4;
+	mxj_device[devsize].idx=1;
+	mxj_device[devsize].registered=1;
+	if(devsize<DEV_SIZE)
+		devsize ++;
+	
+	mxj_device[devsize].id=MENTING_ID;
+	mxj_device[devsize].type=4;
+	mxj_device[devsize].idx=1;
+	mxj_device[devsize].registered=1;
+	if(devsize<DEV_SIZE)
+		devsize ++;
+	
+	mxj_device[devsize].id=GUODAO_ID;
+	mxj_device[devsize].type=4;
+	mxj_device[devsize].idx=2;
+	mxj_device[devsize].registered=1;
+	if(devsize<DEV_SIZE)
+		devsize ++;
+	
+	mxj_device[devsize].id=ZHUWO_ID;
+	mxj_device[devsize].type=4;
+	mxj_device[devsize].idx=1;
+	mxj_device[devsize].registered=1;
+	if(devsize<DEV_SIZE)
+		devsize ++;
+	
+	mxj_device[devsize].id=CIWO_ID;
+	mxj_device[devsize].type=4;
+	mxj_device[devsize].idx=1;
+	mxj_device[devsize].registered=1;
+	if(devsize<DEV_SIZE)
+		devsize ++;
+	
+  MXJ_GetStateMessage(0xffff);
   build_json();
 	while(1)
 	{  
@@ -1282,7 +1331,7 @@ int main(void)
 		
 		if(humand == 1)
 		{
-			MXJ_SendCtrlMessage(CHUFANG_ID,1,0,0,0);	
+			MXJ_SendCtrlMessage(CHUFANG_ID,3,0,0,0);//need change	
 			//MXJ_GetStateMessage(CHUFANG_ID);		
 		}
 		if(humand > 0)
@@ -1308,7 +1357,7 @@ int main(void)
  */
 void MXJ_SendCtrlMessage( uint16_t id ,uint8_t len,uint8_t msg1 , uint8_t msg2 , uint8_t msg3 )
 {
-//  uint8_t data[5]={MXJ_CTRL_DOWN,3,msg1,msg2,msg3};//¨¨?a????1¡ë??¡ã??
+//  uint8_t data[5]={MXJ_CTRL_DOWN,3,msg1,msg2,msg3};//çŒ«?a????1éˆ¥??æ³??
   uint8_t data[7]={0,len+3,(uint8_t)(id>>8),(uint8_t)id,msg1,msg2,msg3};
   send_usart(data,4+len);
 }
@@ -1322,9 +1371,9 @@ void MXJ_SendCtrlMessage( uint16_t id ,uint8_t len,uint8_t msg1 , uint8_t msg2 ,
  *
  * @return  none
  
-      //uint8_t data[7]={0,6,0x17,0x1f,1,1,1};//¿ØÖÆÃüÁî¡ı
-     //uint8_t data[4]={10,3,0x17,0x1f};//¿ª¹ØÅäÖÃÎÄ¼ş»ñÈ¡¡ı
-     //uint8_t data[12]={8,11,0x17,0x1f,0,0,0x7b,0x4f,1,2,2,1};//¿ª¹ØÅäÖÃÎÄ¼şÉèÖÃ¡ı    
+      //uint8_t data[7]={0,6,0x17,0x1f,1,1,1};//éºÑƒåŸ—é›æˆ’æŠ¤éˆ«?
+     //uint8_t data[4]={10,3,0x17,0x1f};//å¯®â‚¬éæŠ½å¤ç¼ƒî†½æƒæµ æƒ°å¹é™æ ¤å•Œ
+     //uint8_t data[12]={8,11,0x17,0x1f,0,0,0x7b,0x4f,1,2,2,1};//å¯®â‚¬éæŠ½å¤ç¼ƒî†½æƒæµ æƒ°î†•ç¼ƒî†¹å•Œ    
      //send_usart(data,12);
  */
 void MXJ_SendRegisterMessage( uint16_t id, uint8_t state )
@@ -1346,13 +1395,13 @@ void MXJ_SendRegisterMessage( uint16_t id, uint8_t state )
 
 void MXJ_SendPingMessage( uint16_t id )
 {
-  uint8_t data[4]={0x0f,3,(uint8_t)(id>>8),(uint8_t)id};//¨¨?a????1¡ë??¡ã??
+  uint8_t data[4]={0x0f,3,(uint8_t)(id>>8),(uint8_t)id};//çŒ«?a????1éˆ¥??æ³??
   send_usart(data,4);
 }
 
 void MXJ_GetIdxMessage( uint16_t id )
 {
-  uint8_t data[4]={0x0b,3,(uint8_t)(id>>8),(uint8_t)id};//¨¨?a????1¡ë??¡ã??
+  uint8_t data[4]={0x0b,3,(uint8_t)(id>>8),(uint8_t)id};//çŒ«?a????1éˆ¥??æ³??
   send_usart(data,4);
 }
 
@@ -1367,7 +1416,7 @@ void MXJ_GetIdxMessage( uint16_t id )
  */
 void MXJ_GetStateMessage( uint16_t id )
 {
-  uint8_t data[4]={5,3,(uint8_t)(id>>8),(uint8_t)id};//×Ô¶¨ÒåÊı¾İ
+  uint8_t data[4]={5,3,(uint8_t)(id>>8),(uint8_t)id};//é‘·î„ç•¾æ¶”å¤‹æšŸé¹?
   send_usart(data,4);
 }
 
