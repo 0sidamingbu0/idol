@@ -75,7 +75,7 @@ sudo find / -name libmicrohttpd*
 #define XMKG_WAI_ID		0x9F68
 
 #define XMLOUSHUI_CIWO_ID		0x0000
-
+#define XMLOUSHUI_CHUFANG_ID    0x0000
 
 typedef unsigned char   uint8_t;     //鏃犵鍙?浣嶆暟
 
@@ -996,6 +996,18 @@ void recieve_usart(uint8_t *rx,uint8_t len)
 			{
 				MXJ_SendCtrlMessage(MENTING_ID,3,rx[12],rx[12],rx[12]);//need change
 				//MXJ_GetStateMessage(MENTING_ID);
+				char str[200]={0};
+				if(rx[12]==1)
+				{
+					sprintf(str,"text=开门！");
+				}
+				else if(rx[12]==0)
+				{
+					sprintf(str,"text=关门！");
+				}
+								
+				curl_easy_setopt(posturl, CURLOPT_POSTFIELDS,str);
+				curl_easy_perform(posturl);
 			}
 			if(id==XMLOUSHUI_CIWO_ID)
 			{
@@ -1010,6 +1022,23 @@ void recieve_usart(uint8_t *rx,uint8_t len)
 				{
 					char str[200]={0};
 					sprintf(str,"text=次卧漏水解除");
+					curl_easy_setopt(posturl, CURLOPT_POSTFIELDS,str);
+					curl_easy_perform(posturl);
+				}
+			}
+			if(id==XMLOUSHUI_CHUFANG_ID)
+			{
+				if(rx[12]==0)//loushui
+				{
+					char str[200]={0};
+					sprintf(str,"text=厨房漏水");				
+					curl_easy_setopt(posturl, CURLOPT_POSTFIELDS,str);
+					curl_easy_perform(posturl);
+				}
+				else if(rx[12]==1)
+				{
+					char str[200]={0};
+					sprintf(str,"text=厨房漏水解除");
 					curl_easy_setopt(posturl, CURLOPT_POSTFIELDS,str);
 					curl_easy_perform(posturl);
 				}
