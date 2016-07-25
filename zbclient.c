@@ -77,6 +77,8 @@ sudo find / -name libmicrohttpd*
 #define XMLOUSHUI_CIWO_ID		0x0000
 #define XMLOUSHUI_CHUFANG_ID    0x0000
 
+	
+
 typedef unsigned char   uint8_t;     //鏃犵鍙?浣嶆暟
 
 #define WW_STATE      0x55
@@ -151,9 +153,10 @@ typedef struct
 {
   uint16_t id;
   uint8_t type;
-  uint8_t ctrl;
+  uint8_t heart;
   uint16_t devid;
   uint8_t idx;
+  char * name;
   uint8_t light[3];
   uint8_t state[3];
   uint8_t registered;
@@ -494,27 +497,7 @@ char *re_body;
 							  else
 							  	MXJ_SendCtrlMessage(id,3,state11,state22,state33);//1need change
 							  
-							  i=find_dev(id);
-							if(i>=0)
-							  {
-								  if(state11 == 3)					  
-									  if(mxj_device[i].state[0] == 1)
-										  mxj_device[i].state[0]=0;
-									  else if(mxj_device[i].state[0] == 0)
-										  mxj_device[i].state[0]=1;
-								  if(state11 == 1||state11 == 0)
-									  mxj_device[i].state[0]=state11;
-				  
-								  if(state22 == 3)
-									  if(mxj_device[i].state[1] == 1)
-										  mxj_device[i].state[1]=0;
-									  else if(mxj_device[i].state[1] == 0)
-										  mxj_device[i].state[1]=1;
-								  if(state22 == 1||state22 == 0)
-									  mxj_device[i].state[1]=state22;
-								  
-								  build_json();
-							  }
+							  
 							  //MXJ_GetStateMessage(id);
 						  }
 					  if(0 == strcmp (json_object_to_json_string(type), "\"register_ok\""))
@@ -756,7 +739,7 @@ void del_dev(void)
 	mxj_device[devsize-1].type=0;
 	mxj_device[devsize-1].idx=0;
 	mxj_device[devsize-1].registered=0;
-	mxj_device[devsize-1].ctrl=0;
+	mxj_device[devsize-1].name="";
 	devsize--;
 }
 
@@ -768,6 +751,7 @@ int find_dev(int id)
 		if(mxj_device[i].id == id)
 			{
 				//printf("find:%d",i);
+				mxj_device[i].heart++;
 				return i;
 			}
 
@@ -1214,11 +1198,7 @@ int main(void)
 	pthread_t id;
   struct MHD_Daemon *daemon;
   uint8_t i=0;
-  for(i=0;i<DEV_SIZE;i++)
-  {
-    mxj_device[i].registered = 0;
-	mxj_device[i].ctrl = 0;
-  }
+
 
   json_str = (char*)calloc(2000,sizeof(char));
   
@@ -1293,6 +1273,8 @@ int main(void)
 	mxj_device[devsize].id=KETING_ID;
 	mxj_device[devsize].type=4;
 	mxj_device[devsize].idx=1;
+	mxj_device[devsize].heart=0;
+	mxj_device[devsize].name="客厅灯开关";
 	mxj_device[devsize].registered=1;
 	if(devsize<DEV_SIZE)
 		devsize ++;
@@ -1300,6 +1282,8 @@ int main(void)
 	mxj_device[devsize].id=CANTING_ID;
 	mxj_device[devsize].type=4;
 	mxj_device[devsize].idx=1;
+	mxj_device[devsize].heart=0;
+	mxj_device[devsize].name="餐厅灯开关";
 	mxj_device[devsize].registered=1;
 	if(devsize<DEV_SIZE)
 		devsize ++;
@@ -1307,6 +1291,8 @@ int main(void)
 	mxj_device[devsize].id=CHUFANG_ID;
 	mxj_device[devsize].type=4;
 	mxj_device[devsize].idx=1;
+	mxj_device[devsize].heart=0;
+	mxj_device[devsize].name="厨房灯开关";
 	mxj_device[devsize].registered=1;
 	if(devsize<DEV_SIZE)
 		devsize ++;
@@ -1314,6 +1300,8 @@ int main(void)
 	mxj_device[devsize].id=MENTING_ID;
 	mxj_device[devsize].type=4;
 	mxj_device[devsize].idx=1;
+	mxj_device[devsize].heart=0;
+	mxj_device[devsize].name="门厅灯开关";
 	mxj_device[devsize].registered=1;
 	if(devsize<DEV_SIZE)
 		devsize ++;
@@ -1321,6 +1309,8 @@ int main(void)
 	mxj_device[devsize].id=GUODAO_ID;
 	mxj_device[devsize].type=4;
 	mxj_device[devsize].idx=2;
+	mxj_device[devsize].heart=0;
+	mxj_device[devsize].name="过道灯开关";
 	mxj_device[devsize].registered=1;
 	if(devsize<DEV_SIZE)
 		devsize ++;
@@ -1328,6 +1318,8 @@ int main(void)
 	mxj_device[devsize].id=ZHUWO_ID;
 	mxj_device[devsize].type=4;
 	mxj_device[devsize].idx=1;
+	mxj_device[devsize].heart=0;
+	mxj_device[devsize].name="主卧灯开关";
 	mxj_device[devsize].registered=1;
 	if(devsize<DEV_SIZE)
 		devsize ++;
@@ -1335,17 +1327,104 @@ int main(void)
 	mxj_device[devsize].id=CIWO_ID;
 	mxj_device[devsize].type=4;
 	mxj_device[devsize].idx=1;
+	mxj_device[devsize].heart=0;
+	mxj_device[devsize].name="次卧灯开关";
 	mxj_device[devsize].registered=1;
 	if(devsize<DEV_SIZE)
 		devsize ++;
-	
+	mxj_device[devsize].id=XMKG_ZHU_ID;
+	mxj_device[devsize].type=14;
+	mxj_device[devsize].idx=1;
+	mxj_device[devsize].heart=0;
+	mxj_device[devsize].name="主卧小米按钮";
+	mxj_device[devsize].registered=1;
+	if(devsize<DEV_SIZE)
+		devsize ++;
+
+	mxj_device[devsize].id=XMKG_CI_ID;
+	mxj_device[devsize].type=14;
+	mxj_device[devsize].idx=1;
+	mxj_device[devsize].heart=0;
+	mxj_device[devsize].name="次卧小米按钮";
+	mxj_device[devsize].registered=1;
+	if(devsize<DEV_SIZE)
+		devsize ++;
+
+	mxj_device[devsize].id=XMMENCI_ID;
+	mxj_device[devsize].type=10;
+	mxj_device[devsize].idx=1;
+	mxj_device[devsize].heart=0;
+	mxj_device[devsize].name="入户小米门磁";
+	mxj_device[devsize].registered=1;
+	if(devsize<DEV_SIZE)
+		devsize ++;
+
+	mxj_device[devsize].id=XIAOMIRENTI_ID;
+	mxj_device[devsize].type=3;
+	mxj_device[devsize].idx=1;
+	mxj_device[devsize].heart=0;
+	mxj_device[devsize].name="厨房小米人体感应";
+	mxj_device[devsize].registered=1;
+	if(devsize<DEV_SIZE)
+		devsize ++;
+
+	mxj_device[devsize].id=XMKG_WAI_ID;
+	mxj_device[devsize].type=14;
+	mxj_device[devsize].idx=1;
+	mxj_device[devsize].heart=0;
+	mxj_device[devsize].name="客厅小米按钮";
+	mxj_device[devsize].registered=1;
+	if(devsize<DEV_SIZE)
+		devsize ++;
+
+	mxj_device[devsize].id=XMLOUSHUI_CIWO_ID;
+	mxj_device[devsize].type=10;
+	mxj_device[devsize].idx=1;
+	mxj_device[devsize].heart=0;
+	mxj_device[devsize].name="次卧漏水检测";
+	mxj_device[devsize].registered=1;
+	if(devsize<DEV_SIZE)
+		devsize ++;
+
+	mxj_device[devsize].id=XMLOUSHUI_CHUFANG_ID;
+	mxj_device[devsize].type=10;
+	mxj_device[devsize].idx=1;
+	mxj_device[devsize].heart=0;
+	mxj_device[devsize].name="厨房漏水检测";
+	mxj_device[devsize].registered=1;
+	if(devsize<DEV_SIZE)
+		devsize ++;
   MXJ_GetStateMessage(0xffff);
   build_json();
+  int flag_hour=0;
 	while(1)
 	{  
 		//usleep(500000);
 
-	 
+	 	flag_hour++;
+	 	if(flag_hour>=7500)
+	 	{
+	 		flag_hour = 0;
+	 		for(i=0;i<devsize;i++)
+	 		{
+	 			if(mxj_device[i].heart==0)
+	 			{
+	 				  char str[200]={0};
+					  sprintf(str,"text=设备:%s ID:%d 离线！  AT:%d-%d-%d %d:%d:%d", mxj_device[i].name,mxj_device[i].id,tblock->tm_year+1900, tblock->tm_mon+1, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec);
+					  curl_easy_setopt(posturl, CURLOPT_POSTFIELDS,str);
+					  curl_easy_perform(posturl);
+					   if ((sp = fopen("/var/log/zbclient.txt","a+")) != NULL)
+					  {
+						  fprintf(sp,str,"text=设备:%s ID:%d 离线！  AT:%d-%d-%d %d:%d:%d", mxj_device[i].name,mxj_device[i].id,tblock->tm_year+1900, tblock->tm_mon+1, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec);
+						  fclose(sp);
+					  }
+	 			}
+	 			else
+	 			{
+	 				mxj_device[i].heart=0;
+	 			}
+	 		}
+	 	}
 
 
 		
