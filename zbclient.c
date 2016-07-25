@@ -1,5 +1,7 @@
 /*
-//gcc zbclient.c -o zbclient -lwiringPi -lcurl -lpthread -ljson-c
+//gcc zbclient.c -o zbclient -lwiringPi -lcurl -lpthread -ljson-c -lmicrohttpd
+sudo cp json-c/* /usr/lib/
+
 #build libmicrohttp.so
 donwload src
 cp to raspi
@@ -12,6 +14,16 @@ sudo make install
 sudo cp /usr/local/lib/libmicrohttp.* /lib/arm-linux-gnueabihf/
 regcc .c
 ok
+
+=====
+sudo rm /usr/arm-linux-gnueabihf/libmicrohttpd.so
+sudo cp libmicrohttpd.so.12.37.0 /usr/arm-linux-gnueabihf/
+sudo ln -s libmicrohttpd.so.12.37.0 libmicrohttpd.so.12
+sudo ln -s libmicrohttpd.so.12 libmicrohttpd.so
+
+----
+ls -l |grep libmicrohttpd
+sudo find / -name libmicrohttpd*
 */
 #include <stdio.h>
 #include <stdlib.h>
@@ -26,7 +38,7 @@ ok
 #include "json.h"
 #include <time.h>
 #include <stddef.h>
-
+#include <curl.h>
 #include <libxml/parser.h>
 #include <libxml/xmlmemory.h>
 
@@ -61,6 +73,8 @@ ok
 #define CIWO_ID         0X9590
 #define XIAOMIRENTI_ID	0x32FE
 #define XMKG_WAI_ID		0x9F68
+
+#define XMLOUSHUI_CIWO_ID		0x0000
 
 
 typedef unsigned char   uint8_t;     //无符号8位数
@@ -106,19 +120,23 @@ typedef unsigned char   uint8_t;     //无符号8位数
 #define MXJ_SENSOR_DATA              0x07
 #define MXJ_CONFIG_WRITE             0x08
 #define MXJ_CONFIG_RETURN            0x09
-#define MXJ_CONFIG_GET               0x0a
-#define MXJ_SEND_IDXS                0x0B
-#define MXJ_SEND_RESPONSE            0x0D
-
-
-
+#define MXJ_CONFIG_GET               0x0A
+#define MXJ_GET_IDXS                 0x0B
+#define MXJ_SEND_IDXS                0x0C
+#define MXJ_SEND_RESPONSE            0x0D 
+#define MXJ_PING_REQUEST             0x0F
+#define MXJ_DEVICE_ANNCE             0x0E
+#define MXJ_PING_RESPONSE            0x10
+#define MXJ_SEND_RESET               0x11  
 #define MXJ_XIAOMI18                 0x18
 #define MXJ_XIAOMI1C                 0x1C
 #define MXJ_SEND_DATA                0xff
 
 #define DEV_SIZE                200
+FILE *sp;
+CURL* posturl;
 
-
+int permitjoin = 0;
 
 typedef struct
 {
@@ -143,13 +161,13 @@ typedef struct
 MXJ_DEVICE mxj_device[DEV_SIZE];
 uint8_t devsize=0; 
 int usart_fd;
-uint8_t rebuf[100];    
+uint8_t rebuf[200];    
 uint8_t rx_step = 0;	
 uint8_t state = WW_STATE;
 uint8_t  LEN_Token;
 uint8_t  FSC_Token;
 uint8_t  tempDataLen = 0;
-uint8_t rxbuf[100];
+uint8_t rxbuf[200];
 uint8_t len=0;
 int humand = 0;
 time_t now;
@@ -161,7 +179,10 @@ struct tm *tblock;
 
 void send_usart(uint8_t *data,uint8_t len);
 void MXJ_SendRegisterMessage( uint16_t , uint8_t );
-void MXJ_SendCtrlMessage( uint16_t , uint8_t , uint8_t , uint8_t );
+void MXJ_SendPingMessage( uint16_t id );
+void MXJ_GetIdxMessage( uint16_t id );
+
+void MXJ_SendCtrlMessage( uint16_t ,uint8_t len, uint8_t , uint8_t , uint8_t );
 void MXJ_SendStateMessage( uint16_t );
 
 void MXJ_GetStateMessage( uint16_t id );
@@ -190,6 +211,10 @@ const char *errorpage =
 
 const char *idolpage =
   "<html><body>hello idol</body></html>";
+long writer(void *data, int size, int nmemb, char *content)
+{
+	return 1;
+}
 
 void build_json()
 {
@@ -335,7 +360,7 @@ char *FromUserName;
 
 char *re_body;
   FILE *sp;
-  printf ("====New %s request for %s using version %s\n", method, url, version);
+  //printf ("====New %s request for %s using version %s\n", method, url, version);
  
   time(&now);
   tblock = localtime(&now);
@@ -362,7 +387,7 @@ char *re_body;
 
   if (0 == strcmp (method, "GET"))
     {	
-		printf("get json_str = %s\n",json_str);
+	//	printf("get json_str = %s\n",json_str);
 		if(json_str!=NULL)
 			return send_page (connection,json_str);
 		else
@@ -374,6 +399,19 @@ char *re_body;
   if (0 == strcmp (method, "POST"))
   	{  		
 	  int ret;
+
+	  if(0 == strcmp (url, "/zbClient/API/permit"))
+		{
+			permitjoin = 1;
+			printf("POST RECIEVE:time: %d-%d-%d %d:%d:%d len=0 url=%s version=%s body=NULL\n", tblock->tm_year+1900, tblock->tm_mon+1, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec,len2, url, version);
+		 	if ((sp = fopen("/var/log/zbclient.txt","a+")) != NULL)
+		    {
+			    fprintf(sp,"POST RECIEVE:time=%d-%d-%d %d:%d:%d len=0 url=%s version=%s body=NULL\n", tblock->tm_year+1900, tblock->tm_mon+1, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec, url, version);
+			    fclose(sp);
+		    }
+		}
+
+
 	  if (*upload_data_size != 0)
 	  {
 
@@ -398,11 +436,12 @@ char *re_body;
 				printf("now datetime: %d-%d-%d %d:%d:%d - New %s request for %s using version %s - len2=0 re_body=\nNULL\n End \n", tblock->tm_year, tblock->tm_mon, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec,method, url, version);
 			}
 		
-			if ((sp = fopen("/home/pi/idol/re.txt","a+")) != NULL)
+			if ((sp = fopen("/var/log/zbclient.txt","a+")) != NULL)
 			{
-				fprintf(sp,"now datetime: %d-%d-%d %d:%d:%d - New %s request for %s using version %s - len2=%d re_body=\n%s\n End \n", tblock->tm_year, tblock->tm_mon, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec,method, url, version,len2,re_body);
+				fprintf(sp,"POST RECIEVE:time=%d-%d-%d %d:%d:%d len=%d url=%s version=%s body=%s\n", tblock->tm_year+1900, tblock->tm_mon+1, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec,len2, url, version,body);
 				fclose(sp);
 			}
+
 		
 			if(len2 != 0)
 			{
@@ -450,8 +489,10 @@ char *re_body;
 							  if(0 == strcmp (json_object_to_json_string(name), "\"CIWO_ID\""))
 								  id = CIWO_ID;
 				  
-							  
-							  MXJ_SendCtrlMessage(id,state11,state22,state33);
+							  if(id == GUODAO_ID)
+							  	MXJ_SendCtrlMessage(id,2,state11,state22,state33);
+							  else
+							  	MXJ_SendCtrlMessage(id,1,state11,state22,state33);
 							  
 							  i=find_dev(id);
 							if(i>=0)
@@ -474,7 +515,7 @@ char *re_body;
 								  
 								  build_json();
 							  }
-							  MXJ_GetStateMessage(id);
+							  //MXJ_GetStateMessage(id);
 						  }
 					  if(0 == strcmp (json_object_to_json_string(type), "\"register_ok\""))
 						  MXJ_SendRegisterMessage(id,MXJ_REGISTER_OK);
@@ -483,15 +524,15 @@ char *re_body;
 					  if(0 == strcmp (json_object_to_json_string(type), "\"ask_state\""))
 						  MXJ_GetStateMessage(id);
 					  if(0 == strcmp (json_object_to_json_string(type), "\"any_data\""))
-						  MXJ_SendCtrlMessage(id,state11,state22,state33);
+						  MXJ_SendCtrlMessage(id,3,state11,state22,state33);
 					  if(0 == strcmp (json_object_to_json_string(type), "\"heart\""))
 						  ;//MXJ_GetStateMessage(0xffff);
 				  
-					  printf("\n");
+					  //printf("\n");
 					  //printf("state11 = %d\n", state11);
 					  //printf("state22 = %d\n", state22);
 					  //printf("state33 = %d\n", state33);
-					  printf("recieve post json= %s\n", json_object_to_json_string(my_object));
+					  //printf("recieve post json= %s\n", json_object_to_json_string(my_object));
 				}
 				
 				else
@@ -501,7 +542,7 @@ char *re_body;
 					xmlChar *uri;
 					char *str_data;
 					post_type = 2;
-					printf("xml2\n");
+					//printf("xml2\n");
 					doc = xmlParseMemory(re_body,len2);
 					if (doc == NULL ) 
 					{
@@ -525,109 +566,109 @@ char *re_body;
 								{
 									uri = xmlNodeGetContent(cur);
 									CreateTime = uri;
-									printf("CreateTime: %s\n", uri);
+									//printf("CreateTime: %s\n", uri);
 								}
 								else if (!xmlStrcmp(cur->name, (const xmlChar *)"FromUserName"))
 								{
 									uri = xmlNodeGetContent(cur);
 									FromUserName = uri;
-									printf("FromUserName: %s\n", uri);
+									//printf("FromUserName: %s\n", uri);
 									
 								}
 								else if (!xmlStrcmp(cur->name, (const xmlChar *)"ToUserName"))
 								{
 									uri = xmlNodeGetContent(cur);
 									ToUserName = uri;
-									printf("ToUserName: %s\n", uri);
+									//printf("ToUserName: %s\n", uri);
 									
 								}
 								else if (!xmlStrcmp(cur->name, (const xmlChar *)"MsgType"))
 								{
 									uri = xmlNodeGetContent(cur);
-									printf("MsgType: %s\n", uri);
+									//printf("MsgType: %s\n", uri);
 								}
 								else if (!xmlStrcmp(cur->name, (const xmlChar *)"Content"))
 								{
 									uri = xmlNodeGetContent(cur);
-									printf("Content: %s\n", uri);
-									if(0 == strcmp (uri, "openketing"))
+									//printf("Content: %s\n", uri);
+									if(0 == strcmp (uri, "kaiketing"))
 									{
 										str_data = uri;
-										MXJ_SendCtrlMessage(KETING_ID,1,1,1);
+										MXJ_SendCtrlMessage(KETING_ID,1,1,1,1);
 									}
-									else if(0 == strcmp (uri, "closeketing"))
+									else if(0 == strcmp (uri, "guanketing"))
 									{
 										str_data = uri;
-										MXJ_SendCtrlMessage(KETING_ID,0,0,0);
+										MXJ_SendCtrlMessage(KETING_ID,1,0,0,0);
 									}
-									else if(0 == strcmp (uri, "opencanting"))
+									else if(0 == strcmp (uri, "kaicanting"))
 									{
 										str_data = uri;
-										MXJ_SendCtrlMessage(CANTING_ID,1,0,0);
+										MXJ_SendCtrlMessage(CANTING_ID,1,1,0,0);
 									}
-									else if(0 == strcmp (uri, "closecanting"))
+									else if(0 == strcmp (uri, "guancanting"))
 									{
 										str_data = uri;
-										MXJ_SendCtrlMessage(CANTING_ID,0,0,0);
+										MXJ_SendCtrlMessage(CANTING_ID,1,0,0,0);
 									}
-									else if(0 == strcmp (uri, "openchufang"))
+									else if(0 == strcmp (uri, "kaichufang"))
 									{
 										str_data = uri;
-										MXJ_SendCtrlMessage(CHUFANG_ID,1,0,0);
+										MXJ_SendCtrlMessage(CHUFANG_ID,1,1,0,0);
 									}
-									else if(0 == strcmp (uri, "closechufang"))
+									else if(0 == strcmp (uri, "guanchufang"))
 									{
 										str_data = uri;
-										MXJ_SendCtrlMessage(CHUFANG_ID,0,0,0);
+										MXJ_SendCtrlMessage(CHUFANG_ID,1,0,0,0);
 									}
-									else if(0 == strcmp (uri, "openmenting"))
+									else if(0 == strcmp (uri, "kaimenting"))
 									{
 										str_data = uri;
-										MXJ_SendCtrlMessage(MENTING_ID,1,0,0);
+										MXJ_SendCtrlMessage(MENTING_ID,1,1,0,0);
 									}
-									else if(0 == strcmp (uri, "closementing"))
+									else if(0 == strcmp (uri, "guanmenting"))
 									{
 										str_data = uri;
-										MXJ_SendCtrlMessage(MENTING_ID,0,0,0);
+										MXJ_SendCtrlMessage(MENTING_ID,1,0,0,0);
 									}
-									else if(0 == strcmp (uri, "openzhuwo"))
+									else if(0 == strcmp (uri, "kaizhuwo"))
 									{
 										str_data = uri;
-										MXJ_SendCtrlMessage(ZHUWO_ID,1,0,0);
+										MXJ_SendCtrlMessage(ZHUWO_ID,1,1,0,0);
 									}
-									else if(0 == strcmp (uri, "closezhuwo"))
+									else if(0 == strcmp (uri, "guanzhuwo"))
 									{
 										str_data = uri;
-										MXJ_SendCtrlMessage(ZHUWO_ID,0,0,0);
+										MXJ_SendCtrlMessage(ZHUWO_ID,1,0,0,0);
 									}
-									else if(0 == strcmp (uri, "openciwo"))
+									else if(0 == strcmp (uri, "kaiciwo"))
 									{
 										str_data = uri;
-										MXJ_SendCtrlMessage(CIWO_ID,1,0,0);
+										MXJ_SendCtrlMessage(CIWO_ID,1,1,0,0);
 									}
-									else if(0 == strcmp (uri, "closeciwo"))
+									else if(0 == strcmp (uri, "guanciwo"))
 									{
 										str_data = uri;
-										MXJ_SendCtrlMessage(CIWO_ID,0,0,0);
+										MXJ_SendCtrlMessage(CIWO_ID,1,0,0,0);
 									}
-									else if(0 == strcmp (uri, "openguodao"))
+									else if(0 == strcmp (uri, "kaiguodao"))
 									{
 										str_data = uri;
-										MXJ_SendCtrlMessage(GUODAO_ID,2,1,2);
-									}else if(0 == strcmp (uri, "closeguodao"))
+										MXJ_SendCtrlMessage(GUODAO_ID,2,2,1,2);
+									}else if(0 == strcmp (uri, "guanguodao"))
 									{
 										str_data = uri;
-										MXJ_SendCtrlMessage(GUODAO_ID,2,0,2);
+										MXJ_SendCtrlMessage(GUODAO_ID,2,2,0,2);
 									}
-									else if(0 == strcmp (uri, "opencesuo"))
+									else if(0 == strcmp (uri, "kaicesuo"))
 									{
 										str_data = uri;
-										MXJ_SendCtrlMessage(GUODAO_ID,1,2,2);
+										MXJ_SendCtrlMessage(GUODAO_ID,2,1,2,2);
 									}
-									else if(0 == strcmp (uri, "closecesuo"))
+									else if(0 == strcmp (uri, "guancesuo"))
 									{
 										str_data = uri;
-										MXJ_SendCtrlMessage(GUODAO_ID,0,2,2);
+										MXJ_SendCtrlMessage(GUODAO_ID,2,0,2,2);
 									}else
 										str_data = "unknow cmd";
 									
@@ -679,8 +720,23 @@ void send_usart(uint8_t *data,uint8_t len) //id,state1,state2,state3 1=开,0=关,2
     crc += data[i];
   }
   txbuf[len+2] = crc;
-  printf("\n");
-  printf("send:");
+ // printf("\n");
+			time(&now);
+			tblock = localtime(&now);
+			
+			if ((sp = fopen("/var/log/zbclient.txt","a+")) != NULL)
+			{
+				fprintf(sp,"USART SEND:time=%d-%d-%d %d:%d:%d len=%d data=", tblock->tm_year+1900, tblock->tm_mon+1, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec,len+3);
+				for(i=0;i<len;i++)
+				  {
+				    fprintf(sp,"%02x ",txbuf[i]);
+				  }
+				  fprintf(sp,"\n");
+				  fclose(sp);
+			}
+			
+			printf("USART SEND:time=%d-%d-%d %d:%d:%d len=%d data=", tblock->tm_year+1900, tblock->tm_mon+1, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec,len+3);
+ // printf("send:");
   for(i=0;i<len+3;i++)
   {
     serialPutchar(usart_fd,txbuf[i]);
@@ -725,13 +781,29 @@ void recieve_usart(uint8_t *rx,uint8_t len)
   int tempctrl[3]={2,2,2};
   time(&now);
   tblock = localtime(&now);
-  printf("\n");
-  printf("recieved:%d - at: %d-%d-%d %d:%d:%d\n",len,tblock->tm_year, tblock->tm_mon, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec);
+//  printf("\n");
+//  printf("recieved:%d - at: %d-%d-%d %d:%d:%d\n",len,tblock->tm_year, tblock->tm_mon, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec);
   
+//  for(i=0;i<len;i++)
+//    printf("%02x ",rx[i]);
+//  printf("\n");
+//  printf("------------------------\n");
+  printf("USART RECIEVE:time=%d-%d-%d %d:%d:%d len=%d data=", tblock->tm_year+1900, tblock->tm_mon+1, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec,len);
   for(i=0;i<len;i++)
-    printf("%02x ",rx[i]);
+	  printf("%02x ",rx[i]);
   printf("\n");
-  printf("------------------------\n");
+
+
+  
+  FILE *sp;
+  if ((sp = fopen("/var/log/zbclient.txt","a+")) != NULL)
+	{
+		fprintf(sp,"USART RECIEVE:time=%d-%d-%d %d:%d:%d len=%d data=", tblock->tm_year+1900, tblock->tm_mon+1, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec,len);
+		for(i=0;i<len;i++)
+    		fprintf(sp,"%02x ",rx[i]);
+		fprintf(sp,"\n");
+		fclose(sp);
+	}
   
  
   if(len>=4)
@@ -897,27 +969,52 @@ void recieve_usart(uint8_t *rx,uint8_t len)
 		if(rx[11] == 0x20)
 		{
 			printf("double kick\n");
-			MXJ_SendCtrlMessage(0xffff,0,0,0);
-			MXJ_GetStateMessage(0xffff);
+			MXJ_SendCtrlMessage(ZHUWO_ID,1,0,0,0);
+			MXJ_SendCtrlMessage(CIWO_ID,1,0,0,0);
+			MXJ_SendCtrlMessage(CHUFANG_ID,1,0,0,0);
+			MXJ_SendCtrlMessage(CANTING_ID,1,0,0,0);
+			MXJ_SendCtrlMessage(KETING_ID,1,0,0,0);
+			MXJ_SendCtrlMessage(MENTING_ID,1,0,0,0);
+			MXJ_SendCtrlMessage(GUODAO_ID,2,0,0,0);
+
+			//MXJ_GetStateMessage(0xffff);
 		}
 		else
 		{
 			printf("action = %d\n",rx[12]);
 			if(id==XMKG_ZHU_ID&&rx[12] == 1)
-				{					
-					MXJ_SendCtrlMessage(ZHUWO_ID,3,3,3);
-					MXJ_GetStateMessage(ZHUWO_ID);
-				}
+			{					
+				MXJ_SendCtrlMessage(ZHUWO_ID,1,3,3,3);
+				//MXJ_GetStateMessage(ZHUWO_ID);
+			}
 			if(id==XMKG_CI_ID&&rx[12] == 1)
-				{
-					MXJ_SendCtrlMessage(CIWO_ID,3,3,3);
-					MXJ_GetStateMessage(CIWO_ID);
-				}
+			{
+				MXJ_SendCtrlMessage(CIWO_ID,1,3,3,3);
+				//MXJ_GetStateMessage(CIWO_ID);
+			}
 			if(id==XMMENCI_ID)
+			{
+				MXJ_SendCtrlMessage(MENTING_ID,1,rx[12],rx[12],rx[12]);
+				//MXJ_GetStateMessage(MENTING_ID);
+			}
+			if(id==XMLOUSHUI_CIWO_ID)
+			{
+				if(rx[12]==0)//loushui
 				{
-					MXJ_SendCtrlMessage(MENTING_ID,rx[12],rx[12],rx[12]);
-					MXJ_GetStateMessage(MENTING_ID);
+					char str[200]={0};
+					sprintf(str,"text=次卧漏水啦");				
+					curl_easy_setopt(posturl, CURLOPT_POSTFIELDS,str);
+					curl_easy_perform(posturl);
 				}
+				else if(rx[12]==1)
+				{
+					char str[200]={0};
+					sprintf(str,"text=次卧漏水解除");
+					curl_easy_setopt(posturl, CURLOPT_POSTFIELDS,str);
+					curl_easy_perform(posturl);
+				}
+			}
+				
 		}
 	}
 	else if(cid == 0x406)
@@ -934,8 +1031,8 @@ void recieve_usart(uint8_t *rx,uint8_t len)
 			{				
 				if(humand <= 1)
 				{
-					MXJ_SendCtrlMessage(CHUFANG_ID,1,1,1);
-					MXJ_GetStateMessage(CHUFANG_ID);
+					MXJ_SendCtrlMessage(CHUFANG_ID,1,1,1,1);
+					//MXJ_GetStateMessage(CHUFANG_ID);
 					humand = 120;
 				}	
 								
@@ -1117,6 +1214,23 @@ int main(void)
 	}
 	
    //printf("start server ...\n");
+   posturl = curl_easy_init();
+   struct curl_slist *list = NULL;
+   
+	 if(posturl){
+   
+		 //list = curl_slist_append(list, "Content-Type: application/json");
+		 //curl_easy_setopt(posturl, CURLOPT_HTTPHEADER, list);
+		 curl_easy_setopt(posturl, CURLOPT_URL, "http://sc.ftqq.com/SCU1247T4f6d392d81bb2e29cf723e311f9bf06d5795a12c0adba.send");
+		 curl_easy_setopt(posturl, CURLOPT_HTTPPOST, 1L);
+		 curl_easy_setopt(posturl, CURLOPT_WRITEFUNCTION, writer);
+		 //curl_easy_setopt(posturl, CURLOPT_WRITEDATA, &headerStr);
+	 }
+	 else
+		return (1);
+
+
+
 
   daemon = MHD_start_daemon (MHD_USE_SELECT_INTERNALLY, PORT, NULL, NULL,
                              &answer_to_connection, NULL,
@@ -1132,6 +1246,20 @@ int main(void)
 
   //MXJ_SendRegisterMessage( 0x4738, MXJ_REGISTER_FAILED );
 //  MXJ_SendRegisterMessage( 0x49f0, MXJ_REGISTER_FAILED );
+  
+  time(&now);
+  tblock = localtime(&now);
+  
+  printf("START!\n");
+  if ((sp = fopen("/var/log/zbclient.txt","a+")) != NULL)
+  {
+	  fprintf(sp,"START time=%d-%d-%d %d:%d:%d START!\n", tblock->tm_year+1900, tblock->tm_mon+1, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec);
+	  fclose(sp);
+  }
+  char str[200]={0};
+  sprintf(str,"text=系统启动 AT:%d-%d-%d %d:%d:%d", tblock->tm_year+1900, tblock->tm_mon+1, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec);
+  curl_easy_setopt(posturl, CURLOPT_POSTFIELDS,str);
+  curl_easy_perform(posturl);
 
   
   build_json();
@@ -1148,14 +1276,14 @@ int main(void)
 		if(j > 20)
 		{
 			j = 0;
-			MXJ_GetStateMessage(0xffff);
+			//MXJ_GetStateMessage(0xffff);
 		}
 		sleep(1);
 		
 		if(humand == 1)
 		{
-			MXJ_SendCtrlMessage(CHUFANG_ID,0,0,0);	
-			MXJ_GetStateMessage(CHUFANG_ID);		
+			MXJ_SendCtrlMessage(CHUFANG_ID,1,0,0,0);	
+			//MXJ_GetStateMessage(CHUFANG_ID);		
 		}
 		if(humand > 0)
 		{	
@@ -1178,11 +1306,11 @@ int main(void)
  *
  * @return  none
  */
-void MXJ_SendCtrlMessage( uint16_t id ,uint8_t msg1 , uint8_t msg2 , uint8_t msg3 )
+void MXJ_SendCtrlMessage( uint16_t id ,uint8_t len,uint8_t msg1 , uint8_t msg2 , uint8_t msg3 )
 {
-//  uint8_t data[5]={MXJ_CTRL_DOWN,3,msg1,msg2,msg3};//自定义数据
-  uint8_t data[7]={0,6,(uint8_t)(id>>8),(uint8_t)id,msg1,msg2,msg3};
-  send_usart(data,7);
+//  uint8_t data[5]={MXJ_CTRL_DOWN,3,msg1,msg2,msg3};//è?a????1‰??°??
+  uint8_t data[7]={0,len+3,(uint8_t)(id>>8),(uint8_t)id,msg1,msg2,msg3};
+  send_usart(data,4+len);
 }
 
 /*********************************************************************
@@ -1216,7 +1344,17 @@ void MXJ_SendRegisterMessage( uint16_t id, uint8_t state )
   }
 }
 
+void MXJ_SendPingMessage( uint16_t id )
+{
+  uint8_t data[4]={0x0f,3,(uint8_t)(id>>8),(uint8_t)id};//è?a????1‰??°??
+  send_usart(data,4);
+}
 
+void MXJ_GetIdxMessage( uint16_t id )
+{
+  uint8_t data[4]={0x0b,3,(uint8_t)(id>>8),(uint8_t)id};//è?a????1‰??°??
+  send_usart(data,4);
+}
 
 /*********************************************************************
  * @fn      MXJ_GetStateMessage
