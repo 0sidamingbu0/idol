@@ -1,4 +1,4 @@
-/*
+﻿/*
 //gcc zbclient.c -o zbclient -lwiringPi -lcurl -lpthread -ljson-c -lmicrohttpd
 sudo cp json-c/* /usr/lib/
 
@@ -74,7 +74,7 @@ sudo find / -name libmicrohttpd*
 #define XIAOMIRENTI_ID	0x32FE
 #define XMKG_WAI_ID		0x9F68
 
-#define XMLOUSHUI_CIWO_ID		0x0000
+#define XMLOUSHUI_CIWO_ID		0x89c9
 #define XMLOUSHUI_CHUFANG_ID    0x0000
 
 #define LINKQUALITY_ENABLE 0
@@ -710,7 +710,7 @@ void send_usart(uint8_t *data,uint8_t len) //id,state1,state2,state3 1=寮€,0=
 			if ((sp = fopen("/var/log/zbclient.txt","a+")) != NULL)
 			{
 				fprintf(sp,"USART SEND:time=%d-%d-%d %d:%d:%d len=%d data=", tblock->tm_year+1900, tblock->tm_mon+1, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec,len+3);
-				for(i=0;i<len;i++)
+				for(i=0;i<len+3;i++)
 				  {
 				    fprintf(sp,"%02x ",txbuf[i]);
 				  }
@@ -1407,12 +1407,12 @@ int main(void)
 	 		flag_hour = 0;
 	 		for(i=0;i<devsize;i++)
 	 		{
-	 			if(mxj_device[i].heart==0)
+	 			if(mxj_device[i].heart==0 && mxj_device[i].id != XMLOUSHUI_CHUFANG_ID)
 	 			{
 	 				  char str[200]={0};
 					  sprintf(str,"text=设备:%s ID:%d 离线！  AT:%d-%d-%d %d:%d:%d", mxj_device[i].name,mxj_device[i].id,tblock->tm_year+1900, tblock->tm_mon+1, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec);
-					  curl_easy_setopt(posturl, CURLOPT_POSTFIELDS,str);
-					  curl_easy_perform(posturl);
+					  //curl_easy_setopt(posturl, CURLOPT_POSTFIELDS,str);
+					  //curl_easy_perform(posturl);
 					   if ((sp = fopen("/var/log/zbclient.txt","a+")) != NULL)
 					  {
 						  fprintf(sp,str,"text=设备:%s ID:%d 离线！  AT:%d-%d-%d %d:%d:%d", mxj_device[i].name,mxj_device[i].id,tblock->tm_year+1900, tblock->tm_mon+1, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec);
