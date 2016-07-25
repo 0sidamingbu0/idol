@@ -77,7 +77,7 @@ sudo find / -name libmicrohttpd*
 #define XMLOUSHUI_CIWO_ID		0x0000
 #define XMLOUSHUI_CHUFANG_ID    0x0000
 
-	
+#define LINKQUALITY_ENABLE 0
 
 typedef unsigned char   uint8_t;     //鏃犵鍙?浣嶆暟
 
@@ -855,7 +855,7 @@ void recieve_usart(uint8_t *rx,uint8_t len)
 		i=find_dev(id);
       if(i>=0)
       	{
-      		if(len >= 5)
+      		if(len >= 5 + LINKQUALITY_ENABLE)
 	  		mxj_device[i].state[0]=rx[4];
 			if(len >= 6)
 	  		mxj_device[i].state[1]=rx[5];
@@ -1087,7 +1087,7 @@ void recieve_usart(uint8_t *rx,uint8_t len)
     break;
 
 	case MXJ_XIAOMI1C:
-
+		i=find_dev(id);
 	break;
 
     
