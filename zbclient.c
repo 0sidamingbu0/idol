@@ -75,7 +75,7 @@ sudo find / -name libmicrohttpd*
 #define XMKG_WAI_ID		0x9F68
 
 #define XMLOUSHUI_CIWO_ID		0x89c9
-#define XMLOUSHUI_CHUFANG_ID    0x0000
+#define XMLOUSHUI_CHUFANG_ID    0xaacb
 
 #define LINKQUALITY_ENABLE 0
 
@@ -983,11 +983,11 @@ void recieve_usart(uint8_t *rx,uint8_t len)
 				char str[200]={0};
 				if(rx[12]==1)
 				{
-					sprintf(str,"text=开门！");
+					sprintf(str,"text=开门！  AT:%d-%d-%d %d:%d:%d", tblock->tm_year+1900, tblock->tm_mon+1, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec);
 				}
 				else if(rx[12]==0)
 				{
-					sprintf(str,"text=关门！");
+					sprintf(str,"text=关门！  AT:%d-%d-%d %d:%d:%d", tblock->tm_year+1900, tblock->tm_mon+1, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec);
 				}
 								
 				curl_easy_setopt(posturl, CURLOPT_POSTFIELDS,str);
@@ -998,14 +998,14 @@ void recieve_usart(uint8_t *rx,uint8_t len)
 				if(rx[12]==0)//loushui
 				{
 					char str[200]={0};
-					sprintf(str,"text=次卧漏水");				
+					sprintf(str,"text=次卧漏水  AT:%d-%d-%d %d:%d:%d", tblock->tm_year+1900, tblock->tm_mon+1, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec);				
 					curl_easy_setopt(posturl, CURLOPT_POSTFIELDS,str);
 					curl_easy_perform(posturl);
 				}
 				else if(rx[12]==1)
 				{
 					char str[200]={0};
-					sprintf(str,"text=次卧漏水解除");
+					sprintf(str,"text=次卧漏水解除  AT:%d-%d-%d %d:%d:%d", tblock->tm_year+1900, tblock->tm_mon+1, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec);
 					curl_easy_setopt(posturl, CURLOPT_POSTFIELDS,str);
 					curl_easy_perform(posturl);
 				}
@@ -1015,14 +1015,14 @@ void recieve_usart(uint8_t *rx,uint8_t len)
 				if(rx[12]==0)//loushui
 				{
 					char str[200]={0};
-					sprintf(str,"text=厨房漏水");				
+					sprintf(str,"text=厨房漏水  AT:%d-%d-%d %d:%d:%d", tblock->tm_year+1900, tblock->tm_mon+1, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec);				
 					curl_easy_setopt(posturl, CURLOPT_POSTFIELDS,str);
 					curl_easy_perform(posturl);
 				}
 				else if(rx[12]==1)
 				{
 					char str[200]={0};
-					sprintf(str,"text=厨房漏水解除");
+					sprintf(str,"text=厨房漏水解除  AT:%d-%d-%d %d:%d:%d", tblock->tm_year+1900, tblock->tm_mon+1, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec);
 					curl_easy_setopt(posturl, CURLOPT_POSTFIELDS,str);
 					curl_easy_perform(posturl);
 				}
@@ -1407,15 +1407,15 @@ int main(void)
 	 		flag_hour = 0;
 	 		for(i=0;i<devsize;i++)
 	 		{
-	 			if(mxj_device[i].heart==0 && mxj_device[i].id != XMLOUSHUI_CHUFANG_ID)
+	 			if(mxj_device[i].heart==0 && (mxj_device[i].id == XMLOUSHUI_CHUFANG_ID||mxj_device[i].id == XMLOUSHUI_CIWO_ID))
 	 			{
 	 				  char str[200]={0};
 					  sprintf(str,"text=设备:%s ID:%d 离线！  AT:%d-%d-%d %d:%d:%d", mxj_device[i].name,mxj_device[i].id,tblock->tm_year+1900, tblock->tm_mon+1, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec);
-					  //curl_easy_setopt(posturl, CURLOPT_POSTFIELDS,str);
-					  //curl_easy_perform(posturl);
+					  curl_easy_setopt(posturl, CURLOPT_POSTFIELDS,str);
+					  curl_easy_perform(posturl);
 					   if ((sp = fopen("/var/log/zbclient.txt","a+")) != NULL)
 					  {
-						  fprintf(sp,str,"text=设备:%s ID:%d 离线！  AT:%d-%d-%d %d:%d:%d", mxj_device[i].name,mxj_device[i].id,tblock->tm_year+1900, tblock->tm_mon+1, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec);
+						  fprintf(sp,str,"设备:%s ID:%d 离线！  AT:%d-%d-%d %d:%d:%d \n", mxj_device[i].name,mxj_device[i].id,tblock->tm_year+1900, tblock->tm_mon+1, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec);
 						  fclose(sp);
 					  }
 	 			}
