@@ -1,4 +1,4 @@
-﻿/*
+/*
 //gcc zbclient.c -o zbclient -lwiringPi -lcurl -lpthread -ljson-c -lmicrohttpd
 sudo cp json-c/* /usr/lib/
 
@@ -61,23 +61,24 @@ sudo find / -name libmicrohttpd*
 
 
 */
-#define XMKG_ZHU_ID     0XFAF8
-#define XMKG_CI_ID      0X1AD6
-#define XMMENCI_ID      0xFC44
-#define KETING_ID       0x5C4E
-#define CANTING_ID      0XB358
-#define CHUFANG_ID      0XBE8A
-#define MENTING_ID      0XE6B0
-#define GUODAO_ID       0X5680
-#define ZHUWO_ID        0X7710
-#define CIWO_ID         0X9590
-#define XIAOMIRENTI_ID	0x32FE
-#define XMKG_WAI_ID		0x9F68
+#define XMKG_ZHU_ID     0Xba9d
+#define XMKG_CI_ID      0X55f6
+#define XMMENCI_ID      0x535e
+#define KETING_ID       0x969E //a9 f9 e9 08 00 4b 12 00
+#define CANTING_ID      0X028C //ea f7 e9 08 00 4b 12 00
+#define CHUFANG_ID      0X8DC0 //01 03 ea 08 00 4b 12 00
+#define MENTING_ID      0X242D //6e 22 ea 08 00 4b 12 00
+#define GUODAO_ID       0X0072 //c5 f7 e9 08 00 4b 12 00
+#define ZHUWO_ID        0XE6A4 //b5 23 dc 07 00 4b 12 00
+#define CIWO_ID         0X0C55 //b4 ff e9 08 00 4b 12 00
+#define XIAOMIRENTI_ID	0x3b6b
+#define XMKG_WAI_ID		0x2349
+#define POWER_CIWO_ID		0x0c41
 
-#define XMLOUSHUI_CIWO_ID		0x89c9
-#define XMLOUSHUI_CHUFANG_ID    0xaacb
+#define XMLOUSHUI_CIWO_ID		0xe320
+#define XMLOUSHUI_CHUFANG_ID    0xab13
 
-#define LINKQUALITY_ENABLE 0
+#define LINKQUALITY_ENABLE 1
 
 typedef unsigned char   uint8_t;     //鏃犵鍙?浣嶆暟
 
@@ -652,14 +653,24 @@ char *re_body;
 									{
 										str_data = uri;
 										MXJ_SendCtrlMessage(GUODAO_ID,3,0,2,2);//need change
-									}else
-										str_data = "eg：开客厅、关客厅、开次卧、开过道、开门厅、开厨房、开餐厅、开厕所";
+									}else if(0 == strcmp (uri, "开次卧插座"))
+									{
+										str_data = uri;
+										MXJ_SendCtrlMessage(POWER_CIWO_ID,1,1,2,2);
+									}
+									else if(0 == strcmp (uri, "关次卧插座"))
+									{
+										str_data = uri;
+										MXJ_SendCtrlMessage(POWER_CIWO_ID,1,0,2,2);//need change
+									}
+									else
+										str_data = "eg：开客厅、关客厅、开次卧、开过道、开门厅、开厨房、开餐厅、开厕所、开次卧插座、关次卧插座";
 									
 									sprintf(strxml,"<xml><ToUserName><![CDATA[%s]]></ToUserName><FromUserName><![CDATA[%s]]></FromUserName><CreateTime>%d</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[%s]]></Content></xml>",FromUserName,ToUserName,time(NULL),str_data);
 									printf("strxml = %s\n",strxml);
 								}
 								
-								
+								////MXJ_SendCtrlMessage(POWER_CIWO_ID,1,1-mxj_device[i].state[0],0,0);
 
 								
 								
@@ -816,21 +827,28 @@ void recieve_usart(uint8_t *rx,uint8_t len)
 		else 
 	   	{
 	      printf("control up - find id = %d\n",i);
-		  printf("id:%4x\n",id);
-			if(mxj_device[i].type==4)
-			{
-				if( rx[5] == 1)
-					mxj_device[i].state[0]=rx[6];
-				if( rx[5] == 2)
-					mxj_device[i].state[1]=rx[6];
-				if( rx[5] == 3)
-					mxj_device[i].state[2]=rx[6];
-
-				if(id == CHUFANG_ID)
-					humand = 0;
-				build_json();
-			}
-	     }
+  		  printf("id:%4x\n",id);
+  			if(mxj_device[i].type==4)
+  			{
+  				if( rx[5] == 1)
+  					mxj_device[i].state[0]=rx[6];
+  				if( rx[5] == 2)
+  					mxj_device[i].state[1]=rx[6];
+  				if( rx[5] == 3)
+  					mxj_device[i].state[2]=rx[6];
+  
+  				if(id == CHUFANG_ID)
+  					humand = 0;
+  				build_json();
+  			}
+        
+        if(id == POWER_CIWO_ID)
+        {
+          //mxj_device[i].state[0]=rx[6];
+          MXJ_SendCtrlMessage(POWER_CIWO_ID,1,1-mxj_device[i].state[0],0,0);
+          mxj_device[i].state[0]=1-mxj_device[i].state[0];
+        }
+       }
 
 		
     break;
@@ -856,11 +874,11 @@ void recieve_usart(uint8_t *rx,uint8_t len)
       if(i>=0)
       	{
       		if(len >= 5 + LINKQUALITY_ENABLE)
-	  		mxj_device[i].state[0]=rx[4];
+	  		mxj_device[i].state[0]=rx[8];
 			if(len >= 6)
-	  		mxj_device[i].state[1]=rx[5];
+	  		mxj_device[i].state[1]=rx[9];
 			if(len >= 7)
-			mxj_device[i].state[2]=rx[6];	
+			mxj_device[i].state[2]=rx[10];	
 			build_json();
       	}
 	  else
@@ -947,7 +965,7 @@ void recieve_usart(uint8_t *rx,uint8_t len)
 
 	if(cid == 6)
 	{
-		if(len != 13)break;
+		if(len != 14)break;
 		printf("control up - find id = %d\n",i);
 		printf("id:%4x\n",id);
 		if(rx[11] == 0x20)
@@ -1001,6 +1019,8 @@ void recieve_usart(uint8_t *rx,uint8_t len)
 					sprintf(str,"text=次卧漏水  AT:%d-%d-%d %d:%d:%d", tblock->tm_year+1900, tblock->tm_mon+1, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec);				
 					curl_easy_setopt(posturl, CURLOPT_POSTFIELDS,str);
 					curl_easy_perform(posturl);
+					MXJ_SendCtrlMessage(ZHUWO_ID,3,1,0,0);//alarm
+					MXJ_SendCtrlMessage(CIWO_ID,3,1,0,0);//alarm
 				}
 				else if(rx[12]==1)
 				{
@@ -1008,6 +1028,7 @@ void recieve_usart(uint8_t *rx,uint8_t len)
 					sprintf(str,"text=次卧漏水解除  AT:%d-%d-%d %d:%d:%d", tblock->tm_year+1900, tblock->tm_mon+1, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec);
 					curl_easy_setopt(posturl, CURLOPT_POSTFIELDS,str);
 					curl_easy_perform(posturl);
+
 				}
 			}
 			if(id==XMLOUSHUI_CHUFANG_ID)
@@ -1018,6 +1039,8 @@ void recieve_usart(uint8_t *rx,uint8_t len)
 					sprintf(str,"text=厨房漏水  AT:%d-%d-%d %d:%d:%d", tblock->tm_year+1900, tblock->tm_mon+1, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec);				
 					curl_easy_setopt(posturl, CURLOPT_POSTFIELDS,str);
 					curl_easy_perform(posturl);
+					MXJ_SendCtrlMessage(ZHUWO_ID,3,1,0,0);//alarm
+					MXJ_SendCtrlMessage(CHUFANG_ID,3,1,0,0);//alarm
 				}
 				else if(rx[12]==1)
 				{
@@ -1032,7 +1055,7 @@ void recieve_usart(uint8_t *rx,uint8_t len)
 	}
 	else if(cid == 0x406)
 	{
-		if(len != 13)break;
+		if(len != 14)break;
 		printf("control up - find id = %d\n",i);
 		printf("id:%4x\n",id);
 		printf("human detected\n");
@@ -1057,7 +1080,7 @@ void recieve_usart(uint8_t *rx,uint8_t len)
 	else if(cid == 0x402)
 	{
 		int16_t temp = 0;
-		if(len != 14)break;
+		if(len != 15)break;
 		temp = rx[13];
 		temp <<= 8;
 		temp |= rx[12];
@@ -1069,7 +1092,7 @@ void recieve_usart(uint8_t *rx,uint8_t len)
 	else if(cid == 0x405)
 	{
 	 	uint16_t temp = 0;
-		if(len != 14)break;
+		if(len != 15)break;
 		temp = rx[13];
 		temp <<= 8;
 		temp |= rx[12];
@@ -1394,6 +1417,17 @@ int main(void)
 	mxj_device[devsize].registered=1;
 	if(devsize<DEV_SIZE)
 		devsize ++;
+   
+ 	mxj_device[devsize].id=POWER_CIWO_ID;
+	mxj_device[devsize].type=6;
+	mxj_device[devsize].idx=1;
+	mxj_device[devsize].heart=0;
+	mxj_device[devsize].name="次卧插座";
+	mxj_device[devsize].registered=1;
+	if(devsize<DEV_SIZE)
+		devsize ++;
+   
+   
   MXJ_GetStateMessage(0xffff);
   build_json();
   int flag_hour=0;
