@@ -69,8 +69,8 @@ sudo find / -name libmicrohttpd*
 #define CHUFANG_ID      0X8DC0 //01 03 ea 08 00 4b 12 00
 #define MENTING_ID      0X242D //6e 22 ea 08 00 4b 12 00
 #define GUODAO_ID       0X0072 //c5 f7 e9 08 00 4b 12 00
-#define ZHUWO_ID        0XE6A4 //b5 23 dc 07 00 4b 12 00
-#define CIWO_ID         0X0C55 //b4 ff e9 08 00 4b 12 00
+#define CIWO_ID         0XE6A4 //b5 23 dc 07 00 4b 12 00
+#define ZHUWO_ID        0X0C55 //b4 ff e9 08 00 4b 12 00
 #define XIAOMIRENTI_ID	0x3b6b
 #define XMKG_WAI_ID		0x2349
 #define POWER_CIWO_ID		0x0c41
@@ -240,6 +240,10 @@ void build_json()
             
 			json_object *dev = json_object_new_object();
 			json_object_object_add(dev, "id", json_object_new_int(mxj_device[i].id));
+			json_object_object_add(dev, "nameChinese", json_object_new_string(mxj_device[i].name));
+			//printf("%s\n",mxj_device[i].name);
+			//printf("%s\n",json_object_to_json_string(dev));
+			
 			json_object_object_add(dev, "type", json_object_new_int(mxj_device[i].type));				
 			json_object_object_add(dev, "status", state);
 			if(mxj_device[i].id == KETING_ID)
@@ -468,7 +472,7 @@ char *re_body;
 					  json_object_object_get_ex(my_object, "state3",&state3);
 					  json_object_object_get_ex(my_object, "type",&type);
 					  json_object_object_get_ex(my_object, "name",&name);
-				  
+				  	
 					  id = (uint16_t)json_object_get_int(devid);
 					  state11 = (uint16_t)json_object_get_int(state1);
 					  state22 = (uint16_t)json_object_get_int(state2);
@@ -1297,6 +1301,7 @@ int main(void)
 	mxj_device[devsize].type=4;
 	mxj_device[devsize].idx=1;
 	mxj_device[devsize].heart=0;
+	//mxj_device[devsize].name = malloc (sizeof (char) * 50);
 	mxj_device[devsize].name="客厅灯开关";
 	mxj_device[devsize].registered=1;
 	if(devsize<DEV_SIZE)
