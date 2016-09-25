@@ -72,8 +72,11 @@ sudo find / -name libmicrohttpd*
 #define CIWO_ID         0XE6A4 //b5 23 dc 07 00 4b 12 00
 #define ZHUWO_ID        0X0C55 //b4 ff e9 08 00 4b 12 00
 #define XIAOMIRENTI_ID	0x3b6b
-#define XMKG_WAI_ID		0x2349
+#define XMKG_WAI_ID		0x0000
 #define POWER_CIWO_ID		0x0c41
+#define CHUANGLIAN_ZHUWO_ID		0x631f
+#define XMKG_CL_ZHUWO_ID		0x2349
+
 
 #define XMLOUSHUI_CIWO_ID		0xe320
 #define XMLOUSHUI_CHUFANG_ID    0xab13
@@ -667,8 +670,22 @@ char *re_body;
 										str_data = uri;
 										MXJ_SendCtrlMessage(POWER_CIWO_ID,1,0,2,2);//need change
 									}
+									else if(0 == strcmp (uri, "关主卧窗帘"))
+									{
+										str_data = uri;
+										MXJ_SendCtrlMessage(CHUANGLIAN_ZHUWO_ID,3,0,0,1); //close
+										usleep(100000);
+										MXJ_SendCtrlMessage(CHUANGLIAN_ZHUWO_ID,3,0,0,0);
+									}
+									else if(0 == strcmp (uri, "开主卧窗帘"))
+									{
+										str_data = uri;
+										MXJ_SendCtrlMessage(CHUANGLIAN_ZHUWO_ID,3,1,0,0); //close
+										usleep(100000);
+										MXJ_SendCtrlMessage(CHUANGLIAN_ZHUWO_ID,3,0,0,0);
+									}													
 									else
-										str_data = "eg：开客厅、关客厅、开次卧、开过道、开门厅、开厨房、开餐厅、开厕所、开次卧插座、关次卧插座";
+										str_data = "eg：开客厅、关客厅、开次卧、开过道、开门厅、开厨房、开餐厅、开厕所、开次卧插座、关次卧插座、开主卧窗帘、关主卧窗帘";
 									
 									sprintf(strxml,"<xml><ToUserName><![CDATA[%s]]></ToUserName><FromUserName><![CDATA[%s]]></FromUserName><CreateTime>%d</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[%s]]></Content></xml>",FromUserName,ToUserName,time(NULL),str_data);
 									printf("strxml = %s\n",strxml);
@@ -887,7 +904,7 @@ void recieve_usart(uint8_t *rx,uint8_t len)
       	}
 	  else
 	  	{
-	  		MXJ_SendRegisterMessage( id, MXJ_REGISTER_FAILED );
+	  		//MXJ_SendRegisterMessage( id, MXJ_REGISTER_FAILED );
 	  	}
     break;
 
@@ -975,14 +992,24 @@ void recieve_usart(uint8_t *rx,uint8_t len)
 		if(rx[11] == 0x20)
 		{
 			printf("double kick\n");
-			MXJ_SendCtrlMessage(ZHUWO_ID,3,0,0,0);
-			MXJ_SendCtrlMessage(CIWO_ID,3,0,0,0);
-			MXJ_SendCtrlMessage(CHUFANG_ID,3,0,0,0);
-			MXJ_SendCtrlMessage(CANTING_ID,3,0,0,0);
-			MXJ_SendCtrlMessage(KETING_ID,3,0,0,0);
-			MXJ_SendCtrlMessage(MENTING_ID,3,0,0,0);
-			MXJ_SendCtrlMessage(GUODAO_ID,3,0,0,0);//2need change
-
+			if(id==XMKG_ZHU_ID||id==XMKG_CI_ID)
+			{
+				MXJ_SendCtrlMessage(ZHUWO_ID,3,0,0,0);
+				MXJ_SendCtrlMessage(CIWO_ID,3,0,0,0);
+				MXJ_SendCtrlMessage(CHUFANG_ID,3,0,0,0);
+				MXJ_SendCtrlMessage(CANTING_ID,3,0,0,0);
+				MXJ_SendCtrlMessage(KETING_ID,3,0,0,0);
+				MXJ_SendCtrlMessage(MENTING_ID,3,0,0,0);
+				MXJ_SendCtrlMessage(GUODAO_ID,3,0,0,0);//2need change
+			}
+			
+			if(id==XMKG_CL_ZHUWO_ID)
+			{
+				MXJ_SendCtrlMessage(CHUANGLIAN_ZHUWO_ID,3,0,0,1); //close
+				usleep(100000);
+				MXJ_SendCtrlMessage(CHUANGLIAN_ZHUWO_ID,3,0,0,0);
+			}
+			
 			//MXJ_GetStateMessage(0xffff);
 		}
 		else
@@ -998,6 +1025,14 @@ void recieve_usart(uint8_t *rx,uint8_t len)
 				MXJ_SendCtrlMessage(CIWO_ID,3,3,3,3);//need change
 				//MXJ_GetStateMessage(CIWO_ID);
 			}
+			
+			if(id==XMKG_CL_ZHUWO_ID&&rx[12] == 1)
+			{
+				MXJ_SendCtrlMessage(CHUANGLIAN_ZHUWO_ID,3,1,0,0);
+				usleep(100000);
+				MXJ_SendCtrlMessage(CHUANGLIAN_ZHUWO_ID,3,0,0,0);
+			}
+			
 			if(id==XMMENCI_ID)
 			{
 				MXJ_SendCtrlMessage(MENTING_ID,3,rx[12],rx[12],rx[12]);//need change
@@ -1432,6 +1467,14 @@ int main(void)
 	if(devsize<DEV_SIZE)
 		devsize ++;
    
+ 	mxj_device[devsize].id=CHUANGLIAN_ZHUWO_ID;
+	mxj_device[devsize].type=4;
+	mxj_device[devsize].idx=3;
+	mxj_device[devsize].heart=0;
+	mxj_device[devsize].name="主卧窗帘";
+	mxj_device[devsize].registered=1;
+	if(devsize<DEV_SIZE)
+		devsize ++;   
    
   MXJ_GetStateMessage(0xffff);
   build_json();
