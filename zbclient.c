@@ -61,6 +61,10 @@ sudo find / -name libmicrohttpd*
 
 
 */
+#define XMKG_CL_KETING1_ID     0Xea86
+#define XMKG_CL_KETING2_ID     0Xe855
+#define CHUANGLIAN_KETING1_ID  0Xd692
+
 #define XMKG_ZHU_ID     0Xba9d
 #define XMKG_CI_ID      0X55f6
 #define XMMENCI_ID      0x535e
@@ -683,9 +687,45 @@ char *re_body;
 										MXJ_SendCtrlMessage(CHUANGLIAN_ZHUWO_ID,3,1,0,0); //close
 										usleep(100000);
 										MXJ_SendCtrlMessage(CHUANGLIAN_ZHUWO_ID,3,0,0,0);
+									}
+                  else if(0 == strcmp (uri, "关客厅纱帘"))
+									{										
+                    uint8_t data[8]={0,4+3,(uint8_t)(CHUANGLIAN_KETING1_ID>>8),(uint8_t)CHUANGLIAN_KETING1_ID,0,1,2,2};
+                    uint8_t data2[8]={0,4+3,(uint8_t)(CHUANGLIAN_KETING1_ID>>8),(uint8_t)CHUANGLIAN_KETING1_ID,0,0,2,2};
+                    str_data = uri;
+                    send_usart(data,4+4);
+                    usleep(100000);
+                    send_usart(data2,4+4);
+									}
+									else if(0 == strcmp (uri, "开客厅纱帘"))
+									{
+                    uint8_t data[8]={0,4+3,(uint8_t)(CHUANGLIAN_KETING1_ID>>8),(uint8_t)CHUANGLIAN_KETING1_ID,1,0,2,2};
+                    uint8_t data2[8]={0,4+3,(uint8_t)(CHUANGLIAN_KETING1_ID>>8),(uint8_t)CHUANGLIAN_KETING1_ID,0,0,2,2};
+                    str_data = uri;
+                    send_usart(data,4+4);
+                    usleep(100000);
+                    send_usart(data2,4+4);
+									}
+                  else if(0 == strcmp (uri, "关客厅布帘"))
+									{
+                    uint8_t data[8]={0,4+3,(uint8_t)(CHUANGLIAN_KETING1_ID>>8),(uint8_t)CHUANGLIAN_KETING1_ID,2,2,0,1};
+                    uint8_t data2[8]={0,4+3,(uint8_t)(CHUANGLIAN_KETING1_ID>>8),(uint8_t)CHUANGLIAN_KETING1_ID,2,2,0,0};
+                    str_data = uri;
+                    send_usart(data,4+4);
+                    usleep(100000);
+                    send_usart(data2,4+4);
+									}
+									else if(0 == strcmp (uri, "开客厅布帘"))
+									{
+                    uint8_t data[8]={0,4+3,(uint8_t)(CHUANGLIAN_KETING1_ID>>8),(uint8_t)CHUANGLIAN_KETING1_ID,2,2,1,0};
+                    uint8_t data2[8]={0,4+3,(uint8_t)(CHUANGLIAN_KETING1_ID>>8),(uint8_t)CHUANGLIAN_KETING1_ID,2,2,0,0};
+                    str_data = uri;
+                    send_usart(data,4+4);
+                    usleep(100000);
+                    send_usart(data2,4+4);
 									}													
 									else
-										str_data = "eg：开客厅、关客厅、开次卧、开过道、开门厅、开厨房、开餐厅、开厕所、开次卧插座、关次卧插座、开主卧窗帘、关主卧窗帘";
+										str_data = "eg：开客厅、关客厅、开次卧、开过道、开门厅、开厨房、开餐厅、开厕所、开次卧插座、关次卧插座、开主卧窗帘、关主卧窗帘、开客厅纱帘、关客厅纱帘、开客厅布帘、关客厅布帘";
 									
 									sprintf(strxml,"<xml><ToUserName><![CDATA[%s]]></ToUserName><FromUserName><![CDATA[%s]]></FromUserName><CreateTime>%d</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[%s]]></Content></xml>",FromUserName,ToUserName,time(NULL),str_data);
 									printf("strxml = %s\n",strxml);
@@ -875,18 +915,7 @@ void recieve_usart(uint8_t *rx,uint8_t len)
     break;
     
     case MXJ_REGISTER_REQUEST:
-		i=find_dev(id);
-      if(i==-1)
-      	{
-      		
-	  		mxj_device[devsize].id=id;
-			mxj_device[devsize].type=rx[4];
-			mxj_device[devsize].idx=rx[5];
-			mxj_device[devsize].registered=1;
-			if(devsize<DEV_SIZE)
-				devsize ++;
-			build_json();
-      	}
+
       MXJ_SendRegisterMessage(id,MXJ_REGISTER_OK);
     break;
 
@@ -1009,7 +1038,27 @@ void recieve_usart(uint8_t *rx,uint8_t len)
 				usleep(100000);
 				MXJ_SendCtrlMessage(CHUANGLIAN_ZHUWO_ID,3,0,0,0);
 			}
-			
+				
+			if(id==XMKG_CL_KETING1_ID)
+			{
+				
+          uint8_t data[8]={0,4+3,(uint8_t)(CHUANGLIAN_KETING1_ID>>8),(uint8_t)CHUANGLIAN_KETING1_ID,1,0,2,2};
+          uint8_t data2[8]={0,4+3,(uint8_t)(CHUANGLIAN_KETING1_ID>>8),(uint8_t)CHUANGLIAN_KETING1_ID,0,0,2,2};
+          send_usart(data,4+4);
+          usleep(100000);
+          
+          send_usart(data2,4+4);
+			}
+			if(id==XMKG_CL_KETING2_ID)
+			{
+				
+          uint8_t data[8]={0,4+3,(uint8_t)(CHUANGLIAN_KETING1_ID>>8),(uint8_t)CHUANGLIAN_KETING1_ID,2,2,1,0};
+          uint8_t data2[8]={0,4+3,(uint8_t)(CHUANGLIAN_KETING1_ID>>8),(uint8_t)CHUANGLIAN_KETING1_ID,2,2,0,0};
+          send_usart(data,4+4);
+          usleep(100000);
+          
+          send_usart(data2,4+4);
+			}
 			//MXJ_GetStateMessage(0xffff);
 		}
 		else
@@ -1033,6 +1082,24 @@ void recieve_usart(uint8_t *rx,uint8_t len)
 				MXJ_SendCtrlMessage(CHUANGLIAN_ZHUWO_ID,3,0,0,0);
 			}
 			
+			if(id==XMKG_CL_KETING1_ID&&rx[12] == 1)
+			{
+          uint8_t data[8]={0,4+3,(uint8_t)(CHUANGLIAN_KETING1_ID>>8),(uint8_t)CHUANGLIAN_KETING1_ID,0,1,2,2};
+          uint8_t data2[8]={0,4+3,(uint8_t)(CHUANGLIAN_KETING1_ID>>8),(uint8_t)CHUANGLIAN_KETING1_ID,0,0,2,2};
+          send_usart(data,4+4);
+          usleep(100000);
+          send_usart(data2,4+4);
+			}
+			if(id==XMKG_CL_KETING2_ID&&rx[12] == 1)
+			{
+				
+          uint8_t data[8]={0,4+3,(uint8_t)(CHUANGLIAN_KETING1_ID>>8),(uint8_t)CHUANGLIAN_KETING1_ID,2,2,0,1};
+          uint8_t data2[8]={0,4+3,(uint8_t)(CHUANGLIAN_KETING1_ID>>8),(uint8_t)CHUANGLIAN_KETING1_ID,2,2,0,0};
+          send_usart(data,4+4);
+          usleep(100000);
+          
+          send_usart(data2,4+4);
+			}
 			if(id==XMMENCI_ID)
 			{
 				MXJ_SendCtrlMessage(MENTING_ID,3,rx[12],rx[12],rx[12]);//need change
@@ -1040,11 +1107,11 @@ void recieve_usart(uint8_t *rx,uint8_t len)
 				char str[200]={0};
 				if(rx[12]==1)
 				{
-					sprintf(str,"text=开门！  AT:%d-%d-%d %d:%d:%d", tblock->tm_year+1900, tblock->tm_mon+1, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec);
+					sprintf(str,"text=开门！_%d年%d月%d日 %d点%d分%d秒", tblock->tm_year+1900, tblock->tm_mon+1, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec);
 				}
 				else if(rx[12]==0)
 				{
-					sprintf(str,"text=关门！  AT:%d-%d-%d %d:%d:%d", tblock->tm_year+1900, tblock->tm_mon+1, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec);
+					sprintf(str,"text=关门！_%d年%d月%d日 %d点%d分%d秒", tblock->tm_year+1900, tblock->tm_mon+1, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec);
 				}
 								
 				curl_easy_setopt(posturl, CURLOPT_POSTFIELDS,str);
@@ -1055,7 +1122,7 @@ void recieve_usart(uint8_t *rx,uint8_t len)
 				if(rx[12]==0)//loushui
 				{
 					char str[200]={0};
-					sprintf(str,"text=次卧漏水  AT:%d-%d-%d %d:%d:%d", tblock->tm_year+1900, tblock->tm_mon+1, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec);				
+					sprintf(str,"text=次卧漏水_%d年%d月%d日 %d点%d分%d秒", tblock->tm_year+1900, tblock->tm_mon+1, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec);				
 					curl_easy_setopt(posturl, CURLOPT_POSTFIELDS,str);
 					curl_easy_perform(posturl);
 					MXJ_SendCtrlMessage(ZHUWO_ID,3,1,0,0);//alarm
@@ -1064,7 +1131,7 @@ void recieve_usart(uint8_t *rx,uint8_t len)
 				else if(rx[12]==1)
 				{
 					char str[200]={0};
-					sprintf(str,"text=次卧漏水解除  AT:%d-%d-%d %d:%d:%d", tblock->tm_year+1900, tblock->tm_mon+1, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec);
+					sprintf(str,"text=次卧漏水解除_%d年%d月%d日 %d点%d分%d秒", tblock->tm_year+1900, tblock->tm_mon+1, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec);
 					curl_easy_setopt(posturl, CURLOPT_POSTFIELDS,str);
 					curl_easy_perform(posturl);
 
@@ -1075,7 +1142,7 @@ void recieve_usart(uint8_t *rx,uint8_t len)
 				if(rx[12]==0)//loushui
 				{
 					char str[200]={0};
-					sprintf(str,"text=厨房漏水  AT:%d-%d-%d %d:%d:%d", tblock->tm_year+1900, tblock->tm_mon+1, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec);				
+					sprintf(str,"text=厨房漏水_%d年%d月%d日 %d点%d分%d秒", tblock->tm_year+1900, tblock->tm_mon+1, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec);				
 					curl_easy_setopt(posturl, CURLOPT_POSTFIELDS,str);
 					curl_easy_perform(posturl);
 					MXJ_SendCtrlMessage(ZHUWO_ID,3,1,0,0);//alarm
@@ -1084,7 +1151,7 @@ void recieve_usart(uint8_t *rx,uint8_t len)
 				else if(rx[12]==1)
 				{
 					char str[200]={0};
-					sprintf(str,"text=厨房漏水解除  AT:%d-%d-%d %d:%d:%d", tblock->tm_year+1900, tblock->tm_mon+1, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec);
+					sprintf(str,"text=厨房漏水解除_%d年%d月%d日 %d点%d分%d秒", tblock->tm_year+1900, tblock->tm_mon+1, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec);
 					curl_easy_setopt(posturl, CURLOPT_POSTFIELDS,str);
 					curl_easy_perform(posturl);
 				}
@@ -1328,7 +1395,7 @@ int main(void)
 	  fclose(sp);
   }
   char str[200]={0};
-  sprintf(str,"text=系统启动  AT:%d-%d-%d %d:%d:%d", tblock->tm_year+1900, tblock->tm_mon+1, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec);
+  sprintf(str,"text=系统启动_%d年%d月%d日 %d点%d分%d秒", tblock->tm_year+1900, tblock->tm_mon+1, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec);
   curl_easy_setopt(posturl, CURLOPT_POSTFIELDS,str);
   curl_easy_perform(posturl);
 
@@ -1476,9 +1543,44 @@ int main(void)
 	if(devsize<DEV_SIZE)
 		devsize ++;   
    
+  mxj_device[devsize].id=CHUANGLIAN_KETING1_ID;
+	mxj_device[devsize].type=4;
+	mxj_device[devsize].idx=2;
+	mxj_device[devsize].heart=0;
+	mxj_device[devsize].name="客厅窗帘";
+	mxj_device[devsize].registered=1;
+	if(devsize<DEV_SIZE)
+		devsize ++;   
+
+  mxj_device[devsize].id=XMKG_CL_KETING1_ID;
+	mxj_device[devsize].type=4;
+	mxj_device[devsize].idx=2;
+	mxj_device[devsize].heart=0;
+	mxj_device[devsize].name="客厅窗帘开关1";
+	mxj_device[devsize].registered=1;
+	if(devsize<DEV_SIZE)
+		devsize ++; 
+    
+  mxj_device[devsize].id=XMKG_CL_KETING2_ID;
+	mxj_device[devsize].type=4;
+	mxj_device[devsize].idx=2;
+	mxj_device[devsize].heart=0;
+	mxj_device[devsize].name="客厅窗帘开关2";
+	mxj_device[devsize].registered=1;
+	if(devsize<DEV_SIZE)
+		devsize ++;        
+   
+   
   MXJ_GetStateMessage(0xffff);
   build_json();
   int flag_hour=0;
+ // MXJ_SendCtrlMessage(CHUANGLIAN_KTSHA_ID,1,2,0,0);//need change
+ // sleep(10);
+//    MXJ_SendCtrlMessage(CHUANGLIAN_KTSHA_ID,1,1,0,0);//need change
+//  sleep(1);
+//MXJ_SendCtrlMessage(CHUANGLIAN_KTSHA_ID,1,0,0,0);//need change
+ //sleep(1);
+ //    MXJ_SendCtrlMessage(CHUANGLIAN_KTSHA_ID,1,1,0,0);//need change 
 	while(1)
 	{  
 		//usleep(500000);
@@ -1492,7 +1594,7 @@ int main(void)
 	 			if(mxj_device[i].heart==0 && (mxj_device[i].id == XMLOUSHUI_CHUFANG_ID||mxj_device[i].id == XMLOUSHUI_CIWO_ID))
 	 			{
 	 				  char str[200]={0};
-					  sprintf(str,"text=设备:%s ID:%d 离线！  AT:%d-%d-%d %d:%d:%d", mxj_device[i].name,mxj_device[i].id,tblock->tm_year+1900, tblock->tm_mon+1, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec);
+					  sprintf(str,"text=设备:%s ID:%d 离线！_%d年%d月%d日 %d点%d分%d秒", mxj_device[i].name,mxj_device[i].id,tblock->tm_year+1900, tblock->tm_mon+1, tblock->tm_mday, tblock->tm_hour, tblock->tm_min, tblock->tm_sec);
 					  curl_easy_setopt(posturl, CURLOPT_POSTFIELDS,str);
 					  curl_easy_perform(posturl);
 					   if ((sp = fopen("/var/log/zbclient.txt","a+")) != NULL)
