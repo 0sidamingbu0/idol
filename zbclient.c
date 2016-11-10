@@ -1042,7 +1042,7 @@ void recieve_usart(uint8_t *rx,uint8_t len)
 			if(id==XMKG_CL_KETING1_ID)
 			{
 				
-          uint8_t data[8]={0,4+3,(uint8_t)(CHUANGLIAN_KETING1_ID>>8),(uint8_t)CHUANGLIAN_KETING1_ID,1,0,2,2};
+          uint8_t data[8]={0,4+3,(uint8_t)(CHUANGLIAN_KETING1_ID>>8),(uint8_t)CHUANGLIAN_KETING1_ID,0,1,2,2};
           uint8_t data2[8]={0,4+3,(uint8_t)(CHUANGLIAN_KETING1_ID>>8),(uint8_t)CHUANGLIAN_KETING1_ID,0,0,2,2};
           send_usart(data,4+4);
           usleep(100000);
@@ -1052,7 +1052,7 @@ void recieve_usart(uint8_t *rx,uint8_t len)
 			if(id==XMKG_CL_KETING2_ID)
 			{
 				
-          uint8_t data[8]={0,4+3,(uint8_t)(CHUANGLIAN_KETING1_ID>>8),(uint8_t)CHUANGLIAN_KETING1_ID,2,2,1,0};
+          uint8_t data[8]={0,4+3,(uint8_t)(CHUANGLIAN_KETING1_ID>>8),(uint8_t)CHUANGLIAN_KETING1_ID,2,2,0,1};
           uint8_t data2[8]={0,4+3,(uint8_t)(CHUANGLIAN_KETING1_ID>>8),(uint8_t)CHUANGLIAN_KETING1_ID,2,2,0,0};
           send_usart(data,4+4);
           usleep(100000);
@@ -1084,7 +1084,7 @@ void recieve_usart(uint8_t *rx,uint8_t len)
 			
 			if(id==XMKG_CL_KETING1_ID&&rx[12] == 1)
 			{
-          uint8_t data[8]={0,4+3,(uint8_t)(CHUANGLIAN_KETING1_ID>>8),(uint8_t)CHUANGLIAN_KETING1_ID,0,1,2,2};
+          uint8_t data[8]={0,4+3,(uint8_t)(CHUANGLIAN_KETING1_ID>>8),(uint8_t)CHUANGLIAN_KETING1_ID,1,0,2,2};
           uint8_t data2[8]={0,4+3,(uint8_t)(CHUANGLIAN_KETING1_ID>>8),(uint8_t)CHUANGLIAN_KETING1_ID,0,0,2,2};
           send_usart(data,4+4);
           usleep(100000);
@@ -1093,7 +1093,7 @@ void recieve_usart(uint8_t *rx,uint8_t len)
 			if(id==XMKG_CL_KETING2_ID&&rx[12] == 1)
 			{
 				
-          uint8_t data[8]={0,4+3,(uint8_t)(CHUANGLIAN_KETING1_ID>>8),(uint8_t)CHUANGLIAN_KETING1_ID,2,2,0,1};
+          uint8_t data[8]={0,4+3,(uint8_t)(CHUANGLIAN_KETING1_ID>>8),(uint8_t)CHUANGLIAN_KETING1_ID,2,2,1,0};
           uint8_t data2[8]={0,4+3,(uint8_t)(CHUANGLIAN_KETING1_ID>>8),(uint8_t)CHUANGLIAN_KETING1_ID,2,2,0,0};
           send_usart(data,4+4);
           usleep(100000);
