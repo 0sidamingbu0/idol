@@ -68,7 +68,7 @@ sudo find / -name libmicrohttpd*
 #define XMKG_ZHU_ID     0Xba9d
 #define XMKG_CI_ID      0X55f6
 #define XMMENCI_ID      0x535e
-#define KETING_ID       0x969E //a9 f9 e9 08 00 4b 12 00
+#define KETING_ID       0x4c35 //a9 f9 e9 08 00 4b 12 00
 #define CANTING_ID      0X028C //ea f7 e9 08 00 4b 12 00
 #define CHUFANG_ID      0X8DC0 //01 03 ea 08 00 4b 12 00
 #define MENTING_ID      0X242D //6e 22 ea 08 00 4b 12 00
@@ -1021,7 +1021,11 @@ void recieve_usart(uint8_t *rx,uint8_t len)
 		if(rx[11] == 0x20)
 		{
 			printf("double kick\n");
-			if(id==XMKG_ZHU_ID||id==XMKG_CI_ID)
+			if(id==XMKG_ZHU_ID)
+			{
+				MXJ_SendCtrlMessage(ZHUWO_ID,3,3,3,3);
+			}
+			if(id==XMKG_CI_ID)
 			{
 				MXJ_SendCtrlMessage(ZHUWO_ID,3,0,0,0);
 				MXJ_SendCtrlMessage(CIWO_ID,3,0,0,0);
@@ -1066,7 +1070,7 @@ void recieve_usart(uint8_t *rx,uint8_t len)
 			printf("action = %d\n",rx[12]);
 			if(id==XMKG_ZHU_ID&&rx[12] == 1)
 			{					
-				MXJ_SendCtrlMessage(ZHUWO_ID,3,3,3,3);//need change
+				MXJ_SendCtrlMessage(GUODAO_ID,3,3,3,3);//need change
 				//MXJ_GetStateMessage(ZHUWO_ID);
 			}
 			if(id==XMKG_CI_ID&&rx[12] == 1)
