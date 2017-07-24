@@ -72,7 +72,7 @@ sudo find / -name libmicrohttpd*
 #define CANTING_ID      0X028C //ea f7 e9 08 00 4b 12 00
 #define CHUFANG_ID      0X8DC0 //01 03 ea 08 00 4b 12 00
 #define MENTING_ID      0X242D //6e 22 ea 08 00 4b 12 00
-#define GUODAO_ID       0X0072 //c5 f7 e9 08 00 4b 12 00
+#define GUODAO_ID       0x3865 //68 5e 34 10 00 4b 12 00//0X0072-c5 f7 e9 08 00 4b 12 00
 #define CIWO_ID         0XE6A4 //b5 23 dc 07 00 4b 12 00
 #define ZHUWO_ID        0X0C55 //b4 ff e9 08 00 4b 12 00
 #define XIAOMIRENTI_ID	0x3b6b
@@ -649,11 +649,11 @@ char *re_body;
 									else if(0 == strcmp (uri, "开过道"))
 									{
 										str_data = uri;
-										MXJ_SendCtrlMessage(GUODAO_ID,3,2,1,2);//2need change
+										MXJ_SendCtrlMessage(GUODAO_ID,3,2,2,1);//2need change
 									}else if(0 == strcmp (uri, "关过道"))
 									{
 										str_data = uri;
-										MXJ_SendCtrlMessage(GUODAO_ID,3,2,0,2);//2need change
+										MXJ_SendCtrlMessage(GUODAO_ID,3,2,2,0);//2need change
 									}
 									else if(0 == strcmp (uri, "开厕所"))
 									{
@@ -943,7 +943,9 @@ void recieve_usart(uint8_t *rx,uint8_t len)
 
     case MXJ_GET_STATE:
 		{
-			;//printf("get state\n");
+			
+			MXJ_SendCtrlMessage(id,1,2,2,2);
+			//printf("get state\n");
 			//char str[200]={0};
 			///sprintf(str,"type=ask_state&dev_id=%d",id);
 			//curl_easy_setopt(geturl, CURLOPT_POSTFIELDS,str);
@@ -1106,7 +1108,7 @@ void recieve_usart(uint8_t *rx,uint8_t len)
 			}
 			if(id==XMMENCI_ID)
 			{
-				MXJ_SendCtrlMessage(MENTING_ID,3,rx[12],rx[12],rx[12]);//need change
+			//	MXJ_SendCtrlMessage(MENTING_ID,3,rx[12],rx[12],rx[12]);//need change
 				//MXJ_GetStateMessage(MENTING_ID);
 				char str[200]={0};
 				if(rx[12]==1)
@@ -1442,7 +1444,7 @@ int main(void)
 	
 	mxj_device[devsize].id=GUODAO_ID;
 	mxj_device[devsize].type=4;
-	mxj_device[devsize].idx=2;
+	mxj_device[devsize].idx=3;
 	mxj_device[devsize].heart=0;
 	mxj_device[devsize].name="过道灯开关";
 	mxj_device[devsize].registered=1;
