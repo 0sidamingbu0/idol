@@ -567,7 +567,9 @@ char *re_body;
 								{
 									uri = xmlNodeGetContent(cur);
 									FromUserName = uri;
-									//printf("FromUserName: %s\n", uri);
+									 if(!((0 == strcmp (uri, "ogvN0w4jG360_wHow3gKLxG7wURY"))||(0 == strcmp (uri, "ogvN0w6AZVrJ7zbIjD58N6eEjJVY"))))	
+									return;	
+									printf("FromUserName: %s\n", uri);
 									
 								}
 								else if (!xmlStrcmp(cur->name, (const xmlChar *)"ToUserName"))
